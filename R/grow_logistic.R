@@ -1,0 +1,31 @@
+#' Logistic Growth Model
+#'
+#' Classical logistic growth model written as analytical solution of the differential equation.
+#'
+#' @param time vector of time steps (independend variable)
+#' @param parms named parameter vector of the logistic growth model with:
+#' \itemize{
+#'   \item \code{y0} initial concentration of bacterial cells
+#'   \item \code{mu} intrinsic growth rate (1/time)
+#'   \item \code{K} carrying capacity (max. total concentration of cells)
+#' }
+#'
+#' @return vector of dependend variable (\code{y})
+#'
+#' @examples
+#'
+#' time <- seq(0, 30, length=200)
+#' y    <- grow_logistic(time, c(y0=1, mu=0.5, K=10))[,"y"]
+#' plot(time, y, type="l")
+#'
+#' @family growth models
+#'
+#' @rdname grow_logistic
+#' @export grow_logistic
+#'
+grow_logistic <- function(time, parms) {
+  with(as.list(parms), {
+    y <- (K * y0) / (y0 + (K - y0) * exp(-mu * time))
+    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+  })
+}

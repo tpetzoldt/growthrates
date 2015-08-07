@@ -1,0 +1,293 @@
+---
+title: "Estimation of Growth Rates with package `growthrates`"
+author: "Thomas Petzoldt"
+date: "`r Sys.Date()`"
+output: rmarkdown::pdf_document
+bibliography: growthrates.bib
+vignette: >
+  %\VignetteIndexEntry{Estimation of Growth Rates}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+```{r opts, echo = FALSE, message = FALSE}
+library("knitr")
+#knitr::opts_chunk$set(eval = FALSE)
+``` 
+
+<!--
+possible output options are:
+rmarkdown::pdf_document
+rmarkdown::html_vignette
+
+set to UTF if necessary with:
+%\VignetteEncoding{UTF-8}
+
+Bibliographies may need to set the LANG environment variable
+LANG=en_US.UTF-8
+-->
+
+
+Introduction
+============
+
+The growth rate of a population is a direct measure of fitness. Therefore, 
+determination of growth rates is common in many disciplines of theoretical and 
+applied biology, e.g. physiology, ecology, eco-toxicology or pharmacology.
+
+This package aims to streamline estimation of growth rates from direct or indirect 
+measures of population density (e.g. cell counts, optical density or fluorescence) 
+determined in batch experiments or field observations. It should be applicable to
+different species of bacteria, archaea, protists, and metazoa, e.g. *E. coli*, 
+*Cyanobacteria*, *Paramecium*, green algae or *Daphnia*.
+
+The determination of growth rates from chemostat and semi-continuous cultures is 
+currently not covered by the package, but we are open to include it, depending on 
+your interest and the availability of data.
+
+
+Methods
+=======
+
+The package includes three types of methods:
+
+* Nonlinear fitting of parametric growth models like the logistic or the Gompertz 
+  growth model. Parametric model fitting is done by using package `FME` (Flexible 
+  Modelling Environment) of @Soetaert2010 . In addition to growth models given
+  in closed form (i.e. empirical regression equations or analytical solution
+  of differential equations) it is also possible to use numerically solved 
+  differential equation models. Such models are then solved with package `deSolve'
+  [@deSolve_jss].
+* Fitting of linear models to the period of exponential growth using the 
+  ``growth rates made easy method'' of @Hall2013 ,
+* Nonparametric growthrate estimation by using smoothers. R contains several very 
+  powerful methods for this, that can leveraged for this purpose. The currently
+  implemented method uses function `smooth.spline`, similar to the package `grofit` 
+  [@Kahm2010].
+  
+The package contains methods to fit single data sets or complete series of data 
+sets organized in a data frame. It contains also functions for extracting results
+(e.g. `coef`, `summary`, `deviance`, `obs`, `residuals`, `rsquared` and `results`)
+and methods for plotting (`plot`, `lines`). The implementation follows an object 
+oriented style, so that the functions above determine automatically which method
+is used for a given class of objects.
+  
+Data Set
+--------
+
+The data set for demonstrating main features of the package was provided by
+Claudia Seiler from one of a series of plate reader experiments carried out at 
+the Institute of Hydrobiology of TU Dresden. It describes growth of
+three different strains of bacteria (D=donor, R=recipient, T=transconjugant)
+in dependence of a gradient of the antibiotics Tetracycline.
+
+
+```{r eval=TRUE, echo=FALSE, results="hide"}
+#suppressMessages(require("growthrates"))
+require("growthrates")
+```
+
+```{r eval=FALSE}
+library("growthrates")
+```
+
+Firstly, we load the data and inspect its structure with `str`:
+
+```{r eval=TRUE}
+data(bactgrowth)
+str(bactgrowth)
+```
+
+And we can also inspect the full data set with `View(growthrates)` or look at 
+the first few lines with `head`:
+
+```{r eval=TRUE}
+head(bactgrowth)
+```
+
+
+
+Examples
+========
+
+Inspect the Data
+----------------
+
+Plot raw data:
+
+```{r, fig.width=7, fig.height=14}
+library(lattice)
+data(bactgrowth)
+xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
+```
+
+Fit Models to Individual Data Sets
+----------------------------------
+
+
+Single data sets can be analysed with functions `fit_easylinear`, `fit_growthmodels` 
+or `fit_splines`. As a prerequisite, single data sets containing only one treatment
+have to be extracted from a complete experiment, which can be done with function 
+`multsiplit'. In the following example, the full data table is first split into a list
+of experiments according to a vector of criteria and then the first experiment is
+extracted:
+
+### Easy Linear Method
+
+```{r}
+splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
+dat <- splitted.data[[1]]
+```
+
+In the next step, model fitting is done, e.g. with the "easylinear" method:
+
+```{r}
+fit <- fit_easylinear(dat$time, dat$value)
+```
+
+This method fits segments of linear models to the log-transformed data and tries 
+to find the maximum growth rate. Several functions exist to inspect the outcome of 
+the model fit, e.g.
+
+```{r}
+summary(fit) 
+```
+
+```{r}
+coef(fit)      # exponential growth parameters
+rsquared(fit)  # coefficient of determination (of log-transformed data)
+deviance(fit)  # residual sum of squares of log-transformed data
+```
+
+Plotting can then be done either in log-scale or after re-transformation
+```{r, fig.width=7}
+par(mfrow=c(1,2))
+plot(fit)
+plot(fit, log="y")
+```
+
+and in addition to @Hall2013 it is also possible to modify the default settings 
+of the algorithm:
+
+```{r}
+fitx <- fit_easylinear(dat$time, dat$value, h=8, quota=0.95)
+plot(fit)
+lines(fitx, pch="+", col="blue")
+```
+
+
+Parametric Nonlinear Growth Models
+----------------------------------
+
+```{r, fig.width=7}
+
+p     <- c(y0=0.01, mu=0.03, K=0.1)
+lower <- c(y0=1e-6, mu=0,   K=0)
+upper <- c(y0=0.05, mu=5,   K=0.5)
+
+fit1 <- fit_growthmodel(FUN=grow_logistic, p=p, dat$time, dat$value,
+                        lower=lower, upper=upper)
+
+
+p     <- c(yi=0.01, ya=0.01, kw=0.1,	mu=0.2, K=0.1)
+lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
+upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
+
+fit2 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
+                        lower=lower, upper=upper)
+
+
+coef(fit1)
+coef(fit2)
+
+par(mfrow=c(1,2))
+plot(fit1)
+lines(fit2, col="red")
+
+
+plot(fit1, log="y")
+lines(fit2, col="red")
+
+```
+
+
+
+Nonparametric Smoothing Splines
+-------------------------------
+
+```{r, fig.width=7}
+
+dat <- splitted.data[[2]]
+time <- dat$time
+y    <- dat$value
+
+## automatic smoothing with cv
+res <- fit_spline(time, y)
+
+par(mfrow=c(1,2))
+plot(res, log="y")
+plot(res)
+coef(res)
+
+```
+
+
+
+
+Fit Multiple Data Sets
+======================
+
+Fiting multiple data sets at once is possible with functions `all_easyliner`,
+`all_growthrates` and `alls_splines'. Usage is similar for all methods, whereas
+the parameters are analogous to the single-fit methods. Both, the easy growth 
+rates and the smooting splines method are quite robust. In contrast to this,
+parametric fits with function `all_growthrates` need more care and more 
+computational power. 
+
+Special emphasis should be given to the selection of good starting points. In 
+addition, it is possible to select an alternative optimization algorithm, to enable
+additional output (`trace`) or to fine-tune their optimization control parameters.
+Nevertheless, it should be noted that parametric models have more explanatory 
+power and may therefore be advantageous for basic research.
+
+Nonlinear optimization is done with parallelized code, so multi-core computers 
+can speed up computation.
+
+It can be a good idea, to use a nonparametric approach like the smoothing spline method to get a first impression and, potentially, to derive start parameters for a parametric model.
+
+In the following, we show an example with the smoothing spline method:
+
+
+```{r fig.width=14, fig.height=20}
+many_fits <- all_splines(bactgrowth, 
+                  criteria=c("strain", "conc", "replicate"), spar=0.5)
+
+par(mfrow=c(12,6))
+par(mar=c(2.5,4,2,1))
+plot(many_fits)
+```
+
+Finally
+=======
+
+Dependency of growth rate on antibiotic concentration for the three strains:
+
+```{r, fig.width=7, fig.height=4}
+many_res <- results(many_fits)
+xyplot(mu ~ conc|strain, data=many_res)
+```
+
+
+
+
+Acknowledgments
+===============
+
+Many thanks to Claudia Seiler for the data set. Many thanks to the R Core Team 
+[@RCore2015] for developing and maintaining **R**. This documentation was written 
+using **knitr** [@knitr2014] and **rmarkdown** [@rmarkdown].
+
+
+References
+==========
+
