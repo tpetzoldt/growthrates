@@ -32,11 +32,12 @@ Download and Installation
 Install and load **R** package devtools:
 
 	install.packages("devtools")
-	library(devtools)
+
 	
 Install package growthrates:
 
-	install_github("tpetzoldt/growthrates")
+	library(devtools)
+	install_github("tpetzoldt/growthrates/pkg")
 
 
 
