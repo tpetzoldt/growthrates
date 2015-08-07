@@ -43,9 +43,9 @@ Install package growthrates:
 Introduction to the main functions
 ----------------------------------
 
-* pdf: https://github.com/tpetzoldt/growthrates/blob/master/inst/doc/Introduction.pdf
+* pdf: https://github.com/tpetzoldt/growthrates/blob/master/pkg/inst/doc/Introduction.pdf
 
-* R markdown (without figures): https://github.com/tpetzoldt/growthrates/blob/master/vignettes/Introduction.Rmd
+* R markdown (without figures): https://github.com/tpetzoldt/growthrates/blob/master/pkg/vignettes/Introduction.Rmd
 
 
 References
