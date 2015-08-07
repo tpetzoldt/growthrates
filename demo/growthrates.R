@@ -1,3 +1,5 @@
+library("growthrates")
+
 data(bactgrowth)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 
