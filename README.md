@@ -1,5 +1,6 @@
-# growthrates
-R Package growthrates:  Estimate Growth Rates from Experimental Data
+# R package growthrates
+
+### Estimate Growth Rates from Experimental Data
 
 The population growth rate is the main indicator of population
 fitness.  This **R** package provides a collection of methods to
@@ -25,7 +26,20 @@ The package can fit data sets of single experiments of complete series
 containing multiple data sets. Included are functions for extracting
 estimates and for plotting. The package supports growth models given
 as numerically solved differential equation models. Multi-core
-computation can be used to speed up fitting of parametric models.
+computation can speed up fitting of parametric models.
+
+Download and Installation
+-----------------------------------------------------------------------------
+
+1. Install and load **R** package devtools:
+
+	install.packages("devtools")
+	library(devtools)
+	
+2. Install package growthrates:
+
+	install_github("growthrates", username="tpetzoldt")
+
 
 
 Introduction to the main functions
