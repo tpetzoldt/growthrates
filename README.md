@@ -31,12 +31,12 @@ computation can speed up fitting of parametric models.
 Download and Installation
 -----------------------------------------------------------------------------
 
-1. Install and load **R** package devtools:
+Install and load **R** package devtools:
 
 	install.packages("devtools")
 	library(devtools)
 	
-2. Install package growthrates:
+Install package growthrates:
 
 	install_github("growthrates", username="tpetzoldt")
 
