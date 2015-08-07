@@ -31,13 +31,13 @@ computation can be used to speed up fitting of parametric models.
 Introduction to the main functions
 ----------------------------------
 
-* html: [vignettes/Introduction.html]
+* html: [https://github.com/tpetzoldt/growthrates/inst/doc/Introduction.html]
 
-* pdf: [vignettes/Introduction.pdf]
+* pdf: [https://github.com/tpetzoldt/growthrates/inst/doc/Introduction.pdf]
 
-* R source code: [vignettes/Introduction.R]
+* R source code: [https://github.com/tpetzoldt/growthrates/inst/doc/Introduction.R]
 
-* R markdown: [vignettes/Introduction.Rmd]
+* R markdown: [https://github.com/tpetzoldt/growthrates/vignettes/Introduction.Rmd]
 
 Note: Only the .Rmd file is frequently updated.
 
