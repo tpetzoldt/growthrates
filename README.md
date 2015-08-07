@@ -38,7 +38,7 @@ Install and load **R** package devtools:
 	
 Install package growthrates:
 
-	install_github("growthrates", username="tpetzoldt")
+	install_github("tpetzoldt/growthrates")
 
 
 
