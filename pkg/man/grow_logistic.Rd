@@ -11,7 +11,7 @@ grow_logistic(time, parms)
 
 \item{parms}{named parameter vector of the logistic growth model with:
 \itemize{
-  \item \code{y0} initial concentration of bacterial cells
+  \item \code{y0} initial value of population measure
   \item \code{mu} intrinsic growth rate (1/time)
   \item \code{K} carrying capacity (max. total concentration of cells)
 }}
@@ -28,10 +28,10 @@ y    <- grow_logistic(time, c(y0=1, mu=0.5, K=10))[,"y"]
 plot(time, y, type="l")
 }
 \seealso{
-Other growth models: \code{\link{grow_expgompertz}},
-  \code{\link{grow_gompertz}};
-  \code{\link{grow_exponential}};
-  \code{\link{grow_richards}}; \code{\link{grow_twostep}},
-  \code{\link{ode_twostep}}
+Other growth.models: \code{\link{grow_exponential}};
+  \code{\link{grow_genlogistic}},
+  \code{\link{grow_twostep}},
+  \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}};
+  \code{\link{grow_gompertz}}; \code{\link{grow_richards}}
 }
 

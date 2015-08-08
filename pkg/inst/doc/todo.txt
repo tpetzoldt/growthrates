@@ -1,0 +1,14 @@
+o streamline documentation
+o interfaces to related packages (Suggests)
+  - growthmodels
+  - grofit
+  - drc
+
+o data conversion functions
+  - plate reader
+  - grofit
+  - ???
+
+o implement ODE models in Fortran
+
+o interactive data brushing 

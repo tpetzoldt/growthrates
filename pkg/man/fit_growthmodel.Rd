@@ -59,7 +59,7 @@ plot(fit1, log="y")
 \seealso{
 \code{link{modFit}} about constrained fitting of models to data
 
-Other fitting functions: \code{\link{all_easylinear}};
+Other fitting.functions: \code{\link{all_easylinear}};
   \code{\link{all_growthmodels}};
   \code{\link{all_splines}}; \code{\link{fit_easylinear}};
   \code{\link{fit_spline}}

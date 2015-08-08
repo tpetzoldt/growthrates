@@ -58,7 +58,7 @@ Journal of Statistical Software, 33(7), 1-21. URL
 \url{http://www.jstatsoft.org/v33/i07/}
 }
 \seealso{
-Other fitting functions: \code{\link{all_easylinear}};
+Other fitting.functions: \code{\link{all_easylinear}};
   \code{\link{all_growthmodels}};
   \code{\link{fit_easylinear}};
   \code{\link{fit_growthmodel}}; \code{\link{fit_spline}}

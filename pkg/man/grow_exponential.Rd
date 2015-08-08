@@ -27,9 +27,10 @@ y <- grow_exponential(time, c(y0=1, mu=0.5))[,"y"]
 plot(time, y, type="l")
 }
 \seealso{
-Other growth models: \code{\link{grow_expgompertz}},
+Other growth.models: \code{\link{grow_genlogistic}},
+  \code{\link{grow_twostep}},
+  \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}};
   \code{\link{grow_gompertz}}; \code{\link{grow_logistic}};
-  \code{\link{grow_richards}}; \code{\link{grow_twostep}},
-  \code{\link{ode_twostep}}
+  \code{\link{grow_richards}}
 }
 
