@@ -11,6 +11,9 @@
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #'   
 #' }
+#' 
+#' @references Tsoularis, A. (2001) Analysis of Logistic Growth Models. 
+#'   Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 #'
 #' @return vector of dependend variable (\code{y})
 #'
