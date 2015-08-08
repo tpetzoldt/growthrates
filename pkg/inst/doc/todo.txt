@@ -4,6 +4,10 @@ o interfaces to related packages (Suggests)
   - grofit
   - drc
 
+o "masking" of parameters during fit
+
+o estimate and plot confidence intervals
+
 o data conversion functions
   - plate reader
   - grofit
