@@ -5,7 +5,7 @@
 #' @param time vector of time steps (independend variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
-#'   \item \code{y0} initial concentration of bacterial cells
+#'   \item \code{y0} initial value of population measure
 #'   \item \code{mu} intrinsic growth rate (1/time)
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #' }

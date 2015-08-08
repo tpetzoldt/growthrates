@@ -5,23 +5,38 @@
 #' @param time vector of time steps (independend variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
+#'   \item \code{y0} initial value of population measure
 #'   \item \code{mu} growth rate (..... different interpretation cfrom exp growth .....)
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
-#'   \item \code{lambda} parameter specifying the lag-phase
-#'   \item \code{shape} shape parameter determining the curvature
+#'   \item \code{beta} shape parameter determining the curvature
 #'   
 #' }
 #'
 #' @return vector of dependend variable (\code{y})
+#' 
+#' @details 
+#' 
+#' The naming of parameters used here follows the convention of Tsoularis 2001
+#' but uses \code{mu} for growtrate and \code{y} for abundance to make them 
+#' more compatible with other growth functions.
+#' 
+#' 
+#' @references 
+#' 
+#' Richards, F. J. (1959) A Flexible Growth Function for Empirical Use. 
+#' Journal of Experimental Botany 10 (2): 290--300.
+#' 
+#' Tsoularis, A. (2001) Analysis of Logistic Growth Models.
+#' Res. Lett. Inf. Math. Sci, (2001) 2, 23--46.
 #'
 #' @examples
 #'
 #' time <- seq(0, 30, length=200)
-#' y    <- grow_richards(time, c(mu=1, K=10, lambda=5, shape=2))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=2))[,"y"]
 #' plot(time, y, type="l")
-#' y    <- grow_richards(time, c(mu=1, K=10, lambda=2, shape=100))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=100))[,"y"]
 #' lines(time, y, col="red")
-#' y    <- grow_richards(time, c(mu=1, K=10, lambda=0, shape=.2))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=.2))[,"y"]
 #' lines(time, y, col="blue")
 #'
 #' @family growth models
@@ -31,8 +46,7 @@
 #'
 grow_richards <- function(time, parms) {
   with(as.list(parms), {
-    y <- K * (1 + shape * exp(1+shape + shape + mu/K*(1+shape)^(1+1/shape) * 
-                                (lambda-time)))^(-1/shape)
+    y <- K*(1-exp(-beta * time)*(1-(y0/K)^-beta))^(-1/beta)
               
     return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
   })
