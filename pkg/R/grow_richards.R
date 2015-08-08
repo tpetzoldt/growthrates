@@ -32,11 +32,11 @@
 #' @examples
 #'
 #' time <- seq(0, 30, length=200)
-#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=2))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=2))[,"y"]
 #' plot(time, y, type="l")
-#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=100))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=100))[,"y"]
 #' lines(time, y, col="red")
-#' y    <- grow_richards(time, c(y0=1, mu=1, K=10, beta=.2))[,"y"]
+#' y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=.2))[,"y"]
 #' lines(time, y, col="blue")
 #'
 #' @family growth models
@@ -46,7 +46,7 @@
 #'
 grow_richards <- function(time, parms) {
   with(as.list(parms), {
-    y <- K*(1-exp(-beta * time)*(1-(y0/K)^-beta))^(-1/beta)
+    y <- K*(1-exp(-beta * mu * time)*(1-(y0/K)^-beta))^(-1/beta)
               
     return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
   })

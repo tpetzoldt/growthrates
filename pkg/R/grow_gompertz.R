@@ -1,16 +1,14 @@
 #' Growth Models According to Gompertz
 #'
 #' Gompertz growth model written as analytical solution of the differential 
-#'   equation system and an expanded version that is more flexible.
+#'   equation system.
 #'
 #' @param time vector of time steps (independend variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
+#'   \item \code{y0} initial value of population measure (e.g. cell concentration)
 #'   \item \code{mu} intrinsic growth rate (1/time)
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
-#'   \item \code{lambda} parameter specifying the lag-phase
-#'   \item \code{alpha} scaling parameter
-#'   \item \code{tshift} shifting parameter
 #'   
 #' }
 #'
@@ -19,11 +17,11 @@
 #' @examples 
 #' 
 #' time <- seq(0, 30, length=200)
-#' y    <- grow_gompertz(time, c(mu=1, K=10, lambda=5))[,"y"]
+#' y    <- grow_gompertz(time, c(y0=1, mu=.2, K=10))[,"y"]
 #' plot(time, y, type="l", ylim=c(0, 20))
 #'
-#' y    <- grow_expgompertz(time, c(mu=2, K=10, lambda=2, alpha=.1, tshift=30))[,"y"]
-#' lines(time, y, col="blue")
+#' y    <- grow_hypgompertz(time, c(y0=1, mu=.2, K=10, gamma=))[,"y"]
+#' plot(time, y, col="blue")
 #'
 #'
 #' @family growth models
@@ -33,17 +31,7 @@
 #'
 grow_gompertz <- function(time, parms) {
   with(as.list(parms), {
-    y <- K * exp(-exp(mu * exp(1)/K * (lambda - time) + 1))
-    return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
-  })
-}
-
-#' @rdname grow_gompertz
-#' @export grow_expgompertz
-#'
-grow_expgompertz <- function(time, parms) {
-  with(as.list(parms), {
-    y <- K * exp(-exp(mu * exp(1)/K * (lambda-time) + 1)) + K * exp(alpha*(time-tshift))
+    y <- K * exp(log(y0 / K) * exp(-mu * time))
     return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
   })
 }
