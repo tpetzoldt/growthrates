@@ -63,6 +63,15 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   fixed.p  <- p[setdiff(parnames, which)]
   parms    <- p[intersect(parnames, which)]
   
+  ## todo: check case lower, upper = 1
+  if (length(fixed.p) & (length(lower > 1))) {
+    lower = lower[intersect(parnames, which)]
+  }
+  if (length(fixed.p) & (length(upper > 1))) {
+    upper = upper[intersect(parnames, which)]
+  }
+  
+  
   if(!length(parms)) stop("No fitting parameters given. 'which' is empty or wrong")
 
   ## create data frame with names matching between model and data
@@ -92,7 +101,9 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   #cat(coef(fit), "r2=", r2, "\n")
 
   #return(list(fit=fit, out = out.fit, coef = coef(fit), obs=obs, RSS=RSS, r2=r2))
+  
+  ## par contains fitted and fixed parameters in the original order
   obj <- new("nonlinear_fit", FUN = FUN, fit = fit, obs = obs, 
-             par = c(parms, fixed.p), rsquared = r2)
+             par = c(parms, fixed.p)[parnames], rsquared = r2)
   invisible(obj)
 }
