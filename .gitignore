@@ -11,3 +11,4 @@ pkg/.Rproj.user/
 # produced vignettes
 pkg/vignettes/*.html
 pkg/vignettes/*.pdf
+.Rproj.user

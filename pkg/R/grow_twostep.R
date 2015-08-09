@@ -34,7 +34,10 @@
 #' out   <- ode(y0, time, ode_twostep, parms)
 #'
 #' plot(out)
-#'
+#' 
+#' o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mu=0.2, K=0.1))
+#' plot(o)
+#' 
 #' @family growth models
 #'
 #' @rdname grow_twostep
@@ -50,11 +53,29 @@ ode_twostep <- function (time, y, parms, ...) {
 }
 
 #' @rdname grow_twostep
-#' @export grow_twostep
+#' @export grow_twostep.R
 #'
-grow_twostep <- function(time, parms, ...) {
+grow_twostep.R <- function(time, parms, ...) {
   ## assign parameters and solve differential equations
   y0    <- parms[c("yi", "ya")]
   parms <- parms[c("kw", "mu", "K")]
   out  <-  ode(y0, time, ode_twostep, parms, ...)
 }
+
+#' @rdname grow_twostep
+#' @export grow_twostep
+#'
+grow_twostep <- function(time, parms, ...) {
+  ## assign parameters and solve differential equations
+  cat("compiled code running\n")
+  y0    <- parms[c("yi", "ya")]
+  parms <- parms[c("kw", "mu", "K")]
+  cat(y0, "\n")
+  cat(parms, "\n")
+  out <- ode(y0, time, func = "d_twostep", parms = parms,
+             dllname = "growthrates",
+             initfunc = "ini_twostep", nout = 2, outnames=c("y", "y_log"), ...)
+  
+}
+
+
