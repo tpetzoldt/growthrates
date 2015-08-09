@@ -74,7 +74,7 @@ grow_twostep <- function(time, parms, ...) {
   #cat(parms, "\n")
   out <- ode(y0, time, func = "d_twostep", parms = parms,
              dllname = "growthrates",
-             initfunc = "ini_twostep", nout = 2, outnames=c("y", "y_log"), ...)
+             initfunc = "ini_twostep", nout = 2, outnames=c("y", "log_y"), ...)
   
 }
 

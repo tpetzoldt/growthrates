@@ -60,7 +60,7 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   if (length(union(parnames, c(parnames, which))) > length(parnames))
     warning("Names in 'which' that do not occur in p")
   
-  noparms  <- p[setdiff(parnames, which)]
+  fixed.p  <- p[setdiff(parnames, which)]
   parms    <- p[intersect(parnames, which)]
   
   if(!length(parms)) stop("No fitting parameters given. 'which' is empty or wrong")
@@ -74,10 +74,10 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
 
   ## fit model; log-transformed data need box constraints
   fit <- modFit(f = cost, p = parms, FUN=FUN, obs=obs, 
-                lower=lower, upper=upper, method=method, noparms = noparms, ...)
+                lower=lower, upper=upper, method=method, fixed.p = fixed.p, ...)
 
   parms <- coef(fit)
-  out.fit <- FUN(obs$time, c(parms, noparms))
+  out.fit <- FUN(obs$time, c(parms, fixed.p))
 
 
   ## Note r2 in case of log-transformed values
@@ -93,6 +93,6 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
 
   #return(list(fit=fit, out = out.fit, coef = coef(fit), obs=obs, RSS=RSS, r2=r2))
   obj <- new("nonlinear_fit", FUN = FUN, fit = fit, obs = obs, 
-             par = c(parms, noparms), rsquared = r2)
+             par = c(parms, fixed.p), rsquared = r2)
   invisible(obj)
 }

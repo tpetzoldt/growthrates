@@ -103,7 +103,7 @@ grow_genlogistic <- function(time, parms, ...) {
   out <- ode(y0, time, func = "d_genlogistic", parms = parms,
              dllname = "growthrates",
              initfunc = "ini_genlogistic", nout = 0, ...)
-  cbind(out, y_log=log(out[,"y"]))
+  cbind(out, log_y = log(out[,"y"]))
 }
 
 

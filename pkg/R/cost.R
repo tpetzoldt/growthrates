@@ -5,7 +5,8 @@
 #'
 #'
 #' @param FUN function of growth model to be fitted
-#' @param p initial parameter vector of the growth model
+#' @param p vector of fitted parameters of the growth model
+#' @param fixed.p vector of fixed  parameters of the growth model
 #' @param \dots additional parameters passed to the optimizer
 #'
 #' @return an object of class \code{modCost}, see \code{\link{modCost}} in 
@@ -14,7 +15,7 @@
 #' @export cost
 #' @keywords internal
 #'
-cost <- function(p, obs, FUN, ...) {
-  out <- FUN(obs$time, p)
+cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
+  out <- FUN(obs$time, c(p, fixed.p))
   modCost(out, obs, weight = "none", ...)
 }
