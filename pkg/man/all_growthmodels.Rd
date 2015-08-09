@@ -5,13 +5,13 @@
 \title{Fit Nonlinear Growth Models to Data Frame}
 \usage{
 all_growthmodels(FUN, p, df, criteria, time = "time", y = "value",
-  lower = -Inf, upper = Inf, method = "Marq", transform = c("none",
-  "log"), ..., ncores = detectCores(logical = FALSE))
+  lower = -Inf, upper = Inf, which = names(p), method = "Marq",
+  transform = c("none", "log"), ..., ncores = detectCores(logical = FALSE))
 }
 \arguments{
 \item{FUN}{function of growth model to be fitted}
 
-\item{p}{initial parameter vector of the growth model}
+\item{p}{named vector of start parameters and initial values of the growth model}
 
 \item{df}{data frame of observational data}
 
@@ -24,6 +24,8 @@ all_growthmodels(FUN, p, df, criteria, time = "time", y = "value",
 \item{lower}{lower bound of the parameter vector}
 
 \item{upper}{upper bound of the parameter vector}
+
+\item{which}{vector of parameter names that are to be fitted}
 
 \item{method}{character vector specifying the optimization algorithm}
 

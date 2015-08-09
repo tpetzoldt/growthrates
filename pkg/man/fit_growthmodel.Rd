@@ -5,12 +5,12 @@
 \title{Fit Nonlinear Parametric Growth Model}
 \usage{
 fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
-  method = "Marq", transform = c("none", "log"), ...)
+  which = names(p), method = "Marq", transform = c("none", "log"), ...)
 }
 \arguments{
 \item{FUN}{function of growth model to be fitted}
 
-\item{p}{initial parameter vector of the growth model}
+\item{p}{named vector of start parameters and initial values of the growth model}
 
 \item{time}{vector of independend variable}
 
@@ -19,6 +19,8 @@ fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
 \item{lower}{lower bound of the parameter vector (optional)}
 
 \item{upper}{upper bound of the parameter vector (optional)}
+
+\item{which}{vector of parameter names that are to be fitted}
 
 \item{method}{character vector specifying the optimization algorithm}
 

@@ -4,11 +4,12 @@
 #'
 #'
 #' @param FUN function of growth model to be fitted
-#' @param p initial parameter vector of the growth model
+#' @param p named vector of start parameters and initial values of the growth model
 #' @param time vector of independend variable
 #' @param y vector of dependend variable (concentration of organisms)
 #' @param lower lower bound of the parameter vector (optional)
 #' @param upper upper bound of the parameter vector (optional)
+#' @param which vector of parameter names that are to be fitted
 #' @param method character vector specifying the optimization algorithm
 #' @param transform fit model to non-transformed or log-transformed data
 #' @param \dots additional parameters passed to the optimizer
@@ -46,11 +47,23 @@
 #' @export fit_growthmodel
 #'
 fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
+                            which = names(p), 
                             method="Marq", transform=c("none", "log"), ...) {
 
   transform <- match.arg(transform)
   
   if (any(duplicated(time))) stop("x variable must not contain duplicated values")
+  
+  ## split parameter vector in fitted and non-fitted
+  parnames <- names(p)
+  
+  if (length(union(parnames, c(parnames, which))) > length(parnames))
+    warning("Names in 'which' that do not occur in p")
+  
+  noparms  <- p[setdiff(parnames, which)]
+  parms    <- p[intersect(parnames, which)]
+  
+  if(!length(parms)) stop("No fitting parameters given. 'which' is empty or wrong")
 
   ## create data frame with names matching between model and data
   if (transform == "log") {
@@ -60,10 +73,11 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   }
 
   ## fit model; log-transformed data need box constraints
-  fit <- modFit(f = cost, p = p, FUN=FUN, obs=obs, lower=lower, upper=upper, method=method, ...)
+  fit <- modFit(f = cost, p = parms, FUN=FUN, obs=obs, 
+                lower=lower, upper=upper, method=method, noparms = noparms, ...)
 
   parms <- coef(fit)
-  out.fit <- FUN(obs$time, p)
+  out.fit <- FUN(obs$time, c(parms, noparms))
 
 
   ## Note r2 in case of log-transformed values
@@ -78,6 +92,7 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   #cat(coef(fit), "r2=", r2, "\n")
 
   #return(list(fit=fit, out = out.fit, coef = coef(fit), obs=obs, RSS=RSS, r2=r2))
-  obj <- new("nonlinear_fit", FUN=FUN, fit=fit, obs=obs, rsquared=r2)
+  obj <- new("nonlinear_fit", FUN = FUN, fit = fit, obs = obs, 
+             par = c(parms, noparms), rsquared = r2)
   invisible(obj)
 }

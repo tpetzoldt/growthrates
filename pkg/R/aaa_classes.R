@@ -49,7 +49,8 @@ setClass("growthrates_fit",
 #' 
 setClass("nonlinear_fit",
          representation(
-           fit = "modFit"
+           fit = "modFit",
+           par = "numeric"   ## fitted and fixed parms
          ),
          contains = "growthrates_fit"
 )

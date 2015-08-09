@@ -8,9 +8,10 @@
 #' @param y character vector with name of dependent variable
 #' @param criteria vector of criteria defining subsets in the data frame 
 #' @param FUN function of growth model to be fitted
-#' @param p initial parameter vector of the growth model
+#' @param p named vector of start parameters and initial values of the growth model
 #' @param lower lower bound of the parameter vector
 #' @param upper upper bound of the parameter vector
+#' @param which vector of parameter names that are to be fitted
 #' @param method character vector specifying the optimization algorithm
 #' @param transform fit model to non-transformed or log-transformed data
 #' @param \dots additional parameters passed to the optimizer
@@ -53,6 +54,7 @@
 #'
 all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value", 
                              lower = -Inf, upper = Inf,
+                             which = names(p), 
                              method = "Marq", 
                              transform = c("none", "log"), ..., 
                              ncores = detectCores(logical = FALSE)) {
@@ -62,22 +64,22 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   ## trycatch??
   if (ncores == 1) {
     fits <- lapply(splitted.data, 
-      function(tmp) fit_growthmodel(FUN, p, time=tmp[,time], y=tmp[,y],
-        lower = lower, upper = upper,
+      function(tmp) fit_growthmodel(FUN, p, time = tmp[,time], y = tmp[,y],
+        lower = lower, upper = upper, which = which,
         method = method, transform = transform, ...
       ))
   } else {
     cl <- makeCluster(getOption("cl.cores", ncores))
     on.exit(stopCluster(cl))
 
-    parfun <- function(X, FUNx, p, time, y, lower, upper, method, transform, ...) {
+    parfun <- function(X, FUNx, p, time, y, lower, upper, which, method, transform, ...) {
       #require(growthrates) # not necessary
       
       time <- X[,time] 
       y    <- X[,y]
       
       fit_growthmodel(FUNx, p = p, time = time, y = y,
-                      lower = lower, upper = upper, 
+                      lower = lower, upper = upper, which = which,
                       method = method, transform = transform, ...)
                       
     }
@@ -85,7 +87,7 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
     fits <- parLapply(cl=cl, X=splitted.data, fun=parfun, 
                       FUNx = FUN, 
                       p = p, time = time, y=y, 
-                      lower = lower, upper = upper, 
+                      lower = lower, upper = upper, which = which,
                       method = method, transform = transform, ...)
   }
   
