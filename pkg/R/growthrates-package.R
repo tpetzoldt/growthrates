@@ -70,7 +70,8 @@
 #' lines(fit2, col="green")
 #' lines(fit3, col="red")
 #' 
-#' 
+#' @useDynLib growthrates
+#'  
 #' @import stats graphics methods FME lattice
 #' @importFrom deSolve ode
 #' @import parallel

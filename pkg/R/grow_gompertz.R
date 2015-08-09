@@ -23,9 +23,6 @@
 #' y    <- grow_gompertz(time, c(y0=1, mu=.2, K=10))[,"y"]
 #' plot(time, y, type="l", ylim=c(0, 20))
 #'
-#' y    <- grow_hypgompertz(time, c(y0=1, mu=.2, K=10, gamma=))[,"y"]
-#' plot(time, y, col="blue")
-#'
 #'
 #' @family growth models
 #'

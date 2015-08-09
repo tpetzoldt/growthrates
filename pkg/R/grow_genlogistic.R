@@ -12,9 +12,10 @@
 #'      \item \code{alpha, beta, gamma} parameters determining the shape of growth.
 #'        Setting all values to one returns the ordinary logistic function. 
 #'   }
-#' @param \dots placeholder for additional parameters (for user-extended versions of this function)
+#' @param \dots additional parameters passed to the \code{ode}-function.
 #'
-#' @return matrix of class deSolve containing the simulation outputs
+#' @return matrix containing the simulation outputs. The return value of 
+#'   \code{ode_twostep} is also of class \code{deSolve}.
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
@@ -29,6 +30,10 @@
 #'   The differential equation is solved numerically, where function 
 #'   \code{ode_genlogistic} is the differential equation, while
 #'   \code{grow_genlogistic} runs a numerical simulation over time.
+#'   
+#'   The default version \code{grow_genlogistic} is run directly as compiled code,
+#'   whereas the R versions \code{ode_logistic} and \code{grow_genlogistic.R} are 
+#'   provided for testing by the user.
 #'   
 #'  @references 
 #'  
@@ -51,32 +56,54 @@
 #' out7 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.3, K=10, alpha=1, beta=1, gamma=.5))
 #' plot(out, out2, out3, out4, out5, out6, out7)
 #' 
+#' ## growth with lag (cf. log_y)
 #' plot(ode(y0, time, ode_genlogistic, parms = c(mu=1, K=10, alpha=2, beta=.8, gamma=5)))
+#' 
+#' ## compiled and R function
+#' o1 <- grow_genlogistic(time, c(y0=unname(y0), parms))
+#' o2 <- grow_genlogistic.R(time, c(y0=unname(y0), parms))
+#' 
+#' par(mfrow=c(1,2))
+#' matplot(o1[,1], o1[,2:3], type="l", xlab="time", ylab="y, y_log", main="C function")
+#' matplot(o2, main="R function")
 #'
 #' @family growth models
 #'
-#' @rdname grow_twostep
-#' @export ode_twostep
+#' @rdname grow_genlogistic
+#' @export ode_genlogistic
 #'
-
-
-
-
 ode_genlogistic <- function (time, y, parms, ...) {
   ## the differential equations
   with(as.list(c(parms)), {
     dy <-  mu * y^alpha * (1-(y/K)^beta)^gamma
-    list(c(dy), log_y = log(unname(y)))
+    list(dy, log_y = log(unname(y)))
   })
 }
 
-#' @rdname grow_twostep
-#' @export grow_twostep
+#' @rdname grow_genlogistic
+#' @export grow_genlogistic.R
+#'
+grow_genlogistic.R <- function(time, parms, ...) {
+  ## assign parameters and solve differential equations
+  y0    <- c(y = unname(parms[c("y0")]))
+  parms <- parms[c("mu", "K", "alpha", "beta", "gamma")]
+  out  <-  as.matrix(ode(y0, time, ode_genlogistic, parms, ...))
+}
+
+#' @rdname grow_genlogistic
+#' @export grow_genlogistic
 #'
 grow_genlogistic <- function(time, parms, ...) {
   ## assign parameters and solve differential equations
-  y0    <- parms[c("y0")]
+  #cat("compiled code running\n")
+  y0    <- c(y = unname(parms[c("y0")]))
   parms <- parms[c("mu", "K", "alpha", "beta", "gamma")]
-  out  <-  ode(y0, time, ode_genlogistic, parms, ...)
+  #cat(y0, "\n")
+  #cat(parms, "\n")
+  out <- ode(y0, time, func = "d_genlogistic", parms = parms,
+             dllname = "growthrates",
+             initfunc = "ini_genlogistic", nout = 0, ...)
+  cbind(out, y_log=log(out[,"y"]))
 }
+
 
