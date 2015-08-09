@@ -28,9 +28,6 @@ Gompertz growth model written as analytical solution of the differential
 time <- seq(0, 30, length=200)
 y    <- grow_gompertz(time, c(y0=1, mu=.2, K=10))[,"y"]
 plot(time, y, type="l", ylim=c(0, 20))
-
-y    <- grow_hypgompertz(time, c(y0=1, mu=.2, K=10, gamma=))[,"y"]
-plot(time, y, col="blue")
 }
 \references{
 Tsoularis, A. (2001) Analysis of Logistic Growth Models.
@@ -39,8 +36,10 @@ Tsoularis, A. (2001) Analysis of Logistic Growth Models.
 \seealso{
 Other growth.models: \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_twostep}},
-  \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}};
-  \code{\link{grow_logistic}}; \code{\link{grow_richards}}
+  \code{\link{grow_genlogistic.R}},
+  \code{\link{ode_genlogistic}};
+  \code{\link{grow_logistic}}; \code{\link{grow_richards}};
+  \code{\link{grow_twostep}}, \code{\link{grow_twostep.R}},
+  \code{\link{ode_twostep}}
 }
 

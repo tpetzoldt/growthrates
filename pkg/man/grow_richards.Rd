@@ -48,8 +48,10 @@ Res. Lett. Inf. Math. Sci, (2001) 2, 23--46.
 \seealso{
 Other growth.models: \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_twostep}},
-  \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}};
-  \code{\link{grow_gompertz}}; \code{\link{grow_logistic}}
+  \code{\link{grow_genlogistic.R}},
+  \code{\link{ode_genlogistic}};
+  \code{\link{grow_gompertz}}; \code{\link{grow_logistic}};
+  \code{\link{grow_twostep}}, \code{\link{grow_twostep.R}},
+  \code{\link{ode_twostep}}
 }
 

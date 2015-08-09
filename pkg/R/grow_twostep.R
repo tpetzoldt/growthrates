@@ -67,11 +67,11 @@ grow_twostep.R <- function(time, parms, ...) {
 #'
 grow_twostep <- function(time, parms, ...) {
   ## assign parameters and solve differential equations
-  cat("compiled code running\n")
+  #cat("compiled code running\n")
   y0    <- parms[c("yi", "ya")]
   parms <- parms[c("kw", "mu", "K")]
-  cat(y0, "\n")
-  cat(parms, "\n")
+  #cat(y0, "\n")
+  #cat(parms, "\n")
   out <- ode(y0, time, func = "d_twostep", parms = parms,
              dllname = "growthrates",
              initfunc = "ini_twostep", nout = 2, outnames=c("y", "y_log"), ...)

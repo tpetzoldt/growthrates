@@ -7,8 +7,8 @@ static double parms[3];
 
 /* define 5 parameters as macros: mu, K, alpha, beta, gamma */
 #define kw    parms[0]
-#define mu    parms[0]
-#define K     parms[1]
+#define mu    parms[1]
+#define K     parms[2]
 
 
 /* initializer */
