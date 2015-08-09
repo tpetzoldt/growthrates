@@ -4,12 +4,14 @@
 \alias{cost}
 \title{Cost Function for Nonlinear Fits}
 \usage{
-cost(p, obs, FUN, ...)
+cost(p, obs, FUN, fixed.p = NULL, ...)
 }
 \arguments{
-\item{p}{initial parameter vector of the growth model}
+\item{p}{vector of fitted parameters of the growth model}
 
 \item{FUN}{function of growth model to be fitted}
+
+\item{fixed.p}{vector of fixed  parameters of the growth model}
 
 \item{\dots}{additional parameters passed to the optimizer}
 }

@@ -65,7 +65,8 @@ setMethod("obs", "growthrates_fit",
 #'  
 setMethod("coef", "growthrates_fit",
           function(object, ...) {
-            coef(object@fit, ...)
+            #coef(object@fit, ...)
+            object@par
           }
 )
 
@@ -163,7 +164,7 @@ setMethod("summary", "smooth.spline_fit",
 #' @rdname methods
 #' @exportMethod df.residual
 #'  
-setMethod("df.residual", "smooth.splines_fit",
+setMethod("df.residual", "smooth.spline_fit",
           function(object, ...) {
             object@fit$df
           }

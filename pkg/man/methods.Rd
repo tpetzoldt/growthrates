@@ -10,7 +10,7 @@
 \alias{deviance,multiple_fits-method}
 \alias{deviance,smooth.spline_fit-method}
 \alias{df.residual,growthrates_fit-method}
-\alias{df.residual,smooth.splines_fit-method}
+\alias{df.residual,smooth.spline_fit-method}
 \alias{obs,growthrates_fit-method}
 \alias{residuals,growthrates_fit-method}
 \alias{residuals,multiple_fits-method}
@@ -46,7 +46,7 @@
 
 \S4method{summary}{smooth.spline_fit}(object, cov = TRUE, ...)
 
-\S4method{df.residual}{smooth.splines_fit}(object, ...)
+\S4method{df.residual}{smooth.spline_fit}(object, ...)
 
 \S4method{deviance}{smooth.spline_fit}(object, ...)
 
