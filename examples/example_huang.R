@@ -7,20 +7,24 @@ dat <- splitted.data[[7]]
 
 p     <- c(y0=0.02, mu=.1, K=0.1, alpha=1.5, lambda=3)
 
-lower   <- c(y0=0.001, mu=1e-6, K=0.01, alpha=0.01, lambda=0)
-upper   <- c(y0=0.1, mu=1, K=0.5, alpha=20, lambda=10)
+p   <- c(y0=0.03, mu=.1, K=0.1, alpha=1, lambda=2)
+
+lower   <- c(y0=0.001, mu=1e-2, K=0.005, alpha=0.01, lambda=0)
+upper   <- c(y0=0.1, mu=1, K=0.5, alpha=20, lambda=15)
 
 fit <- fit_growthmodel(FUN=grow_huang, p=p, time=dat$time, y=dat$value,
-                       lower = lower,
+                       lower = lower, upper = upper,
                        control=list(nprint=TRUE), 
-                       #which=c("mu", "K", "alpha", "lambda"), # ??
+                       which=c("y0", "mu", "K", "lambda"),
                        method="Marq")
 
 plot(fit)
 
 
-L <- all_growthmodels(grow_huang, p=p, df=bactgrowth, criteria = c("strain", "conc", "replicate"),
-                      lower = lower, upper=upper, method="Marq")
+L <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      #which=c("y0", "mu", "K"),
+                      lower = lower, upper=upper, method="Marq", log="y")
 
 par(mfrow=c(3,3))
 plot(L)

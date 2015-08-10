@@ -70,8 +70,7 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   if (length(fixed.p) & (length(upper > 1))) {
     upper = upper[intersect(parnames, which)]
   }
-  
-  
+
   if(!length(parms)) stop("No fitting parameters given. 'which' is empty or wrong")
 
   ## create data frame with names matching between model and data
