@@ -1,10 +1,12 @@
 o streamline documentation
+
 o interfaces to related packages (Suggests)
-  - growthmodels
+  - growthmodels (generic function interface)
   - grofit
   - drc
 
 o "masking" of parameters during fit
+--> done
 
 o estimate and plot confidence intervals
 
@@ -13,6 +15,7 @@ o data conversion functions
   - grofit
   - ???
 
-o implement ODE models in Fortran
+o implement ODE models in C or Fortran
+--> done
 
 o interactive data brushing 
