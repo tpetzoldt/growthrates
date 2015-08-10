@@ -46,8 +46,8 @@
 grow_huang <- function(time, parms) {
   with(as.list(parms), {
     B <- time + 1/alpha * log((1+exp(-alpha * (time - lambda)))/(1 + exp(alpha * lambda)))
-    y <- y0 + K - log(exp(y0) + (exp(K) - exp(y0)) * exp(-mu * B))
+    log_y <- y0 + K - log(exp(y0) + (exp(K) - exp(y0)) * exp(-mu * B))
               
-    return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
+    return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
   })
 }
