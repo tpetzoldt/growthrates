@@ -1,3 +1,6 @@
+## The Huang model fits very well in most cases
+##   but parameters correlated, so that "mu" did not make much sense
+
 library("growthrates")
 library("lattice")
 
