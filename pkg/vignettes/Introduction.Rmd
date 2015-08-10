@@ -213,7 +213,7 @@ lines(fit2, col="red")
 ### Differential equation models
 
 
-In the example above, growth is described as a two-step process of
+In the two-step model above, growth is described as a two-step process of
 adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
 
 $$\frac{dy_i}{dt} = - k_w \cdot y_i $$

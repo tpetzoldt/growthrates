@@ -56,7 +56,8 @@ o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mu=0.2, K=0.1))
 plot(o)
 }
 \seealso{
-Other growth models: \code{\link{grow_exponential}};
+Other growth models: \code{\link{grow_baranyi}};
+  \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
   \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};

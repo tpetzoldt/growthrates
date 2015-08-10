@@ -43,7 +43,8 @@ Belehdradek-type model for evaluating the effect of temperature on growth rate.
 Food Microbiology , 2011, 28, 770 - 776
 }
 \seealso{
-Other growth models: \code{\link{grow_exponential}};
+Other growth models: \code{\link{grow_baranyi}};
+  \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
   \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
