@@ -29,12 +29,20 @@ lines(fit3, col="red")
 sfit <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"),
   spar=0.5)
 
-## extract and compare results
+## initial parameters
 p <- c(coef(fit1), K = max(dat$value))
+
+## avoid negative parameters
+lower = c(y0=0, mu=0, K=0)
+
+## fit all models
 pfit <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
+  lower = lower, 
   criteria=c("strain", "conc", "replicate"), ncores=1)
 
+## extract and compare results
 results1 <- results(sfit)
 results2 <- results(pfit)
 
 plot(results1$mu, results2$mu, xlab="smooth splines", ylab="logistic")
+abline(a=0,b=1)

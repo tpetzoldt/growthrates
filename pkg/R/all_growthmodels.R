@@ -34,6 +34,9 @@
 #' data(bactgrowth)
 #' splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 #' 
+#' ## show which experiments are in splitted.data
+#' names(dat)
+#' 
 #' ## get table from single experiment
 #' dat <- splitted.data[["D:0:1"]]
 #' 
@@ -42,8 +45,15 @@
 #' fit1 <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"),
 #'   spar=0.5)
 #' 
+#' ## initial parameters
 #' p <- c(coef(fit0), K = max(dat$value))
-#' fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth, 
+#' 
+#' ## avoid negative parameters
+#' lower = c(y0=0, mu=0, K=0)
+#' 
+#' ## fit all models
+#' fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
+#'   lower = lower, 
 #'   criteria=c("strain", "conc", "replicate"), ncores=1)
 #' 
 #' results1 <- results(fit1) 
