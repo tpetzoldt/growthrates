@@ -121,8 +121,8 @@ data(bactgrowth)
 xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
 ```
 
-Fit Models to Individual Data Sets
-----------------------------------
+Fitting Models to Individual Data Sets
+--------------------------------------
 
 
 Single data sets can be analysed with functions `fit_easylinear`, `fit_growthmodels` 
@@ -210,8 +210,8 @@ lines(fit2, col="red")
 
 ```
 
-Differential equation models
-----------------------------
+### Differential equation models
+
 
 In the example above, growth is described as a two-step process of
 adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
@@ -232,8 +232,8 @@ using a differential solver from package **deSolve**. Here both, the model and
 the solver are running in compiled code (C resp. Fortran), but it is of course 
 also possible to define user-specified models in R code.
 
-Selective parameter fitting
----------------------------
+### Selective parameter fitting
+
 
 Despite the fact that the above model is solved as a differential equation, 
 the relatively high number of parameters may need special care, too. In such cases,
@@ -281,15 +281,15 @@ coef(res)
 
 
 
-Fit Multiple Data Sets
-======================
+Fiting Multiple Data Sets
+=========================
 
 Fiting multiple data sets at once is possible with functions `all_easyliner`,
-`all_growthrates` and `alls_splines'. Usage is similar for all methods, whereas
+`all_growthrates` and `alls_splines`. Usage is similar for all methods, whereas
 the parameters are analogous to the single-fit methods. Both, the easy growth 
 rates and the smooting splines method are quite robust. In contrast to this,
-parametric fits with function `all_growthrates` need more care and more 
-computational power. 
+parametric fits with function `all_growthrates` need more care and a little bit 
+more computational power. 
 
 Special emphasis should be given to the selection of good starting points. In 
 addition, it is possible to select an alternative optimization algorithm, to enable
@@ -300,7 +300,9 @@ power and may therefore be advantageous for basic research.
 Nonlinear optimization is done with parallelized code, so multi-core computers 
 can speed up computation.
 
-It can be a good idea, to use a nonparametric approach like the smoothing spline method to get a first impression and, potentially, to derive start parameters for a parametric model.
+It can be a good idea, to use a nonparametric approach like the smoothing spline 
+method to get a first impression and, potentially, to derive start parameters for 
+a parametric model.
 
 In the following, we show an example with the smoothing spline method:
 
@@ -313,6 +315,12 @@ par(mfrow=c(12,6))
 par(mar=c(2.5,4,2,1))
 plot(many_fits)
 ```
+
+In this example, smoothness is set to an average value (`spar = 0.5`). 
+Other values between zero and one will result in different degrees of smoothing. 
+If `spar` is omitted, leave-one-out cross-validation is used to determine 
+smoothness automatically.
+
 
 Finally
 =======
