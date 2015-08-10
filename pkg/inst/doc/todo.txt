@@ -19,3 +19,5 @@ o implement ODE models in C or Fortran
 --> done
 
 o interactive data brushing 
+
+o enable "trace" for all optimizers

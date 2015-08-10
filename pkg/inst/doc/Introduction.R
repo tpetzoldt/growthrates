@@ -48,7 +48,7 @@ lines(fitx, pch="+", col="blue")
 
 ## ---- fig.width=7--------------------------------------------------------
 
-p     <- c(y0=0.01, mu=0.03, K=0.1)
+p     <- c(y0=0.01, mu=0.2, K=0.1)
 lower <- c(y0=1e-6, mu=0,   K=0)
 upper <- c(y0=0.05, mu=5,   K=0.5)
 
@@ -56,7 +56,7 @@ fit1 <- fit_growthmodel(FUN=grow_logistic, p=p, dat$time, dat$value,
                         lower=lower, upper=upper)
 
 
-p     <- c(yi=0.01, ya=0.01, kw=0.1,	mu=0.2, K=0.1)
+p     <- c(yi=0.02, ya=0.001, kw=0.1,	mu=0.2, K=0.1)
 lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
 upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
 
@@ -75,6 +75,15 @@ lines(fit2, col="red")
 plot(fit1, log="y")
 lines(fit2, col="red")
 
+
+## ------------------------------------------------------------------------
+fit3 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
+                        lower=lower, upper=upper, which=c("kw", "mu", "K"))
+
+summary(fit3)
+
+coef(fit3)
+plot(fit3)
 
 ## ---- fig.width=7--------------------------------------------------------
 

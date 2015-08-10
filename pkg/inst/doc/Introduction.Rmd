@@ -2,7 +2,7 @@
 title: "Estimation of Growth Rates with package `growthrates`"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 bibliography: growthrates.bib
 vignette: >
   %\VignetteIndexEntry{Estimation of Growth Rates}
@@ -121,8 +121,8 @@ data(bactgrowth)
 xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
 ```
 
-Fit Models to Individual Data Sets
-----------------------------------
+Fitting Models to Individual Data Sets
+--------------------------------------
 
 
 Single data sets can be analysed with functions `fit_easylinear`, `fit_growthmodels` 
@@ -181,7 +181,7 @@ Parametric Nonlinear Growth Models
 
 ```{r, fig.width=7}
 
-p     <- c(y0=0.01, mu=0.03, K=0.1)
+p     <- c(y0=0.01, mu=0.2, K=0.1)
 lower <- c(y0=1e-6, mu=0,   K=0)
 upper <- c(y0=0.05, mu=5,   K=0.5)
 
@@ -189,7 +189,7 @@ fit1 <- fit_growthmodel(FUN=grow_logistic, p=p, dat$time, dat$value,
                         lower=lower, upper=upper)
 
 
-p     <- c(yi=0.01, ya=0.01, kw=0.1,	mu=0.2, K=0.1)
+p     <- c(yi=0.02, ya=0.001, kw=0.1,	mu=0.2, K=0.1)
 lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
 upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
 
@@ -210,6 +210,53 @@ lines(fit2, col="red")
 
 ```
 
+### Differential equation models
+
+
+In the example above, growth is described as a two-step process of
+adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
+
+$$\frac{dy_i}{dt} = - k_w \cdot y_i $$
+
+$$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu \cdot 
+  y_a \cdot \left(1 - \frac{K}{y_a + y_i} \right)$$
+
+with amount of total organisms $y = y_i + y_a$, the parameters adaption rate $k_w$, 
+intrinsic growth rate $\mu$, carrying capacity $K$. The initial abundance (normally $y_0$) 
+is splitted in two separate values, $y_{i,0}$ and $y_{a,0}$ that are by default 
+also fitted.
+
+The underlying ordinary differential equation (ODE) model has no simple 
+analytical solution and is therefore solved numerically 
+using a differential solver from package **deSolve**. Here both, the model and 
+the solver are running in compiled code (C resp. Fortran), but it is of course 
+also possible to define user-specified models in R code.
+
+### Selective parameter fitting
+
+
+Despite the fact that the above model is solved as a differential equation, 
+the relatively high number of parameters may need special care, too. In such cases,
+package growthrates allows to fit subsets of parameters while setting 
+the others to fixed values. In the following, this is done by specifying a subset
+without initial abundances $y_a$ and $y_i$ in `which`:
+
+```{r}
+fit3 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
+                        lower=lower, upper=upper, which=c("kw", "mu", "K"))
+
+summary(fit3)
+
+coef(fit3)
+plot(fit3)
+```
+
+We see that `summary` shows only the fitted parameters whereas `coef` contains 
+the full set.
+
+Both, start values for the fitted parameters and fixed values of the other 
+parameters need to be available in the start parameter vector `p`, while
+`upper` and `lower` bounds for the fixed parameters can be omitted.
 
 
 Nonparametric Smoothing Splines
@@ -234,15 +281,15 @@ coef(res)
 
 
 
-Fit Multiple Data Sets
-======================
+Fiting Multiple Data Sets
+=========================
 
 Fiting multiple data sets at once is possible with functions `all_easyliner`,
-`all_growthrates` and `alls_splines'. Usage is similar for all methods, whereas
+`all_growthrates` and `alls_splines`. Usage is similar for all methods, whereas
 the parameters are analogous to the single-fit methods. Both, the easy growth 
 rates and the smooting splines method are quite robust. In contrast to this,
-parametric fits with function `all_growthrates` need more care and more 
-computational power. 
+parametric fits with function `all_growthrates` need more care and a little bit 
+more computational power. 
 
 Special emphasis should be given to the selection of good starting points. In 
 addition, it is possible to select an alternative optimization algorithm, to enable
@@ -253,7 +300,9 @@ power and may therefore be advantageous for basic research.
 Nonlinear optimization is done with parallelized code, so multi-core computers 
 can speed up computation.
 
-It can be a good idea, to use a nonparametric approach like the smoothing spline method to get a first impression and, potentially, to derive start parameters for a parametric model.
+It can be a good idea, to use a nonparametric approach like the smoothing spline 
+method to get a first impression and, potentially, to derive start parameters for 
+a parametric model.
 
 In the following, we show an example with the smoothing spline method:
 
@@ -267,6 +316,12 @@ par(mar=c(2.5,4,2,1))
 plot(many_fits)
 ```
 
+In this example, smoothness is set to an average value (`spar = 0.5`). 
+Other values between zero and one will result in different degrees of smoothing. 
+If `spar` is omitted, leave-one-out cross-validation is used to determine 
+smoothness automatically.
+
+
 Finally
 =======
 
@@ -277,6 +332,9 @@ many_res <- results(many_fits)
 xyplot(mu ~ conc|strain, data=many_res)
 ```
 
+Describing the observed dependency can again be described with parametric or nonparametric
+a functional response curves, which may then be done directly in R or by using a specialized
+package for dose-response curves, for example package **drc** [@Ritz2005].
 
 
 
