@@ -45,4 +45,4 @@ results1 <- results(sfit)
 results2 <- results(pfit)
 
 plot(results1$mu, results2$mu, xlab="smooth splines", ylab="logistic")
-abline(a=0,b=1)
+abline(a=0, b=1, lty="dashed")
