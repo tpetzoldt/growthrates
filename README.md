@@ -15,7 +15,9 @@ The package contains basically three methods:
 * fit a linear regression to a subset of data with the steepest
   log-linear increase (a method, similar to Hall et al., 2013),
 
-* fit parametric nonlinear models to the complete data set,
+* fit parametric nonlinear models to the complete data set, where the
+  model functions can be given either in closed form or as numerically
+  solved (system of) differential equation(s),
 
 * use maximum of the 1st derivative of a smoothing spline with
   log-transformed y-values (similar to Kahm et al., 2010).
