@@ -79,7 +79,7 @@ plot(results1$mu, results2$mu, xlab="smooth splines", ylab="logistic")
 }
 }
 \seealso{
-Other fitting.functions: \code{\link{all_easylinear}};
+Other fitting functions: \code{\link{all_easylinear}};
   \code{\link{all_splines}}; \code{\link{fit_easylinear}};
   \code{\link{fit_growthmodel}}; \code{\link{fit_spline}}
 }
