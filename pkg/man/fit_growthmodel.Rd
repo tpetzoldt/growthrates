@@ -5,7 +5,8 @@
 \title{Fit Nonlinear Parametric Growth Model}
 \usage{
 fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
-  which = names(p), method = "Marq", transform = c("none", "log"), ...)
+  which = names(p), method = "Marq", transform = c("none", "log"),
+  control = NULL, ...)
 }
 \arguments{
 \item{FUN}{function of growth model to be fitted}
@@ -26,6 +27,8 @@ fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
 
 \item{transform}{fit model to non-transformed or log-transformed data}
 
+\item{control}{A list of control parameters for the optimizers. See ‘Details’.}
+
 \item{\dots}{additional parameters passed to the optimizer}
 }
 \value{
@@ -33,6 +36,13 @@ list with parameters of the fit
 }
 \description{
 Determine maximum growth rates by fitting nonlinear models
+}
+\details{
+This function calls \code{modFit} from package \pkg{FME}.
+Syntax of control parameters and available options may differ, depending
+on the optimizer used, except \code{control=list(trace=...)} that switches
+  tracing on and off in all methods and is either \code{TRUE}, or \code{FALSE},
+  or an integer value like 0, 1, 2, 3, depending on the optimizer.
 }
 \examples{
 data(bactgrowth)

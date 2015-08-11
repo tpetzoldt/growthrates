@@ -12,9 +12,16 @@
 #' @param which vector of parameter names that are to be fitted
 #' @param method character vector specifying the optimization algorithm
 #' @param transform fit model to non-transformed or log-transformed data
+#' @param control A list of control parameters for the optimizers. See ‘Details’.
 #' @param \dots additional parameters passed to the optimizer
 #'
 #' @return list with parameters of the fit
+#'
+#' @details This function calls \code{modFit} from package \pkg{FME}.
+#' Syntax of control parameters and available options may differ, depending
+#' on the optimizer used, except \code{control=list(trace=...)} that switches 
+#'   tracing on and off in all methods and is either \code{TRUE}, or \code{FALSE},
+#'   or an integer value like 0, 1, 2, 3, depending on the optimizer.
 #'
 #' @family fitting functions
 #' @seealso \code{link{modFit}} about constrained fitting of models to data 
@@ -48,7 +55,8 @@
 #'
 fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
                             which = names(p), 
-                            method="Marq", transform=c("none", "log"), ...) {
+                            method = "Marq", transform=c("none", "log"), 
+                            control = NULL, ...) {
 
   transform <- match.arg(transform)
   
@@ -79,10 +87,36 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   } else {
     obs <- data.frame(time = time, y = y)
   }
-
+  
+  ## handle trace. this control parameter is named inconsistently between the
+  ## methods, so we try to make this unique. other controls are even more diverse
+  
+  ## optim-methods: "Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"
+  ## "trace" as integer: leave as is
+  
+  ## nlminb, "Port": trace as integer: leave as is
+  
+  ## nlm, "Newton": print.level as integer
+  if (method %in% c("Newton"))
+    control <- renameListElement(control, "trace", "print.level") 
+  
+  ## nls.lm, "Marq": nprint as integer
+  if (method %in% c("Marq"))
+    control <- renameListElement(control, "trace", "nprint") 
+  
+  ## minqa, "bobyqa": iprint can be 0, 1, 2, 3
+  if (method %in% c("bobyqa"))
+    control <- renameListElement(control, "trace", "iprint") 
+  
+  ## FME, "Pseudo": verbose = TRUE/FALSE
+  if (method %in% c("Pseudo"))
+    control <- renameListElement(control, "trace", "verbose") 
+  
   ## fit model; log-transformed data need box constraints
-  fit <- modFit(f = cost, p = parms, FUN=FUN, obs=obs, 
-                lower=lower, upper=upper, method=method, fixed.p = fixed.p, ...)
+  ## todo: redefine functions to allow unconstrained log-transformed parameters
+  fit <- modFit(f = cost, p = parms, FUN = FUN, obs = obs, 
+                lower = lower, upper = upper, 
+                method = method, fixed.p = fixed.p, control = control, ...)
 
   parms <- coef(fit)
   out.fit <- FUN(obs$time, c(parms, fixed.p))

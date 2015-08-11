@@ -56,3 +56,4 @@ coef(fit3)
 plot(fit1)
 lines(fit2, col="blue")
 lines(fit3, col="red")
+

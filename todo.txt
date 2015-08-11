@@ -24,5 +24,6 @@ o estimate and plot confidence intervals
 o interactive data brushing 
 
 o enable "trace" for all optimizers
+--> done
 
 o streamline documentation

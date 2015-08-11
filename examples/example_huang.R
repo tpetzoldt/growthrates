@@ -27,7 +27,7 @@ upper   <- c(y0=0.1,   mu=1,    K=0.5,   alpha=200,  lambda=20)
 ## fit model
 fit <- fit_growthmodel(FUN=grow_huang, p=p, time=dat$time, y=dat$value,
                        lower = lower, upper = upper,
-                       control=list(nprint=TRUE))
+                       control=list(trace=TRUE))
 
 ## coefficients and plot
 coef(fit)

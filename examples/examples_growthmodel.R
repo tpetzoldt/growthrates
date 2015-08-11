@@ -25,12 +25,12 @@ lower <- c(y0=1e-6, mu=0,   K=0)
 upper <- c(y0=0.05, mu=5,   K=0.5)
 
 fit3 <- fit_growthmodel(FUN=grow_logistic, dat$time, dat$value, p=p,
-                        control=list(nprint=TRUE),
+                        control=list(trace=TRUE),
                         lower=lower, upper=upper)
 
 fit4 <- fit_growthmodel(FUN=grow_logistic, dat$time, dat$value, p=p, 
                         lower=lower, upper=upper, 
-                        transform="log", control=list(nprint=TRUE))
+                        transform="log", control=list(trace=TRUE))
 
 
 ## show results graphically
