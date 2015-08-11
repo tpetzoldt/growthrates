@@ -137,6 +137,6 @@ plot(many_baranyi2)
 ## ---- fig.width=7, fig.height=3------------------------------------------
 many_spline_res <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
-xyplot(mu ~ conc|strain, data=many_spline_res, layout=c(3, 1))
-xyplot(mu ~ conc|strain, data=many_baranyi2_res, layout=c(3, 1))
+xyplot(mu ~ log(conc+1)|strain, data=many_spline_res, layout=c(3, 1))
+xyplot(mu ~ log(conc+1)|strain, data=many_baranyi2_res, layout=c(3, 1))
 
