@@ -70,7 +70,7 @@ setMethod("plot", c("nonlinear_fit", "missing"),
                      plot(obs, log=log, ...)
                      times <- seq(min(obs$time), max(obs$time), length.out=200)
                      sim <- x@FUN(times, coef(x))
-                     lines(sim[,"time"], sim[,"y"], ...)
+                     lines(sim[,"time"], sim[,"y"], col="blue", ...)
                    },
                    diagnostics = {
                      opar <- par(no.readonly = TRUE)

@@ -1,4 +1,4 @@
-## Test of the Baranyi Growth model, cf. Baranyi, L (1995), Food Microbiology
+## Test of the Huang Growth model, cf. Huang, L (2011), Food Microbiology
 ##
 ## Note: the original model formulation works in log space, so that
 ##       y(t), y_0 and y_max are all given as natural log.
@@ -19,13 +19,13 @@ splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[23]]
 
 ## initial parameters and bocx constraints
-p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
+p   <- c(y0=0.03, mu=.1, K=0.1, alpha=1, lambda=2)
 
-lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
-upper   <- c(y0=0.1,   mu=1,    K=0.5,   h0=10)
+lower   <- c(y0=0.001, mu=1e-2, K=0.005, alpha=-100, lambda=-20)
+upper   <- c(y0=0.1,   mu=1,    K=0.5,   alpha=200,  lambda=20)
 
 ## fit model
-fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
+fit <- fit_growthmodel(FUN=grow_huang, p=p, time=dat$time, y=dat$value,
                        lower = lower, upper = upper,
                        control=list(nprint=TRUE))
 
@@ -35,26 +35,43 @@ plot(fit)
 
 
 ## fit growth models to all data using (log transformed residuals)
-L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+L <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       lower = lower, upper=upper, 
                       log="y")
 
 
-## fit growth models to all data using (log transformed residuals)
-p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
-L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
-                      which=c("y0", "mu", "K"),
-                      lower = lower, upper=upper)
 
 
 par(mfrow=c(4,3))
-par(mar=c(2.5,4,2,1))
 plot(L, log="y")
 
 par(mfrow=c(4,3))
 plot(L)
 
+
 res <- results(L)
-xyplot(mu ~ log(conc + 1)| strain, data=res, layout=c(3,1))
+
+xyplot(lambda ~ log(conc + 1)| strain, data=res)
+xyplot(alpha ~ log(conc + 1)| strain, data=res)
+
+## and most importantly, the max growth rates
+xyplot(mu ~ log(conc + 1)| strain, data=res)
+
+## 2nd approach: fit selected parameters, fix the remaining (here: alpha)
+## alpha = 4 from the IPMP tutorial
+p   <- c(y0=0.03, mu=.1, K=0.1, alpha=4, lambda=2)
+L2 <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      which=c("y0", "mu", "K", "lambda"),
+                      lower = lower, upper=upper, 
+                      method="Marq", log="y")
+
+
+par(mfrow=c(4,3))
+plot(L2)
+
+res2 <- results(L2)
+xyplot(mu ~ log(conc + 1)| strain, data=res2)
+
+plot(res$mu, res2$mu)

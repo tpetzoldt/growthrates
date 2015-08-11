@@ -16,7 +16,7 @@ str(bactgrowth)
 ## ----eval=TRUE-----------------------------------------------------------
 head(bactgrowth)
 
-## ---- fig.width=7, fig.height=14-----------------------------------------
+## ---- fig.width=10, fig.height=14----------------------------------------
 library(lattice)
 data(bactgrowth)
 xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
@@ -101,14 +101,42 @@ coef(res)
 
 
 ## ----fig.width=14, fig.height=20-----------------------------------------
-many_fits <- all_splines(bactgrowth, 
-                  criteria=c("strain", "conc", "replicate"), spar=0.5)
+many_spline_fits <- all_splines(bactgrowth, 
+                    criteria=c("strain", "conc", "replicate"), spar=0.5)
 
 par(mfrow=c(12,6))
 par(mar=c(2.5,4,2,1))
-plot(many_fits)
+plot(many_spline_fits)
 
-## ---- fig.width=7, fig.height=4------------------------------------------
-many_res <- results(many_fits)
-xyplot(mu ~ conc|strain, data=many_res)
+## ------------------------------------------------------------------------
+## initial parameters and bocx constraints
+p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
+
+lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
+upper   <- c(y0=0.1,   mu=1,    K=0.5,   h0=10)
+
+## fit growth models to all data using log transformed residuals
+many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      lower = lower, upper=upper, 
+                      log="y")
+
+## ------------------------------------------------------------------------
+## fit growth models to all data using log transformed residuals
+p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      which=c("y0", "mu", "K"),
+                      lower = lower, upper=upper, log="y")
+
+## ----fig.width=14, fig.height=20-----------------------------------------
+par(mfrow=c(12,6))
+par(mar=c(2.5,4,2,1))
+plot(many_baranyi2)
+
+## ---- fig.width=7, fig.height=3------------------------------------------
+many_spline_res <- results(many_spline_fits)
+many_baranyi2_res <- results(many_baranyi2)
+xyplot(mu ~ conc|strain, data=many_spline_res, layout=c(3, 1))
+xyplot(mu ~ conc|strain, data=many_baranyi2_res, layout=c(3, 1))
 

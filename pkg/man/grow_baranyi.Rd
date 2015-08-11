@@ -23,7 +23,8 @@ grow_baranyi(time, parms)
 vector of dependend variable (\code{y})
 }
 \description{
-Baranyi growth model ......
+The growth model of Baranyi and Roberts (1995) written as analytical solution
+of the system of differential equations.
 }
 \examples{
 time <- seq(0, 30, length=200)

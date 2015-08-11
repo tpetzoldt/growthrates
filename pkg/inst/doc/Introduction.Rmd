@@ -115,14 +115,14 @@ Inspect the Data
 
 Plot raw data:
 
-```{r, fig.width=7, fig.height=14}
+```{r, fig.width=10, fig.height=14}
 library(lattice)
 data(bactgrowth)
 xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
 ```
 
-Fitting Models to Individual Data Sets
---------------------------------------
+Fitting Models to Single Data Sets
+----------------------------------
 
 
 Single data sets can be analysed with functions `fit_easylinear`, `fit_growthmodels` 
@@ -213,7 +213,7 @@ lines(fit2, col="red")
 ### Differential equation models
 
 
-In the example above, growth is described as a two-step process of
+In the two-step model above, growth is described as a two-step process of
 adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
 
 $$\frac{dy_i}{dt} = - k_w \cdot y_i $$
@@ -300,7 +300,10 @@ power and may therefore be advantageous for basic research.
 Nonlinear optimization is done with parallelized code, so multi-core computers 
 can speed up computation.
 
-It can be a good idea, to use a nonparametric approach like the smoothing spline 
+Fitting smoothing splines to multiple data
+------------------------------------------
+
+It can be a good idea, to start with a nonparametric approach like the smoothing spline 
 method to get a first impression and, potentially, to derive start parameters for 
 a parametric model.
 
@@ -308,12 +311,12 @@ In the following, we show an example with the smoothing spline method:
 
 
 ```{r fig.width=14, fig.height=20}
-many_fits <- all_splines(bactgrowth, 
-                  criteria=c("strain", "conc", "replicate"), spar=0.5)
+many_spline_fits <- all_splines(bactgrowth, 
+                    criteria=c("strain", "conc", "replicate"), spar=0.5)
 
 par(mfrow=c(12,6))
 par(mar=c(2.5,4,2,1))
-plot(many_fits)
+plot(many_spline_fits)
 ```
 
 In this example, smoothness is set to an average value (`spar = 0.5`). 
@@ -321,19 +324,71 @@ Other values between zero and one will result in different degrees of smoothing.
 If `spar` is omitted, leave-one-out cross-validation is used to determine 
 smoothness automatically.
 
+Fitting parametric models to multiple data
+------------------------------------------
+
+In the following, let's fit a Baranyi growth model to the data [@Baranyi1995], a
+model that considers the lag phase as as a period to build up ``critical substances''
+needed for growth. The model is based on a system of two differential equations
+for which under some simplifying assumptions an analytical solution was presented.
+
+
+In a first attempt, we fit all parameters of the model: 
+
+```{r}
+## initial parameters and bocx constraints
+p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
+
+lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
+upper   <- c(y0=0.1,   mu=1,    K=0.5,   h0=10)
+
+## fit growth models to all data using log transformed residuals
+many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      lower = lower, upper=upper, 
+                      log="y")
+```
+
+whereas in a second trial, `h0`is fixed to a common value to avoid that `h0` 
+``consumes'' parts of the effect because of interdependency between `h0`and `mu`:
+
+```{r}
+## fit growth models to all data using log transformed residuals
+p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      which=c("y0", "mu", "K"),
+                      lower = lower, upper=upper, log="y")
+```
+
+The result of the second fit is shown in the following figure. It may be noted 
+that even better fits are possible with models with more parameters, 
+e.g. @Huang2011, again at the cost that the effect of antibiotics is distributed
+over several correlated parameters instead of an effect of the maximum growth rate.
+
+```{r fig.width=14, fig.height=20}
+par(mfrow=c(12,6))
+par(mar=c(2.5,4,2,1))
+plot(many_baranyi2)
+```
+
+
 
 Finally
 =======
 
-Dependency of growth rate on antibiotic concentration for the three strains:
+Dependency of growth rate on antibiotic concentration for the three strains 
+with the spline fit and the Baranyi model:
 
-```{r, fig.width=7, fig.height=4}
-many_res <- results(many_fits)
-xyplot(mu ~ conc|strain, data=many_res)
+```{r, fig.width=7, fig.height=3}
+many_spline_res <- results(many_spline_fits)
+many_baranyi2_res <- results(many_baranyi2)
+xyplot(mu ~ conc|strain, data=many_spline_res, layout=c(3, 1))
+xyplot(mu ~ conc|strain, data=many_baranyi2_res, layout=c(3, 1))
 ```
 
-Describing the observed dependency can again be described with parametric or nonparametric
-a functional response curves, which may then be done directly in R or by using a specialized
+Describing the observed dependency can again be approached with nonparametric 
+methods or parametric functional response curves, which may be done by using a specialized
 package for dose-response curves, for example package **drc** [@Ritz2005].
 
 
