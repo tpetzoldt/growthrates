@@ -84,13 +84,13 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
     stop("length of start parameters does not match number of samples")
   
   
-  ## trycatch??
+  
   
   ## work in progress: p (and upper and lower) can be data frames
   ## todo: implement this for single and multi core; 
   ## and allow data frames instead of lists
   if (ncores == 1) {
-    if (is.list(p)){  # todo: better check
+    if (is.list(p)){
       fits <- lapply(seq_along(splitted.data),
              FUN = function(i) {
                cat(i, "\n")
@@ -116,23 +116,36 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
     cl <- makeCluster(getOption("cl.cores", ncores))
     on.exit(stopCluster(cl))
 
-    parfun <- function(X, FUNx, p, time, y, lower, upper, which, method, transform, ...) {
-      #require(growthrates) # not necessary
+    parfun <- function(X, FUNx, splitted.data = splitted.data,
+                       p, time, y, lower, upper, which, method, transform, ...) {
+      cat(p[[X]], "\n")
       
-      time <- X[,time] 
-      y    <- X[,y]
+      time <- splitted.data[[X]][ ,time]
+      y    <- splitted.data[[X]][ ,y]
+      p    <- p[[X]]
       
-      fit_growthmodel(FUNx, p = p, time = time, y = y,
-                      lower = lower, upper = upper, which = which,
+      fit_growthmodel(FUNx, 
+                      p = p, time = time, y = y,
+                      lower = lower, upper = upper, #which = which,
                       method = method, transform = transform, ...)
-                      
     }
     
-    fits <- parLapply(cl=cl, X=splitted.data, fun=parfun, 
-                      FUNx = FUN, 
-                      p = p, time = time, y=y, 
+    #fits <- parLapply(cl=cl, X=splitted.data, fun=parfun, 
+    #                  FUNx = FUN, 
+    #                  p = p, time = time, y=y, 
+    #                  lower = lower, upper = upper, which = which,
+    #                  method = method, transform = transform, ...)
+    
+    X <- seq_along(splitted.data)
+    X <- 1:72
+    
+    fits <- parLapply(cl=cl, X=X, fun=parfun,
+                      FUNx = FUN,
+                      splitted.data = splitted.data,
+                      p=p, time = time, y = y,
                       lower = lower, upper = upper, which = which,
-                      method = method, transform = transform, ...)
+                      method = method, transform = transform, ...
+                     )
   }
   
   new("multiple_nonlinear_fits", fits = fits, criteria = criteria)
