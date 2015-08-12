@@ -109,7 +109,7 @@ par(mar=c(2.5,4,2,1))
 plot(many_spline_fits)
 
 ## ------------------------------------------------------------------------
-## initial parameters and bocx constraints
+## initial parameters and box constraints
 p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
 
 lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
@@ -124,10 +124,12 @@ many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth,
 ## ------------------------------------------------------------------------
 ## fit growth models to all data using log transformed residuals
 p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
-many_baranyi2 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+system.time(
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=coef(many_baranyi1), df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       which=c("y0", "mu", "K"),
                       lower = lower, upper=upper, log="y")
+)
 
 ## ----fig.width=14, fig.height=20-----------------------------------------
 par(mfrow=c(12,6))

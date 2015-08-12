@@ -82,7 +82,14 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   
   ndata <- length(splitted.data)
   
-  ## convert to a list of the rows
+  ## convert p to data frame if matrix
+  if (is.matrix(p)) {
+    p <- as.data.frame(p)
+    ## fix empty "which" if p was a matrix
+    if (is.null(which)) which <- names(p)
+  }
+
+  ## convert p to a list of the rows
   if (is.data.frame(p)) {
     p <- apply(p, 1, list)
     p <- lapply(p, unlist)
@@ -157,7 +164,10 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
                       method = method, transform = transform, ...
                      )
   }
+  ## names got lost during computation, so re-assign names to fits
+  names(fits) <- names(splitted.data)
   
+  ## create S4 object
   new("multiple_nonlinear_fits", fits = fits, criteria = criteria)
 }
 
