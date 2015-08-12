@@ -69,8 +69,17 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
                              transform = c("none", "log"), ..., 
                              ncores = detectCores(logical = FALSE)) {
   
+  ## check arguments -----------------------------------------------------------
+  
+  if (!is.data.frame(df)) stop("df must be a data frame")
+  if (!is.character(criteria)) stop("criteria must be a character vector")
+  if (!all(criteria %in% names(bactgrowth))) stop("all criteria must be column names of df")
+  if (!is.function(FUN)) stop("FUN needs to be a valid growth model")
+  if (!is.numericOrNull(lower) & is.numericOrNull(upper))
+    stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
+  
   splitted.data <- multisplit(df, criteria)
-  ## check arguments
+  
   ndata <- length(splitted.data)
   
   ## convert to a list of the rows
@@ -83,18 +92,22 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   if (!(npar) %in% c(1, ndata)) 
     stop("length of start parameters does not match number of samples")
   
+  p1 <- if (npar == 1) p else p[[1]]
+  if (!all(which %in% names(p1))) stop("parameter names from 'which' not found in p")
   
+  nc.exist <- detectCores()
+  if (ncores > nc.exist) 
+    warning(ncores, " cores requested but computer has only ", nc.exist)
   
+  ## ... more checking, when necessary
   
-  ## work in progress: p (and upper and lower) can be data frames
-  ## todo: implement this for single and multi core; 
-  ## and allow data frames instead of lists
+  ## start of computation ------------------------------------------------------
+  
   if (ncores == 1) {
+    ## single core, p is vector with n parameter sets
     if (is.list(p)){
       fits <- lapply(seq_along(splitted.data),
              FUN = function(i) {
-               cat(i, "\n")
-               print(p[[i]])
                fit_growthmodel(FUN, p=p[[i]], 
                                time = splitted.data[[i]][,time], 
                                y = splitted.data[[i]][,y],
@@ -104,6 +117,7 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
       )  
       
     } else {
+      ## single core, p is vector with 1 parameter set
       fits <- lapply(splitted.data, 
         function(tmp) fit_growthmodel(FUN, p, time = tmp[,time], y = tmp[,y],
           lower = lower, upper = upper, which = which,
@@ -113,33 +127,29 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
     
     
   } else {
+    ## multi core, p is vector with 1 or n parameter sets
     cl <- makeCluster(getOption("cl.cores", ncores))
     on.exit(stopCluster(cl))
 
+    ## function that is to be run on the cores
     parfun <- function(X, FUNx, splitted.data = splitted.data,
                        p, time, y, lower, upper, which, method, transform, ...) {
-      cat(p[[X]], "\n")
       
       time <- splitted.data[[X]][ ,time]
       y    <- splitted.data[[X]][ ,y]
-      p    <- p[[X]]
+      p1    <- if (is.numeric(p)) p else p[[X]] # 1 or n parameter sets
       
       fit_growthmodel(FUNx, 
-                      p = p, time = time, y = y,
+                      p = p1, time = time, y = y,
                       lower = lower, upper = upper, #which = which,
                       method = method, transform = transform, ...)
     }
-    
-    #fits <- parLapply(cl=cl, X=splitted.data, fun=parfun, 
-    #                  FUNx = FUN, 
-    #                  p = p, time = time, y=y, 
-    #                  lower = lower, upper = upper, which = which,
-    #                  method = method, transform = transform, ...)
-    
+
+    ## vector of indizes of the data list    
     X <- seq_along(splitted.data)
-    X <- 1:72
     
-    fits <- parLapply(cl=cl, X=X, fun=parfun,
+    ## multicore controller
+    fits <- parLapply(cl = cl, X = X, fun = parfun,
                       FUNx = FUN,
                       splitted.data = splitted.data,
                       p=p, time = time, y = y,

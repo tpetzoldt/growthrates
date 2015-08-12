@@ -4,3 +4,7 @@ renameListElement <- function(L, old, new) {
   names(L)[match(old, names(L))] <- new
   L
 }
+
+is.numericOrNull <- function(x) {
+  is.numeric(x) | is.null(x)
+}
