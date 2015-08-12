@@ -70,14 +70,48 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
                              ncores = detectCores(logical = FALSE)) {
   
   splitted.data <- multisplit(df, criteria)
+  ## check arguments
+  ndata <- length(splitted.data)
+  
+  ## convert to a list of the rows
+  if (is.data.frame(p)) {
+    p <- apply(p, 1, list)
+    p <- lapply(p, unlist)
+    
+  }
+  npar  <- if (is.numeric(p)) 1 else (length(p))
+  if (!(npar) %in% c(1, ndata)) 
+    stop("length of start parameters does not match number of samples")
+  
   
   ## trycatch??
+  
+  ## work in progress: p (and upper and lower) can be data frames
+  ## todo: implement this for single and multi core; 
+  ## and allow data frames instead of lists
   if (ncores == 1) {
-    fits <- lapply(splitted.data, 
-      function(tmp) fit_growthmodel(FUN, p, time = tmp[,time], y = tmp[,y],
-        lower = lower, upper = upper, which = which,
-        method = method, transform = transform, ...
+    if (is.list(p)){  # todo: better check
+      fits <- lapply(seq_along(splitted.data),
+             FUN = function(i) {
+               cat(i, "\n")
+               print(p[[i]])
+               fit_growthmodel(FUN, p=p[[i]], 
+                               time = splitted.data[[i]][,time], 
+                               y = splitted.data[[i]][,y],
+                               lower = lower, upper = upper, #which = which,
+                               method = method, transform = transform, ...
+               )}
+      )  
+      
+    } else {
+      fits <- lapply(splitted.data, 
+        function(tmp) fit_growthmodel(FUN, p, time = tmp[,time], y = tmp[,y],
+          lower = lower, upper = upper, which = which,
+          method = method, transform = transform, ...
       ))
+    }
+    
+    
   } else {
     cl <- makeCluster(getOption("cl.cores", ncores))
     on.exit(stopCluster(cl))
@@ -101,7 +135,6 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
                       method = method, transform = transform, ...)
   }
   
-  ## change type of the object    
   new("multiple_nonlinear_fits", fits = fits, criteria = criteria)
 }
 
