@@ -4,13 +4,8 @@ o implement ODE models in C or Fortran
 o "masking" of parameters during fit
 --> done
 
-o data conversion functions
-  - plate reader
-  - grofit --> see examples/import_grofit_data.R
-
-o direct use of log-transformed parameters y0 and ymax = K
-
 o multiple start parameters, as lists (or data frames)
+--> done
 
 o interfaces to related packages (Suggests)
   - growthmodels (generic function interface)
@@ -18,12 +13,20 @@ o interfaces to related packages (Suggests)
   - drc
 
 o more argument checking
-
-o estimate and plot confidence intervals
-
-o interactive data brushing 
+--> work in progress
 
 o enable "trace" for all optimizers
 --> done
 
 o streamline documentation
+--> work in progress
+
+o data conversion functions
+  - plate reader
+  - grofit --> see examples/import_grofit_data.R
+
+o direct use of log-transformed parameters y0 and ymax = K
+
+o estimate and plot confidence intervals
+
+o interactive data brushing 

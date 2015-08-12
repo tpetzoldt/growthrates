@@ -6,12 +6,12 @@
 #' @param time vector of time steps (independend variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
-#'   \item \code{y0} initial value of population measure
+#'   \item \code{y0} initial value of abundance
 #'   \item \code{mu} maximum growth rate (1/time)
-#'   \item \code{K} carrying capacity (max. total concentration of cells)
+#'   \item \code{K} carrying capacity (max. abundance)
 #'   \item \code{h0} parameter specifying the initial physiological state of 
-#'     the cells and in consequence the lag phase 
-#'     (h0 approx max growth rate * lag phase).
+#'     organisms (e.g. cells) and in consequence the lag phase 
+#'     (h0 = max growth rate * lag phase).
 #' }
 #'
 #' @return vector of dependend variable (\code{y})
@@ -50,3 +50,9 @@ grow_baranyi <- function(time, parms) {
     return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
   })
 }
+## attach names of parameters as attributes
+attr(grow_baranyi, "pnames") <- c("y0", "mu", "K", "h0")
+class(grow_baranyi) <- "growthmodel"
+
+## idea for future extension
+#attr(grow_baranyi, "pnames") <- list(c("y0", "mu", "K", "h0"), c("log_y0", "mu", "log_K", "h0"))

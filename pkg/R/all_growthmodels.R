@@ -93,8 +93,8 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   if (is.data.frame(p)) {
     p <- apply(p, 1, list)
     p <- lapply(p, unlist)
-    
   }
+
   npar  <- if (is.numeric(p)) 1 else (length(p))
   if (!(npar) %in% c(1, ndata)) 
     stop("length of start parameters does not match number of samples")
