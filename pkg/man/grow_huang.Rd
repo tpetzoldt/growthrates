@@ -9,7 +9,7 @@ grow_huang(time, parms)
 \arguments{
 \item{time}{vector of time steps (independend variable)}
 
-\item{parms}{named parameter vector of the logistic growth model with:
+\item{parms}{named parameter vector of Huang's growth model with:
 \itemize{
   \item \code{y0} initial value of population measure
   \item \code{mu} maximum growth rate (1/time)
@@ -20,15 +20,15 @@ grow_huang(time, parms)
 }}
 }
 \value{
-vector of dependend variable (\code{y})
+vector of dependend variable (\code{y}) and its log-transformed
+  values (\code{log_y}).
 }
 \description{
-Huangs growth model ......
+Huangs growth model written as analytical solution of the differential equations.
 }
 \details{
-The naming of parameters used here follows the convention of Tsoularis 2001
-but uses \code{mu} for growtrate and \code{y} for abundance to make them
-more compatible with other growth functions.
+In contrast to the original publication, all measures of population abundance
+(y, y0, K) are given as untransformed values. They are not log-transformed.
 }
 \examples{
 time <- seq(0, 30, length=200)
@@ -46,10 +46,9 @@ Food Microbiology , 2011, 28, 770 - 776
 Other growth models: \code{\link{grow_baranyi}};
   \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
   \code{\link{grow_gompertz}}; \code{\link{grow_logistic}};
   \code{\link{grow_richards}}; \code{\link{grow_twostep}},
-  \code{\link{grow_twostep.R}}, \code{\link{ode_twostep}}
+  \code{\link{ode_twostep}}
 }
 

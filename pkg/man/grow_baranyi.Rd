@@ -9,7 +9,7 @@ grow_baranyi(time, parms)
 \arguments{
 \item{time}{vector of time steps (independend variable)}
 
-\item{parms}{named parameter vector of the logistic growth model with:
+\item{parms}{named parameter vector of the Baranyi growth model with:
 \itemize{
   \item \code{y0} initial value of abundance
   \item \code{mu} maximum growth rate (1/time)
@@ -20,7 +20,8 @@ grow_baranyi(time, parms)
 }}
 }
 \value{
-vector of dependend variable (\code{y})
+vector of dependend variable (\code{y}) and its log-transformed
+  values (\code{log_y}).
 }
 \description{
 The growth model of Baranyi and Roberts (1995) written as analytical solution
@@ -43,11 +44,9 @@ International Journal of Food Microbiology, 26, 199-218.
 \seealso{
 Other growth models: \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
   \code{\link{grow_gompertz}}; \code{\link{grow_huang}};
   \code{\link{grow_logistic}}; \code{\link{grow_richards}};
-  \code{\link{grow_twostep}}, \code{\link{grow_twostep.R}},
-  \code{\link{ode_twostep}}
+  \code{\link{grow_twostep}}, \code{\link{ode_twostep}}
 }
 

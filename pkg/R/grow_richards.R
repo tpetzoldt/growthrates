@@ -3,16 +3,18 @@
 #' Richards growth model written as analytical solution of the differential equation.
 #'
 #' @param time vector of time steps (independend variable)
-#' @param parms named parameter vector of the logistic growth model with:
+#' @param parms named parameter vector of the Richards growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of population measure
-#'   \item \code{mu} growth rate (..... different interpretation cfrom exp growth .....)
+#'   \item \code{mu} maximum growth rate (note different interpretation compared 
+#'     to exponential growth)
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #'   \item \code{beta} shape parameter determining the curvature
 #'   
 #' }
 #'
-#' @return vector of dependend variable (\code{y})
+#' @return vector of dependend variable (\code{y}) and its log-transformed
+#'   values (\code{log_y}).
 #' 
 #' @details 
 #' 
@@ -51,3 +53,6 @@ grow_richards <- function(time, parms) {
     return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
   })
 }
+## attach names of parameters as attributes
+attr(grow_richards, "pnames") <- c("y0", "mu", "K", "beta")
+class(grow_richards) <- c("growthmodel", "function")

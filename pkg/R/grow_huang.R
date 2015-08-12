@@ -1,9 +1,9 @@
 #' Growth Model According to Huang
 #'
-#' Huangs growth model ......
+#' Huangs growth model written as analytical solution of the differential equations.
 #'
 #' @param time vector of time steps (independend variable)
-#' @param parms named parameter vector of the logistic growth model with:
+#' @param parms named parameter vector of Huang's growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of population measure
 #'   \item \code{mu} maximum growth rate (1/time)
@@ -13,14 +13,13 @@
 #'   
 #' }
 #'
-#' @return vector of dependend variable (\code{y})
+#' @return vector of dependend variable (\code{y}) and its log-transformed
+#'   values (\code{log_y}).
 #' 
 #' @details 
 #' 
-#' The naming of parameters used here follows the convention of Tsoularis 2001
-#' but uses \code{mu} for growtrate and \code{y} for abundance to make them 
-#' more compatible with other growth functions.
-#' 
+#' In contrast to the original publication, all measures of population abundance
+#' (y, y0, K) are given as untransformed values. They are not log-transformed.
 #' 
 #' @references 
 #' 
@@ -41,7 +40,7 @@
 #' @family growth models
 #'
 #' @rdname grow_huang
-#' @export grow_huang
+#' @export
 #'
 grow_huang <- function(time, parms) {
   with(as.list(parms), {
@@ -52,3 +51,6 @@ grow_huang <- function(time, parms) {
     return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
   })
 }
+## attach names of parameters as attributes
+attr(grow_huang, "pnames") <- c("y0", "mu", "K", "alpha", "lambda")
+class(grow_huang) <- c("growthmodel", "function")

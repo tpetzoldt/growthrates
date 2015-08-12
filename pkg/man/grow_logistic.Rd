@@ -17,7 +17,8 @@ grow_logistic(time, parms)
 }}
 }
 \value{
-vector of dependend variable (\code{y})
+vector of dependend variable (\code{y}) and its log-transformed
+  values (\code{log_y}).
 }
 \description{
 Classical logistic growth model written as analytical solution of the differential equation.
@@ -31,10 +32,9 @@ plot(time, y, type="l")
 Other growth models: \code{\link{grow_baranyi}};
   \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
   \code{\link{grow_gompertz}}; \code{\link{grow_huang}};
   \code{\link{grow_richards}}; \code{\link{grow_twostep}},
-  \code{\link{grow_twostep.R}}, \code{\link{ode_twostep}}
+  \code{\link{ode_twostep}}
 }
 

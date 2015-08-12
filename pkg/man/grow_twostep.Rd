@@ -2,32 +2,37 @@
 % Please edit documentation in R/grow_twostep.R
 \name{ode_twostep}
 \alias{grow_twostep}
-\alias{grow_twostep.R}
 \alias{ode_twostep}
 \title{Twostep Growth Model}
 \usage{
 ode_twostep(time, y, parms, ...)
 
-grow_twostep.R(time, parms, ...)
-
 grow_twostep(time, parms, ...)
 }
 \arguments{
-\item{time}{vector of simulation time steps}
+\item{time}{actual time (for the ode) resp. vector of simulation time steps}
 
-\item{y}{named vector with initial values of the system (yi, ya: concentration of inactive resp. active cells)}
+\item{y}{named vector with state of the system
+(yi, ya: abundance of inactive and active organisms, e.g.
+concentration of inactive resp. active cells)}
 
-\item{parms}{parameters of the growth model
+\item{parms}{parameters of the two-step growth model
 \itemize{
+   \item \code{yi, ya} initial abundance of active and inactive organisms
    \item \code{kw} activation (``wakeup'') constant (1/time)
-   \item \code{mu}  intrinsic growth rate (1/time)
-   \item \code{K}  carrying capacity (max. total concentration of cells)
+   \item \code{mu} maximum growth rate (1/time)
+   \item \code{K}  carrying capacity (max. abundance)
 }}
 
 \item{\dots}{placeholder for additional parameters (for user-extended versions of this function)}
 }
 \value{
-matrix of class deSolve containing the simulation outputs
+For \code{ode_twostep}: matrix containing the simulation outputs.
+The return value of has also class \code{deSolve}.
+
+For \code{grow_twostep}: vector of dependend variable (\code{y}) and
+  its log-transformed values (\code{log_y}).
+
 
 \itemize{
 \item \code{time} time of the simulation
@@ -38,11 +43,12 @@ matrix of class deSolve containing the simulation outputs
 }
 }
 \description{
-System of two differential equations describing bacterial growth as two-step process of activation (or adaptation) and growth.
+System of two differential equations describing bacterial growth as two-step
+process of activation (or adaptation) and growth.
 }
 \details{
-Function \code{ode_twostep} is the system of differential equations, whereas
-  \code{grow_twostep} runs a numerical simulation over time.
+Function \code{ode_twostep} is the system of differential equations,
+whereas \code{grow_twostep} runs a numerical simulation over time.
 }
 \examples{
 time <- seq(0, 30, length=200)
@@ -59,7 +65,6 @@ plot(o)
 Other growth models: \code{\link{grow_baranyi}};
   \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
   \code{\link{grow_gompertz}}; \code{\link{grow_huang}};
   \code{\link{grow_logistic}}; \code{\link{grow_richards}}

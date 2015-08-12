@@ -1,19 +1,30 @@
 #' Twostep Growth Model
 #'
-#' System of two differential equations describing bacterial growth as two-step process of activation (or adaptation) and growth.
+#' System of two differential equations describing bacterial growth as two-step 
+#' process of activation (or adaptation) and growth.
 #'
 #'
-#' @param time vector of simulation time steps
-#' @param y named vector with initial values of the system (yi, ya: concentration of inactive resp. active cells)
-#' @param parms parameters of the growth model
+#' @param time actual time (for the ode) resp. vector of simulation time steps
+#' @param y named vector with state of the system 
+#'   (yi, ya: abundance of inactive and active organisms, e.g. 
+#'   concentration of inactive resp. active cells)
+#' @param parms parameters of the two-step growth model
 #'   \itemize{
+#'      \item \code{yi, ya} initial abundance of active and inactive organisms
 #'      \item \code{kw} activation (``wakeup'') constant (1/time)
-#'      \item \code{mu}  intrinsic growth rate (1/time)
-#'      \item \code{K}  carrying capacity (max. total concentration of cells)
+#'      \item \code{mu} maximum growth rate (1/time)
+#'      \item \code{K}  carrying capacity (max. abundance)
 #'   }
 #' @param \dots placeholder for additional parameters (for user-extended versions of this function)
 #'
-#' @return matrix of class deSolve containing the simulation outputs
+#' @return
+#' 
+#' For \code{ode_twostep}: matrix containing the simulation outputs. 
+#' The return value of has also class \code{deSolve}.
+#'   
+#' For \code{grow_twostep}: vector of dependend variable (\code{y}) and 
+#'   its log-transformed values (\code{log_y}).
+#'
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
@@ -23,8 +34,8 @@
 #' \item \code{log_y} natural log of total cell concentration
 #' }
 #'
-#' @details Function \code{ode_twostep} is the system of differential equations, whereas
-#'   \code{grow_twostep} runs a numerical simulation over time.
+#' @details Function \code{ode_twostep} is the system of differential equations, 
+#' whereas \code{grow_twostep} runs a numerical simulation over time.
 #'
 #' @examples
 #'
@@ -52,18 +63,18 @@ ode_twostep <- function (time, y, parms, ...) {
   })
 }
 
-#' @rdname grow_twostep
-#' @export grow_twostep.R
-#'
-grow_twostep.R <- function(time, parms, ...) {
-  ## assign parameters and solve differential equations
-  y0    <- parms[c("yi", "ya")]
-  parms <- parms[c("kw", "mu", "K")]
-  out  <-  ode(y0, time, ode_twostep, parms, ...)
-}
+## @rdname grow_twostep
+## @export grow_twostep.R
+##
+#grow_twostep.R <- function(time, parms, ...) {
+#  ## assign parameters and solve differential equations
+#  y0    <- parms[c("yi", "ya")]
+#  parms <- parms[c("kw", "mu", "K")]
+#  out  <-  ode(y0, time, ode_twostep, parms, ...)
+#}
 
 #' @rdname grow_twostep
-#' @export grow_twostep
+#' @export
 #'
 grow_twostep <- function(time, parms, ...) {
   ## assign parameters and solve differential equations
@@ -77,5 +88,8 @@ grow_twostep <- function(time, parms, ...) {
              initfunc = "ini_twostep", nout = 2, outnames=c("y", "log_y"), ...)
   
 }
+## attach names of parameters as attributes
+attr(grow_twostep, "pnames") <- c("yi","ya", "mu", "K")
+class(grow_twostep) <- c("growthmodel", "function")
 
 

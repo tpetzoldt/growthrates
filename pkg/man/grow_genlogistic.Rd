@@ -2,13 +2,10 @@
 % Please edit documentation in R/grow_genlogistic.R
 \name{ode_genlogistic}
 \alias{grow_genlogistic}
-\alias{grow_genlogistic.R}
 \alias{ode_genlogistic}
 \title{Generalized Logistic Growth Model}
 \usage{
 ode_genlogistic(time, y, parms, ...)
-
-grow_genlogistic.R(time, parms, ...)
 
 grow_genlogistic(time, parms, ...)
 }
@@ -17,10 +14,10 @@ grow_genlogistic(time, parms, ...)
 
 \item{y}{named vector with initial value of the system (e.g. cell concentration)}
 
-\item{parms}{parameters of the growth model
+\item{parms}{parameters of the generalized logistic growth model
 \itemize{
-   \item \code{mu} intrinsic growth rate (1/time)
-   \item \code{K} carrying capacity (max. total concentration of cells)
+   \item \code{mu} maximum growth rate (1/time)
+   \item \code{K} carrying capacity (max. abundance)
    \item \code{alpha, beta, gamma} parameters determining the shape of growth.
      Setting all values to one returns the ordinary logistic function.
 }}
@@ -28,20 +25,23 @@ grow_genlogistic(time, parms, ...)
 \item{\dots}{additional parameters passed to the \code{ode}-function.}
 }
 \value{
-matrix containing the simulation outputs. The return value of
-  \code{ode_twostep} is also of class \code{deSolve}.
+For \code{ode_genlogistic}: matrix containing the simulation outputs.
+The return value of has also class \code{deSolve}.
+
+For \code{grow_genlogistic}: vector of dependend variable (\code{y}) and
+  its log-transformed values (\code{log_y}).
 
 \itemize{
 \item \code{time} time of the simulation
-\item \code{y} total cell concentration
-\item \code{log_y} natural log of total cell concentration
+\item \code{y} abundance of organisms
+\item \code{log_y} natural log of abundance
 }
 }
 \description{
 Generalized logistic growth model solved as differential equation.
 }
 \details{
-The generalized logistic according to Tsoularis (2001) is an extremely flexible
+The generalized logistic according to Tsoularis (2001) is a flexible
   model that covers exponential and logistic growth, Richards, Gompertz, von
   Bertalanffy, and some more as special cases.
 
@@ -88,7 +88,6 @@ Other growth models: \code{\link{grow_baranyi}};
   \code{\link{grow_exponential}};
   \code{\link{grow_gompertz}}; \code{\link{grow_huang}};
   \code{\link{grow_logistic}}; \code{\link{grow_richards}};
-  \code{\link{grow_twostep}}, \code{\link{grow_twostep.R}},
-  \code{\link{ode_twostep}}
+  \code{\link{grow_twostep}}, \code{\link{ode_twostep}}
 }
 

@@ -9,17 +9,19 @@ grow_richards(time, parms)
 \arguments{
 \item{time}{vector of time steps (independend variable)}
 
-\item{parms}{named parameter vector of the logistic growth model with:
+\item{parms}{named parameter vector of the Richards growth model with:
 \itemize{
   \item \code{y0} initial value of population measure
-  \item \code{mu} growth rate (..... different interpretation cfrom exp growth .....)
+  \item \code{mu} maximum growth rate (note different interpretation compared
+    to exponential growth)
   \item \code{K} carrying capacity (max. total concentration of cells)
   \item \code{beta} shape parameter determining the curvature
 
 }}
 }
 \value{
-vector of dependend variable (\code{y})
+vector of dependend variable (\code{y}) and its log-transformed
+  values (\code{log_y}).
 }
 \description{
 Richards growth model written as analytical solution of the differential equation.
@@ -49,10 +51,9 @@ Res. Lett. Inf. Math. Sci, (2001) 2, 23--46.
 Other growth models: \code{\link{grow_baranyi}};
   \code{\link{grow_exponential}};
   \code{\link{grow_genlogistic}},
-  \code{\link{grow_genlogistic.R}},
   \code{\link{ode_genlogistic}};
   \code{\link{grow_gompertz}}; \code{\link{grow_huang}};
   \code{\link{grow_logistic}}; \code{\link{grow_twostep}},
-  \code{\link{grow_twostep.R}}, \code{\link{ode_twostep}}
+  \code{\link{ode_twostep}}
 }
 

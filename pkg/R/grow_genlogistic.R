@@ -5,25 +5,30 @@
 #'
 #' @param time vector of simulation time steps
 #' @param y named vector with initial value of the system (e.g. cell concentration)
-#' @param parms parameters of the growth model
+#' @param parms parameters of the generalized logistic growth model
 #'   \itemize{
-#'      \item \code{mu} intrinsic growth rate (1/time)
-#'      \item \code{K} carrying capacity (max. total concentration of cells)
+#'      \item \code{mu} maximum growth rate (1/time)
+#'      \item \code{K} carrying capacity (max. abundance)
 #'      \item \code{alpha, beta, gamma} parameters determining the shape of growth.
 #'        Setting all values to one returns the ordinary logistic function. 
 #'   }
 #' @param \dots additional parameters passed to the \code{ode}-function.
 #'
-#' @return matrix containing the simulation outputs. The return value of 
-#'   \code{ode_twostep} is also of class \code{deSolve}.
+#' @return 
+#' 
+#' For \code{ode_genlogistic}: matrix containing the simulation outputs. 
+#' The return value of has also class \code{deSolve}.
+#'   
+#' For \code{grow_genlogistic}: vector of dependend variable (\code{y}) and 
+#'   its log-transformed values (\code{log_y}).
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
-#' \item \code{y} total cell concentration
-#' \item \code{log_y} natural log of total cell concentration
+#' \item \code{y} abundance of organisms
+#' \item \code{log_y} natural log of abundance
 #' }
 #'
-#' @details The generalized logistic according to Tsoularis (2001) is an extremely flexible
+#' @details The generalized logistic according to Tsoularis (2001) is a flexible
 #'   model that covers exponential and logistic growth, Richards, Gompertz, von 
 #'   Bertalanffy, and some more as special cases. 
 #'   
@@ -80,15 +85,15 @@ ode_genlogistic <- function (time, y, parms, ...) {
   })
 }
 
-#' @rdname grow_genlogistic
-#' @export grow_genlogistic.R
-#'
-grow_genlogistic.R <- function(time, parms, ...) {
-  ## assign parameters and solve differential equations
-  y0    <- c(y = unname(parms[c("y0")]))
-  parms <- parms[c("mu", "K", "alpha", "beta", "gamma")]
-  out  <-  as.matrix(ode(y0, time, ode_genlogistic, parms, ...))
-}
+# @rdname grow_genlogistic
+# @export grow_genlogistic.R
+#
+# grow_genlogistic.R <- function(time, parms, ...) {
+#   ## assign parameters and solve differential equations
+#   y0    <- c(y = unname(parms[c("y0")]))
+#   parms <- parms[c("mu", "K", "alpha", "beta", "gamma")]
+#   out  <-  as.matrix(ode(y0, time, ode_genlogistic, parms, ...))
+# }
 
 #' @rdname grow_genlogistic
 #' @export grow_genlogistic
@@ -105,5 +110,8 @@ grow_genlogistic <- function(time, parms, ...) {
              initfunc = "ini_genlogistic", nout = 0, ...)
   cbind(out, log_y = log(out[,"y"]))
 }
+## attach names of parameters as attributes
+attr(grow_genlogistic, "pnames") <- c("y0", "mu", "K", "alpha", "beta", "gamma")
+class(grow_genlogistic) <- c("growthmodel", "function")
 
 

@@ -4,7 +4,7 @@
 #' of the system of differential equations.
 #'
 #' @param time vector of time steps (independend variable)
-#' @param parms named parameter vector of the logistic growth model with:
+#' @param parms named parameter vector of the Baranyi growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of abundance
 #'   \item \code{mu} maximum growth rate (1/time)
@@ -14,7 +14,8 @@
 #'     (h0 = max growth rate * lag phase).
 #' }
 #'
-#' @return vector of dependend variable (\code{y})
+#' @return vector of dependend variable (\code{y}) and its log-transformed
+#'   values (\code{log_y}).
 #' 
 #' 
 #' 

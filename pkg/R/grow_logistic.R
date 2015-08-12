@@ -10,7 +10,8 @@
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #' }
 #'
-#' @return vector of dependend variable (\code{y})
+#' @return vector of dependend variable (\code{y}) and its log-transformed
+#'   values (\code{log_y}).
 #'
 #' @examples
 #'
@@ -29,3 +30,6 @@ grow_logistic <- function(time, parms) {
     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
   })
 }
+## attach names of parameters as attributes
+attr(grow_logistic, "pnames") <- c("y0", "mu", "K")
+class(grow_logistic) <- c("growthmodel", "function")

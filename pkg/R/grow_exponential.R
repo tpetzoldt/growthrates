@@ -3,13 +3,14 @@
 #' Unlimited exponential growth model.
 #'
 #' @param time vector of time steps (independend variable)
-#' @param parms named parameter vector of the logistic growth model with:
+#' @param parms named parameter vector of the exponential growth model with:
 #' \itemize{
-#'   \item \code{y0} initial concentration of bacterial cells
-#'   \item \code{mu} intrinsic growth rate (1/time)
+#'   \item \code{y0} initial abundance (e.g. concentration of bacterial cells)
+#'   \item \code{mu} maximum growth rate (1/time)
 #' }
 #'
-#' @return vector of dependend variable (\code{y})
+#' @return vector of dependend variable (\code{y}) and its log-transformed
+#'   values (\code{log_y}).
 #'
 #' @examples
 #'
@@ -20,13 +21,15 @@
 #' @family growth models
 #'
 #' @rdname grow_exponential
-#' @export grow_exponential
+#' @export
 #'
 grow_exponential <- function(time, parms) {
   ## lm object coefficients have no names
   y0 <- parms[1]
   mu <- parms[2]
-  #y  <- exp(y0) * exp(mu * time)
   y  <- y0 * exp(mu * time)
   return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
 }
+## attach names of parameters as attributes
+attr(grow_exponential, "pnames") <- c("y0", "mu")
+class(grow_exponential) <- c("growthmodel", "function")

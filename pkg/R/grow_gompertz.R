@@ -4,13 +4,17 @@
 #'   equation system.
 #'
 #' @param time vector of time steps (independend variable)
-#' @param parms named parameter vector of the logistic growth model with:
+#' @param parms named parameter vector of the Gompertz growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of population measure (e.g. cell concentration)
-#'   \item \code{mu} intrinsic growth rate (1/time)
-#'   \item \code{K} carrying capacity (max. total concentration of cells)
+#'   \item \code{mu} maximum growth rate (1/time)
+#'   \item \code{K} maximum abundance (carrying capacity)
 #'   
 #' }
+#' 
+#' @details This version of the Gompertz model is a placeholder. It will be
+#'   replaced with at least one other selected other Gompertz formula with
+#'   more parameters.
 #' 
 #' @references Tsoularis, A. (2001) Analysis of Logistic Growth Models. 
 #'   Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
@@ -35,3 +39,6 @@ grow_gompertz <- function(time, parms) {
     return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
   })
 }
+## attach names of parameters as attributes
+attr(grow_gompertz, "pnames") <- c("y0", "mu", "K")
+class(grow_gompertz) <- c("growthmodel", "function")
