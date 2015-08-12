@@ -37,8 +37,7 @@
 #'
 #' @family growth models
 #'
-#' @rdname grow_baranyi
-#' @export grow_baranyi
+#' @export
 #'
 grow_baranyi <- function(time, parms) {
   with(as.list(parms), {
@@ -52,7 +51,7 @@ grow_baranyi <- function(time, parms) {
 }
 ## attach names of parameters as attributes
 attr(grow_baranyi, "pnames") <- c("y0", "mu", "K", "h0")
-class(grow_baranyi) <- "growthmodel"
+class(grow_baranyi) <- c("growthmodel", "function")
 
 ## idea for future extension
 #attr(grow_baranyi, "pnames") <- list(c("y0", "mu", "K", "h0"), c("log_y0", "mu", "log_K", "h0"))

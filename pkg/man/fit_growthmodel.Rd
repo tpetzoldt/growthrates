@@ -27,7 +27,7 @@ fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
 
 \item{transform}{fit model to non-transformed or log-transformed data}
 
-\item{control}{A list of control parameters for the optimizers. See ‘Details’.}
+\item{control}{A list of control parameters for the optimizers. See Details.}
 
 \item{\dots}{additional parameters passed to the optimizer}
 }

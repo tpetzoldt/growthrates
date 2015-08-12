@@ -122,14 +122,15 @@ many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth,
                       log="y")
 
 ## ------------------------------------------------------------------------
-## fit growth models to all data using log transformed residuals
-p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
-system.time(
-many_baranyi2 <- all_growthmodels(grow_baranyi, p=coef(many_baranyi1), df=bactgrowth, 
+## use coefficients of first fit as new initial parameters
+pp   <- coef(many_baranyi1)
+## but set h0 to a fixed value
+pp[,"h0"] <- 0.65
+## re-fit models
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       which=c("y0", "mu", "K"),
                       lower = lower, upper=upper, log="y")
-)
 
 ## ----fig.width=14, fig.height=20-----------------------------------------
 par(mfrow=c(12,6))

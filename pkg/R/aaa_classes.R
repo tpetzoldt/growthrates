@@ -10,6 +10,10 @@ setOldClass(c("modFit", "summary.modFit")) # classes from package FME
 
 setOldClass("smooth.spline")
 
+setOldClass("growthmodel") # S3 class
+
+setClassUnion("function_growthmodel", c("growthmodel", "function"))
+
 
 ### ----------------------------------------------------------------------------
 ### S4 Classes Representing Single Fits
@@ -33,7 +37,7 @@ setClass("growthrates_fit",
          representation(
            #names = "character",
            #ID = "character",
-           FUN = "function",
+           FUN = "function_growthmodel",
            fit = "ANY",
            obs =  "data.frame",
            #RSS = "numeric", # redundant, same as deviance

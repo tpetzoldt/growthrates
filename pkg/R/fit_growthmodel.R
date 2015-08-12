@@ -12,7 +12,7 @@
 #' @param which vector of parameter names that are to be fitted
 #' @param method character vector specifying the optimization algorithm
 #' @param transform fit model to non-transformed or log-transformed data
-#' @param control A list of control parameters for the optimizers. See ‘Details’.
+#' @param control A list of control parameters for the optimizers. See Details.
 #' @param \dots additional parameters passed to the optimizer
 #'
 #' @return list with parameters of the fit

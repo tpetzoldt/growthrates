@@ -73,7 +73,7 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   
   if (!is.data.frame(df)) stop("df must be a data frame")
   if (!is.character(criteria)) stop("criteria must be a character vector")
-  if (!all(criteria %in% names(bactgrowth))) stop("all criteria must be column names of df")
+  if (!all(criteria %in% names(df))) stop("all criteria must be column names of df")
   if (!is.function(FUN)) stop("FUN needs to be a valid growth model")
   if (!is.numericOrNull(lower) & is.numericOrNull(upper))
     stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
