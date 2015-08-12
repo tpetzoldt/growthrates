@@ -109,7 +109,7 @@ par(mar=c(2.5,4,2,1))
 plot(many_spline_fits)
 
 ## ------------------------------------------------------------------------
-## initial parameters and bocx constraints
+## initial parameters and box constraints
 p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
 
 lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
@@ -122,9 +122,12 @@ many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth,
                       log="y")
 
 ## ------------------------------------------------------------------------
-## fit growth models to all data using log transformed residuals
-p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
-many_baranyi2 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+## use coefficients of first fit as new initial parameters
+pp   <- coef(many_baranyi1)
+## but set h0 to a fixed value
+pp[,"h0"] <- 0.65
+## re-fit models
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       which=c("y0", "mu", "K"),
                       lower = lower, upper=upper, log="y")
@@ -137,6 +140,6 @@ plot(many_baranyi2)
 ## ---- fig.width=7, fig.height=3------------------------------------------
 many_spline_res <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
-xyplot(mu ~ conc|strain, data=many_spline_res, layout=c(3, 1))
-xyplot(mu ~ conc|strain, data=many_baranyi2_res, layout=c(3, 1))
+xyplot(mu ~ log(conc+1)|strain, data=many_spline_res, layout=c(3, 1))
+xyplot(mu ~ log(conc+1)|strain, data=many_baranyi2_res, layout=c(3, 1))
 
