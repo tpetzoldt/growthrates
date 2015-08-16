@@ -49,7 +49,7 @@
 #' p <- c(coef(fit0), K = max(dat$value))
 #' 
 #' ## avoid negative parameters
-#' lower = c(y0=0, mu=0, K=0)
+#' lower = c(y0=0, mumax=0, K=0)
 #' 
 #' ## fit all models
 #' fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
@@ -59,7 +59,7 @@
 #' results1 <- results(fit1) 
 #' results2 <- results(fit2)
 #' 
-#' plot(results1$mu, results2$mu, xlab="smooth splines", ylab="logistic")
+#' plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
 #' }
 #'
 all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value", 

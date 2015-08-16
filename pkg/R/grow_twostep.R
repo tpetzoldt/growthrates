@@ -12,7 +12,7 @@
 #'   \itemize{
 #'      \item \code{yi, ya} initial abundance of active and inactive organisms
 #'      \item \code{kw} activation (``wakeup'') constant (1/time)
-#'      \item \code{mu} maximum growth rate (1/time)
+#'      \item \code{mumax} maximum growth rate (1/time)
 #'      \item \code{K}  carrying capacity (max. abundance)
 #'   }
 #' @param \dots placeholder for additional parameters (for user-extended versions of this function)
@@ -40,13 +40,13 @@
 #' @examples
 #'
 #' time <- seq(0, 30, length=200)
-#' parms <- c(kw = 0.1,	mu=0.2, K=0.1)
+#' parms <- c(kw = 0.1,	mumax=0.2, K=0.1)
 #' y0    <-  c(yi=0.01, ya=0.0)
 #' out   <- ode(y0, time, ode_twostep, parms)
 #'
 #' plot(out)
 #' 
-#' o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mu=0.2, K=0.1))
+#' o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mumax=0.2, K=0.1))
 #' plot(o)
 #' 
 #' @family growth models
@@ -58,7 +58,7 @@ ode_twostep <- function (time, y, parms, ...) {
   ## the differential equations
   with(as.list(c(parms, y)), {
     dyi <- -kw * yi
-    dya <-  kw * yi + mu * (1 - (yi + ya)/K) * ya
+    dya <-  kw * yi + mumax * (1 - (yi + ya)/K) * ya
     list(c(dyi, dya), y = unname(yi + ya), log_y = log(unname(yi + ya)))
   })
 }
@@ -69,7 +69,7 @@ ode_twostep <- function (time, y, parms, ...) {
 #grow_twostep.R <- function(time, parms, ...) {
 #  ## assign parameters and solve differential equations
 #  y0    <- parms[c("yi", "ya")]
-#  parms <- parms[c("kw", "mu", "K")]
+#  parms <- parms[c("kw", "mumax", "K")]
 #  out  <-  ode(y0, time, ode_twostep, parms, ...)
 #}
 
@@ -80,7 +80,7 @@ grow_twostep <- function(time, parms, ...) {
   ## assign parameters and solve differential equations
   #cat("compiled code running\n")
   y0    <- parms[c("yi", "ya")]
-  parms <- parms[c("kw", "mu", "K")]
+  parms <- parms[c("kw", "mumax", "K")]
   #cat(y0, "\n")
   #cat(parms, "\n")
   out <- ode(y0, time, func = "d_twostep", parms = parms,
@@ -89,7 +89,7 @@ grow_twostep <- function(time, parms, ...) {
   
 }
 ## attach names of parameters as attributes
-attr(grow_twostep, "pnames") <- c("yi","ya", "mu", "K")
+attr(grow_twostep, "pnames") <- c("yi","ya", "mumax", "K")
 class(grow_twostep) <- c("growthmodel", "function")
 
 

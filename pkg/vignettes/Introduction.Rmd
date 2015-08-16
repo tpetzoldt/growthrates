@@ -181,17 +181,17 @@ Parametric Nonlinear Growth Models
 
 ```{r, fig.width=7}
 
-p     <- c(y0=0.01, mu=0.2, K=0.1)
-lower <- c(y0=1e-6, mu=0,   K=0)
-upper <- c(y0=0.05, mu=5,   K=0.5)
+p     <- c(y0=0.01, mumax=0.2, K=0.1)
+lower <- c(y0=1e-6, mumax=0,   K=0)
+upper <- c(y0=0.05, mumax=5,   K=0.5)
 
 fit1 <- fit_growthmodel(FUN=grow_logistic, p=p, dat$time, dat$value,
                         lower=lower, upper=upper)
 
 
-p     <- c(yi=0.02, ya=0.001, kw=0.1,	mu=0.2, K=0.1)
-lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
-upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
+p     <- c(yi=0.02, ya=0.001, kw=0.1,	mumax=0.2, K=0.1)
+lower <- c(yi=1e-6, ya=1e-6, kw=0,    mumax=0,   K=0)
+upper <- c(yi=0.05, ya=0.05, kw=10,   mumax=5,   K=0.5)
 
 fit2 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
                         lower=lower, upper=upper)
@@ -218,11 +218,11 @@ adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
 
 $$\frac{dy_i}{dt} = - k_w \cdot y_i $$
 
-$$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu \cdot 
+$$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu_{max} \cdot 
   y_a \cdot \left(1 - \frac{K}{y_a + y_i} \right)$$
 
 with amount of total organisms $y = y_i + y_a$, the parameters adaption rate $k_w$, 
-intrinsic growth rate $\mu$, carrying capacity $K$. The initial abundance (normally $y_0$) 
+intrinsic growth rate $\mu_{max}$, carrying capacity $K$. The initial abundance (normally $y_0$) 
 is splitted in two separate values, $y_{i,0}$ and $y_{a,0}$ that are by default 
 also fitted.
 
@@ -243,7 +243,7 @@ without initial abundances $y_a$ and $y_i$ in `which`:
 
 ```{r}
 fit3 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
-                        lower=lower, upper=upper, which=c("kw", "mu", "K"))
+                        lower=lower, upper=upper, which=c("kw", "mumax", "K"))
 
 summary(fit3)
 
@@ -337,10 +337,10 @@ In a first attempt, we fit all parameters of the model:
 
 ```{r}
 ## initial parameters and box constraints
-p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
+p   <- c(y0=0.03, mumax=.1, K=0.1, h0=1)
 
-lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
-upper   <- c(y0=0.1,   mu=1,    K=0.5,   h0=10)
+lower   <- c(y0=0.001, mumax=1e-2, K=0.005, h0=0)
+upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
 
 ## fit growth models to all data using log transformed residuals
 many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
@@ -350,7 +350,7 @@ many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth,
 ```
 
 whereas in a second trial, `h0`is fixed to a common value to avoid that `h0` 
-``consumes'' parts of the effect because of interdependency between `h0`and `mu`:
+``consumes'' parts of the effect because of interdependency between `h0`and `mumax`:
 
 ```{r}
 ## use coefficients of first fit as new initial parameters
@@ -360,7 +360,7 @@ pp[,"h0"] <- 0.65
 ## re-fit models
 many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
-                      which=c("y0", "mu", "K"),
+                      which=c("y0", "mumax", "K"),
                       lower = lower, upper=upper, log="y")
 ```
 
@@ -386,8 +386,8 @@ with the spline fit and the Baranyi model:
 ```{r, fig.width=7, fig.height=3}
 many_spline_res <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
-xyplot(mu ~ log(conc+1)|strain, data=many_spline_res, layout=c(3, 1))
-xyplot(mu ~ log(conc+1)|strain, data=many_baranyi2_res, layout=c(3, 1))
+xyplot(mumax ~ log(conc+1)|strain, data=many_spline_res, layout=c(3, 1))
+xyplot(mumax ~ log(conc+1)|strain, data=many_baranyi2_res, layout=c(3, 1))
 ```
 
 Describing the observed dependency can again be approached with nonparametric 

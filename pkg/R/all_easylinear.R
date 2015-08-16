@@ -31,7 +31,7 @@
 #' results <- results(L)
 #'
 #' library(lattice)
-#' xyplot(mu ~ conc|strain, data=results)
+#' xyplot(mumax ~ conc|strain, data=results)
 #'
 #' @rdname all_easylinear
 #' @export all_easylinear

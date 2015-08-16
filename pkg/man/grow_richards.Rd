@@ -12,7 +12,7 @@ grow_richards(time, parms)
 \item{parms}{named parameter vector of the Richards growth model with:
 \itemize{
   \item \code{y0} initial value of population measure
-  \item \code{mu} maximum growth rate (note different interpretation compared
+  \item \code{mumax} maximum growth rate (note different interpretation compared
     to exponential growth)
   \item \code{K} carrying capacity (max. total concentration of cells)
   \item \code{beta} shape parameter determining the curvature
@@ -28,16 +28,16 @@ Richards growth model written as analytical solution of the differential equatio
 }
 \details{
 The naming of parameters used here follows the convention of Tsoularis 2001
-but uses \code{mu} for growtrate and \code{y} for abundance to make them
+but uses \code{mumax} for growtrate and \code{y} for abundance to make them
 more compatible with other growth functions.
 }
 \examples{
 time <- seq(0, 30, length=200)
-y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=2))[,"y"]
+y    <- grow_richards(time, c(y0=1, mumax=.5, K=10, beta=2))[,"y"]
 plot(time, y, type="l")
-y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=100))[,"y"]
+y    <- grow_richards(time, c(y0=1, mumax=.5, K=10, beta=100))[,"y"]
 lines(time, y, col="red")
-y    <- grow_richards(time, c(y0=1, mu=.5, K=10, beta=.2))[,"y"]
+y    <- grow_richards(time, c(y0=1, mumax=.5, K=10, beta=.2))[,"y"]
 lines(time, y, col="blue")
 }
 \references{

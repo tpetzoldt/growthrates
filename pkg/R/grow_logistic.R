@@ -6,7 +6,7 @@
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of population measure
-#'   \item \code{mu} intrinsic growth rate (1/time)
+#'   \item \code{mumax} intrinsic growth rate (1/time)
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #' }
 #'
@@ -16,7 +16,7 @@
 #' @examples
 #'
 #' time <- seq(0, 30, length=200)
-#' y    <- grow_logistic(time, c(y0=1, mu=0.5, K=10))[,"y"]
+#' y    <- grow_logistic(time, c(y0=1, mumax=0.5, K=10))[,"y"]
 #' plot(time, y, type="l")
 #'
 #' @family growth models
@@ -26,10 +26,10 @@
 #'
 grow_logistic <- function(time, parms) {
   with(as.list(parms), {
-    y <- (K * y0) / (y0 + (K - y0) * exp(-mu * time))
+    y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time))
     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
   })
 }
 ## attach names of parameters as attributes
-attr(grow_logistic, "pnames") <- c("y0", "mu", "K")
+attr(grow_logistic, "pnames") <- c("y0", "mumax", "K")
 class(grow_logistic) <- c("growthmodel", "function")

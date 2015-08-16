@@ -5,8 +5,8 @@
 
 static double parms[5];
 
-/* define 5 parameters as macros: mu, K, alpha, beta, gamma */
-#define mu    parms[0]
+/* define 5 parameters as macros: mumax, K, alpha, beta, gamma */
+#define mumax parms[0]
 #define K     parms[1]
 #define alpha parms[2]
 #define beta  parms[3]
@@ -23,7 +23,7 @@ void ini_genlogistic(void (* odeparms)(int *, double *))
 void d_genlogistic(int *neq, double *t, double *y, double *ydot, double *yout, int*ip)
 {
     if (ip[0] < 0) error("nout should be zero");
-    ydot[0] = mu * pow(*y, alpha) * pow((1-pow(*y/K, beta)), gamma);
+    ydot[0] = mumax * pow(*y, alpha) * pow((1-pow(*y/K, beta)), gamma);
 }
 
  

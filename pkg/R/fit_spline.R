@@ -114,6 +114,6 @@ fit_spline <- function(time, y, optgrid = length(time), ...) {
   
   new("smooth.spline_fit", fit = spl,
       FUN = grow_exponential,
-      par = c(y0 = exp(py)/exp((dy * px)), mu = dy),
+      par = c(y0 = exp(py)/exp((dy * px)), mumax = dy),
       xy = c(px, exp(py)), obs=obs, rsquared = r2)
 }

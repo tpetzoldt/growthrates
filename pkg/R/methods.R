@@ -154,7 +154,7 @@ setMethod("summary", "smooth.spline_fit",
             
             cat("Maximum growth at x=", xy[1], ", y=", xy[2], "\n")
             cat("y0 =", coef["y0"], "\n")
-            cat("mu =", coef["mu"], "\n")
+            cat("mumax =", coef["mumax"], "\n")
             cat("\n")
             cat("r2 of log transformed data=", rsquared(object), "\n")
           }
@@ -245,7 +245,7 @@ setMethod("results", "multiple_easylinear_fits",
             keys <- as.data.frame(lapply(keys, type.convert))
             
             ret <- cbind(keys, ret)
-            names(ret) <- c(object@criteria, "y0", "mu", "r2")
+            names(ret) <- c(object@criteria, "y0", "mumax", "r2")
             ret
           })
 

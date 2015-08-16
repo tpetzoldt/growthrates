@@ -19,10 +19,10 @@ splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[23]]
 
 ## initial parameters and bocx constraints
-p   <- c(y0=0.03, mu=.1, K=0.1, alpha=1, lambda=2)
+p   <- c(y0=0.03, mumax=.1, K=0.1, alpha=1, lambda=2)
 
-lower   <- c(y0=0.001, mu=1e-2, K=0.005, alpha=-100, lambda=-20)
-upper   <- c(y0=0.1,   mu=1,    K=0.5,   alpha=200,  lambda=20)
+lower   <- c(y0=0.001, mumax=1e-2, K=0.005, alpha=-100, lambda=-20)
+upper   <- c(y0=0.1,   mumax=1,    K=0.5,   alpha=200,  lambda=20)
 
 ## fit model
 fit <- fit_growthmodel(FUN=grow_huang, p=p, time=dat$time, y=dat$value,
@@ -56,14 +56,14 @@ xyplot(lambda ~ log(conc + 1)| strain, data=res)
 xyplot(alpha ~ log(conc + 1)| strain, data=res)
 
 ## and most importantly, the max growth rates
-xyplot(mu ~ log(conc + 1)| strain, data=res)
+xyplot(mumax ~ log(conc + 1)| strain, data=res)
 
 ## 2nd approach: fit selected parameters, fix the remaining (here: alpha)
 ## alpha = 4 from the IPMP tutorial
-p   <- c(y0=0.03, mu=.1, K=0.1, alpha=4, lambda=2)
+p   <- c(y0=0.03, mumax=.1, K=0.1, alpha=4, lambda=2)
 L2 <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
-                      which=c("y0", "mu", "K", "lambda"),
+                      which=c("y0", "mumax", "K", "lambda"),
                       lower = lower, upper=upper, 
                       method="Marq", log="y")
 
@@ -72,6 +72,6 @@ par(mfrow=c(4,3))
 plot(L2)
 
 res2 <- results(L2)
-xyplot(mu ~ log(conc + 1)| strain, data=res2)
+xyplot(mumax ~ log(conc + 1)| strain, data=res2)
 
-plot(res$mu, res2$mu)
+plot(res$mumax, res2$mumax)

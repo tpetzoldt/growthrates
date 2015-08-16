@@ -4,9 +4,9 @@ data(bactgrowth)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[7]]
 
-p     <- c(yi=0.01, ya=0.01, kw=0.1,	mu=0.2, K=0.1)
-lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
-upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
+p     <- c(yi=0.01, ya=0.01, kw=0.1,	mumax=0.2, K=0.1)
+lower <- c(yi=1e-6, ya=1e-6, kw=0,    mumax=0,   K=0)
+upper <- c(yi=0.05, ya=0.05, kw=10,   mumax=5,   K=0.5)
 
 
 fit1 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
@@ -20,9 +20,9 @@ fit2 <- fit_growthmodel(FUN=grow_twostep, dat$time, dat$value, p=p,
                         method="L-BFGS-B")
 
 
-p     <- c(y0=0.01, mu=0.03, K=0.1)
-lower <- c(y0=1e-6, mu=0,   K=0)
-upper <- c(y0=0.05, mu=5,   K=0.5)
+p     <- c(y0=0.01, mumax=0.03, K=0.1)
+lower <- c(y0=1e-6, mumax=0,   K=0)
+upper <- c(y0=0.05, mumax=5,   K=0.5)
 
 fit3 <- fit_growthmodel(FUN=grow_logistic, dat$time, dat$value, p=p,
                         control=list(trace=TRUE),

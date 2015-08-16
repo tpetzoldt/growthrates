@@ -12,7 +12,7 @@ grow_huang(time, parms)
 \item{parms}{named parameter vector of Huang's growth model with:
 \itemize{
   \item \code{y0} initial value of population measure
-  \item \code{mu} maximum growth rate (1/time)
+  \item \code{mumax} maximum growth rate (1/time)
   \item \code{K} carrying capacity (max. total concentration of cells)
   \item \code{alpha} shape parameter determining the curvature
   \item \code{lambda} parameter determining the lag time
@@ -32,7 +32,7 @@ In contrast to the original publication, all measures of population abundance
 }
 \examples{
 time <- seq(0, 30, length=200)
-y    <- grow_huang(time, c(y0=0.01, mu=.1, K=0.1, alpha=1.5, lambda=3))[,"y"]
+y    <- grow_huang(time, c(y0=0.01, mumax=.1, K=0.1, alpha=1.5, lambda=3))[,"y"]
 plot(time, y, type="l")
 plot(time, y, type="l", log="y")
 }

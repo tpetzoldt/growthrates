@@ -12,7 +12,7 @@ grow_gompertz(time, parms)
 \item{parms}{named parameter vector of the Gompertz growth model with:
 \itemize{
   \item \code{y0} initial value of population measure (e.g. cell concentration)
-  \item \code{mu} maximum growth rate (1/time)
+  \item \code{mumax} maximum growth rate (1/time)
   \item \code{K} maximum abundance (carrying capacity)
 
 }}
@@ -31,7 +31,7 @@ This version of the Gompertz model is a placeholder. It will be
 }
 \examples{
 time <- seq(0, 30, length=200)
-y    <- grow_gompertz(time, c(y0=1, mu=.2, K=10))[,"y"]
+y    <- grow_gompertz(time, c(y0=1, mumax=.2, K=10))[,"y"]
 plot(time, y, type="l", ylim=c(0, 20))
 }
 \references{

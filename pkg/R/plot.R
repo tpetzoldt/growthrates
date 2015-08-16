@@ -149,7 +149,7 @@ setMethod("plot", c("smooth.spline_fit", "missing"),
             px   <- x@xy[1]
             py   <- x@xy[2]
             y0   <- coef(x)["y0"]
-            mu   <- coef(x)["mu"]
+            mumax   <- coef(x)["mumax"]
             
             xnew <- seq(min(time), max(time), length.out = 200)
             ynew <- predict(x@fit, x = xnew)$y
@@ -162,7 +162,7 @@ setMethod("plot", c("smooth.spline_fit", "missing"),
             
             ### plot tangent
             points(px, py, pch=16, col="red")
-            lines(xnew, y0 * exp(mu * xnew), col="blue")
+            lines(xnew, y0 * exp(mumax * xnew), col="blue")
             
             ## draw predictions
             sim <- x@FUN(xnew, coef(x))
@@ -170,7 +170,7 @@ setMethod("plot", c("smooth.spline_fit", "missing"),
             
             ## alternative for log-transformed scale
             #xx <- px + c(-4, 4)
-            #yy <- log(py) + x@par["mu"] * c(-4, 4)
+            #yy <- log(py) + x@par["mumax"] * c(-4, 4)
             #lines(xx, exp(yy), col="grey")
             
             invisible()

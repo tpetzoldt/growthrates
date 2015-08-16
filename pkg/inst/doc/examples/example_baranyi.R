@@ -19,10 +19,10 @@ splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[23]]
 
 ## initial parameters and bocx constraints
-p   <- c(y0=0.03, mu=.1, K=0.1, h0=1)
+p   <- c(y0=0.03, mumax=.1, K=0.1, h0=1)
 
-lower   <- c(y0=0.001, mu=1e-2, K=0.005, h0=0)
-upper   <- c(y0=0.1,   mu=1,    K=0.5,   h0=10)
+lower   <- c(y0=0.001, mumax=1e-2, K=0.005, h0=0)
+upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
 
 ## fit model
 fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
@@ -33,19 +33,47 @@ fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
 coef(fit)
 plot(fit)
 
+## baranyi model with log transformed y0 and K
+px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
+
+lowerx   <- c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0)
+upperx   <- c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10)
+fitx <- fit_growthmodel(FUN=grow_baranyi_test, p=px, time=dat$time, y=dat$value,
+                        lower=lowerx, upper=upperx,
+                       control=list(trace=TRUE))
+
+
+coef(fitx)
+plot(fitx)
+
+
 
 ## fit growth models to all data using (log transformed residuals)
-L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
-                      lower = lower, upper=upper, 
-                      log="y")
+system.time(
+  L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                        criteria = c("strain", "conc", "replicate"),
+                        lower = lower, upper=upper, 
+                        log="y")
+)
+
+
+system.time({
+  px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
+  Lx <- all_growthmodels(grow_baranyi_test, p=px, df=bactgrowth, 
+                        criteria = c("strain", "conc", "replicate"),
+                        lower   = c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0),
+                        upper   = c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10),
+                        log="y")
+})
+
+
 
 
 ## fit growth models to all data using (log transformed residuals)
-p   <- c(y0=0.01, mu=.1, K=0.1, h0=0.65) # 0.65 was mean
+p   <- c(y0=0.01, mumax=.1, K=0.1, h0=0.65) # 0.65 was mean
 L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
-                      which=c("y0", "mu", "K"),
+                      which=c("y0", "mumax", "K"),
                       lower = lower, upper=upper)
 
 
@@ -57,4 +85,4 @@ par(mfrow=c(4,3))
 plot(L)
 
 res <- results(L)
-xyplot(mu ~ log(conc + 1)| strain, data=res, layout=c(3,1))
+xyplot(mumax ~ log(conc + 1)| strain, data=res, layout=c(3,1))

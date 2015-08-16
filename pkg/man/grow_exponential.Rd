@@ -12,7 +12,7 @@ grow_exponential(time, parms)
 \item{parms}{named parameter vector of the exponential growth model with:
 \itemize{
   \item \code{y0} initial abundance (e.g. concentration of bacterial cells)
-  \item \code{mu} maximum growth rate (1/time)
+  \item \code{mumax} maximum growth rate (1/time)
 }}
 }
 \value{
@@ -24,7 +24,7 @@ Unlimited exponential growth model.
 }
 \examples{
 time <- seq(0, 30, length=200)
-y <- grow_exponential(time, c(y0=1, mu=0.5))[,"y"]
+y <- grow_exponential(time, c(y0=1, mumax=0.5))[,"y"]
 plot(time, y, type="l")
 }
 \seealso{

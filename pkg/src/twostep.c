@@ -5,9 +5,9 @@
 
 static double parms[3];
 
-/* define 5 parameters as macros: mu, K, alpha, beta, gamma */
+/* define 5 parameters as macros: mumax, K, alpha, beta, gamma */
 #define kw    parms[0]
-#define mu    parms[1]
+#define mumax parms[1]
 #define K     parms[2]
 
 
@@ -23,7 +23,7 @@ void d_twostep(int *neq, double *t, double *y, double *ydot, double *yout, int*i
 {
     if (ip[0] < 2) error("nout should be >= 2");
     ydot[0] = -kw * y[0];
-    ydot[1] = kw * y[0] + mu * (1.0 - (y[0] + y[1])/K) * y[1];
+    ydot[1] = kw * y[0] + mumax * (1.0 - (y[0] + y[1])/K) * y[1];
 
     yout[0] = y[0] + y[1];
     yout[1] = log(y[0] + y[1]);

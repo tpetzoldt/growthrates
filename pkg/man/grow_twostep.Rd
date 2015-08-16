@@ -20,7 +20,7 @@ concentration of inactive resp. active cells)}
 \itemize{
    \item \code{yi, ya} initial abundance of active and inactive organisms
    \item \code{kw} activation (``wakeup'') constant (1/time)
-   \item \code{mu} maximum growth rate (1/time)
+   \item \code{mumax} maximum growth rate (1/time)
    \item \code{K}  carrying capacity (max. abundance)
 }}
 
@@ -52,13 +52,13 @@ whereas \code{grow_twostep} runs a numerical simulation over time.
 }
 \examples{
 time <- seq(0, 30, length=200)
-parms <- c(kw = 0.1,	mu=0.2, K=0.1)
+parms <- c(kw = 0.1,	mumax=0.2, K=0.1)
 y0    <-  c(yi=0.01, ya=0.0)
 out   <- ode(y0, time, ode_twostep, parms)
 
 plot(out)
 
-o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mu=0.2, K=0.1))
+o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mumax=0.2, K=0.1))
 plot(o)
 }
 \seealso{

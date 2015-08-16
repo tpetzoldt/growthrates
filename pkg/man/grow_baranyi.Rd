@@ -12,7 +12,7 @@ grow_baranyi(time, parms)
 \item{parms}{named parameter vector of the Baranyi growth model with:
 \itemize{
   \item \code{y0} initial value of abundance
-  \item \code{mu} maximum growth rate (1/time)
+  \item \code{mumax} maximum growth rate (1/time)
   \item \code{K} carrying capacity (max. abundance)
   \item \code{h0} parameter specifying the initial physiological state of
     organisms (e.g. cells) and in consequence the lag phase
@@ -29,7 +29,7 @@ of the system of differential equations.
 }
 \examples{
 time <- seq(0, 30, length=200)
-y    <- grow_baranyi(time, c(y0=0.01, mu=.5, K=0.1, h0=5))[,"y"]
+y    <- grow_baranyi(time, c(y0=0.01, mumax=.5, K=0.1, h0=5))[,"y"]
 plot(time, y, type="l")
 plot(time, y, type="l", log="y")
 }

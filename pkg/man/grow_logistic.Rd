@@ -12,7 +12,7 @@ grow_logistic(time, parms)
 \item{parms}{named parameter vector of the logistic growth model with:
 \itemize{
   \item \code{y0} initial value of population measure
-  \item \code{mu} intrinsic growth rate (1/time)
+  \item \code{mumax} intrinsic growth rate (1/time)
   \item \code{K} carrying capacity (max. total concentration of cells)
 }}
 }
@@ -25,7 +25,7 @@ Classical logistic growth model written as analytical solution of the differenti
 }
 \examples{
 time <- seq(0, 30, length=200)
-y    <- grow_logistic(time, c(y0=1, mu=0.5, K=10))[,"y"]
+y    <- grow_logistic(time, c(y0=1, mumax=0.5, K=10))[,"y"]
 plot(time, y, type="l")
 }
 \seealso{

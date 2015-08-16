@@ -39,7 +39,7 @@ rsquared(L)
 results <- results(L)
 
 library(lattice)
-xyplot(mu ~ conc|strain, data=results)
+xyplot(mumax ~ conc|strain, data=results)
 }
 \references{
 Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy.

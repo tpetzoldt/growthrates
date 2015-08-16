@@ -31,7 +31,7 @@ par(mfrow=c(3,3))
 plot(sfit)
 
 ## fit parametric model
-p <- c(y0=0.01, mu=0.2, K=0.2)
+p <- c(y0=0.01, mumax=0.2, K=0.2)
 
 pfit <- all_growthmodels(grow_logistic, p=p, database, criteria=c("experiment", "conc"))
 par(mfrow=c(3,3))

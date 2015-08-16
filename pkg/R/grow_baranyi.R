@@ -7,7 +7,7 @@
 #' @param parms named parameter vector of the Baranyi growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of abundance
-#'   \item \code{mu} maximum growth rate (1/time)
+#'   \item \code{mumax} maximum growth rate (1/time)
 #'   \item \code{K} carrying capacity (max. abundance)
 #'   \item \code{h0} parameter specifying the initial physiological state of 
 #'     organisms (e.g. cells) and in consequence the lag phase 
@@ -32,7 +32,7 @@
 #' @examples
 #'
 #' time <- seq(0, 30, length=200)
-#' y    <- grow_baranyi(time, c(y0=0.01, mu=.5, K=0.1, h0=5))[,"y"]
+#' y    <- grow_baranyi(time, c(y0=0.01, mumax=.5, K=0.1, h0=5))[,"y"]
 #' plot(time, y, type="l")
 #' plot(time, y, type="l", log="y")
 #'
@@ -43,16 +43,16 @@
 grow_baranyi <- function(time, parms) {
   with(as.list(parms), {
     ## todo: q0 in original paper, h0 in Huang
-    A <- time + 1/mu * log(exp(-mu * time) + exp(-h0) - exp(-mu * time - h0))
-    #log_y <- y0 + mu * A - log(1 + (exp(mu * A) - 1)/(exp(K - y0)))
-    log_y <- log(y0) + mu * A - log(1 + (exp(mu * A) - 1) / exp(log(K) - log(y0)))
+    A <- time + 1/mumax * log(exp(-mumax * time) + exp(-h0) - exp(-mumax * time - h0))
+    #log_y <- y0 + mumax * A - log(1 + (exp(mumax * A) - 1)/(exp(K - y0)))
+    log_y <- log(y0) + mumax * A - log(1 + (exp(mumax * A) - 1) / exp(log(K) - log(y0)))
     
     return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
   })
 }
 ## attach names of parameters as attributes
-attr(grow_baranyi, "pnames") <- c("y0", "mu", "K", "h0")
+attr(grow_baranyi, "pnames") <- c("y0", "mumax", "K", "h0")
 class(grow_baranyi) <- c("growthmodel", "function")
 
 ## idea for future extension
-#attr(grow_baranyi, "pnames") <- list(c("y0", "mu", "K", "h0"), c("log_y0", "mu", "log_K", "h0"))
+#attr(grow_baranyi, "pnames") <- list(c("y0", "mumax", "K", "h0"), c("log_y0", "mumax", "log_K", "h0"))

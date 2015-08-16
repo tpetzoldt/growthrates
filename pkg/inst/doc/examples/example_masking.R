@@ -10,9 +10,9 @@ splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[7]]
 
 
-p     <- c(yi=0.01, ya=0.01, kw=0.1,	mu=0.2, K=0.1)
-lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
-upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
+p     <- c(yi=0.01, ya=0.01, kw=0.1,	mumax=0.2, K=0.1)
+lower <- c(yi=1e-6, ya=1e-6, kw=0,    mumax=0,   K=0)
+upper <- c(yi=0.05, ya=0.05, kw=10,   mumax=5,   K=0.5)
 
 
 ## fit of all parameters
@@ -20,30 +20,30 @@ fit1 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value,
                         lower=lower, upper=upper,
                         method="L-BFGS-B")
 
-p     <- c(yi=0.031, ya=0.00, kw=0.01,	mu=0.2, K=0.1)
-lower <- c(yi=1e-6, ya=1e-6, kw=0,    mu=0,   K=0)
-upper <- c(yi=0.05, ya=0.05, kw=10,   mu=5,   K=0.5)
+p     <- c(yi=0.031, ya=0.00, kw=0.01,	mumax=0.2, K=0.1)
+lower <- c(yi=1e-6, ya=1e-6, kw=0,    mumax=0,   K=0)
+upper <- c(yi=0.05, ya=0.05, kw=10,   mumax=5,   K=0.5)
 
-## fit only kw, mu and K, but fix y_i and y_a
+## fit only kw, mumax and K, but fix y_i and y_a
 fit2 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
                         lower=lower, upper=upper,
-                        which = c("kw", "mu", "K"), 
+                        which = c("kw", "mumax", "K"), 
                         method="L-BFGS-B")
 
 
-p     <- c(y0=0.03, mu=.176, K=.101, alpha=1, beta=1, gamma=1)
-lower <- c(y0=0.01, mu=0,   K=0, alpha=0.5, beta=0.5, gamma=1)
-upper <- c(y0=0.04, mu=5,   K=10, alpha=5, beta=10, gamma=10)
+p     <- c(y0=0.03, mumax=.176, K=.101, alpha=1, beta=1, gamma=1)
+lower <- c(y0=0.01, mumax=0,   K=0, alpha=0.5, beta=0.5, gamma=1)
+upper <- c(y0=0.04, mumax=5,   K=10, alpha=5, beta=10, gamma=10)
 
 
 ## generalized logistic
 fit3 <- fit_growthmodel(FUN=grow_genlogistic, p=p, time=dat$time, y=dat$value, 
                         lower=lower, upper=upper,
-                        which = c("mu", "K"),
+                        which = c("mumax", "K"),
                         method="L-BFGS-B")
 
 
-p     <- c(y0=0.03, mu=.176, K=.101, alpha=1, beta=1, gamma=1)
+p     <- c(y0=0.03, mumax=.176, K=.101, alpha=1, beta=1, gamma=1)
 fit3 <- fit_growthmodel(FUN=grow_genlogistic, p=p, time=dat$time, y=dat$value, 
                         lower=lower, upper=upper,
                         which = c("alpha", "beta", "gamma"),

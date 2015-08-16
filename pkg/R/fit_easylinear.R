@@ -72,7 +72,7 @@ fit_easylinear <- function(x, y, h=5, quota=0.95) {
   # cat(strain, conc, replicate, p[2], "\n")
   #return(list(p=p, ndx=tp))
   obj <- new("easylinear_fit", FUN=grow_exponential, fit=m, 
-             par = c(y0 = unname(exp(coef(m)[1])), mu = unname(coef(m)[2])), ndx = tp,
+             par = c(y0 = unname(exp(coef(m)[1])), mumax = unname(coef(m)[2])), ndx = tp,
              obs = data.frame(time = obs$x, y = obs$y), rsquared = p["r2"])
   invisible(obj)
 }

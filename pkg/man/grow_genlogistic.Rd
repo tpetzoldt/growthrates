@@ -16,7 +16,7 @@ grow_genlogistic(time, parms, ...)
 
 \item{parms}{parameters of the generalized logistic growth model
 \itemize{
-   \item \code{mu} maximum growth rate (1/time)
+   \item \code{mumax} maximum growth rate (1/time)
    \item \code{K} carrying capacity (max. abundance)
    \item \code{alpha, beta, gamma} parameters determining the shape of growth.
      Setting all values to one returns the ordinary logistic function.
@@ -50,34 +50,26 @@ The generalized logistic according to Tsoularis (2001) is a flexible
   \code{grow_genlogistic} runs a numerical simulation over time.
 
   The default version \code{grow_genlogistic} is run directly as compiled code,
-  whereas the R versions \code{ode_logistic} and \code{grow_genlogistic.R} are
+  whereas the R versions \code{ode_logistic} is
   provided for testing by the user.
 }
 \examples{
 time <- seq(0, 30, length=200)
-parms <- c(mu=0.5, K=10, alpha=1, beta=1, gamma=1)
+parms <- c(mumax=0.5, K=10, alpha=1, beta=1, gamma=1)
 y0    <-  c(y=.1)
 out   <- ode(y0, time, ode_genlogistic, parms)
 plot(out)
 
-out2 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.2, K=10, alpha=2, beta=1, gamma=1))
-out3 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.2, K=10, alpha=1, beta=2, gamma=1))
-out4 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.2, K=10, alpha=1, beta=1, gamma=2))
-out5 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.2, K=10, alpha=.5, beta=1, gamma=1))
-out6 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.2, K=10, alpha=1, beta=.5, gamma=1))
-out7 <- ode(y0, time, ode_genlogistic, parms = c(mu=0.3, K=10, alpha=1, beta=1, gamma=.5))
+out2 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.2, K=10, alpha=2, beta=1, gamma=1))
+out3 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.2, K=10, alpha=1, beta=2, gamma=1))
+out4 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.2, K=10, alpha=1, beta=1, gamma=2))
+out5 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.2, K=10, alpha=.5, beta=1, gamma=1))
+out6 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.2, K=10, alpha=1, beta=.5, gamma=1))
+out7 <- ode(y0, time, ode_genlogistic, parms = c(mumax=0.3, K=10, alpha=1, beta=1, gamma=.5))
 plot(out, out2, out3, out4, out5, out6, out7)
 
 ## growth with lag (cf. log_y)
-plot(ode(y0, time, ode_genlogistic, parms = c(mu=1, K=10, alpha=2, beta=.8, gamma=5)))
-
-## compiled and R function
-o1 <- grow_genlogistic(time, c(y0=unname(y0), parms))
-o2 <- grow_genlogistic.R(time, c(y0=unname(y0), parms))
-
-par(mfrow=c(1,2))
-matplot(o1[,1], o1[,2:3], type="l", xlab="time", ylab="y, y_log", main="C function")
-matplot(o2, main="R function")
+plot(ode(y0, time, ode_genlogistic, parms = c(mumax=1, K=10, alpha=2, beta=.8, gamma=5)))
 }
 \references{
 Tsoularis, A. (2001) Analysis of Logistic Growth Models.

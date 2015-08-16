@@ -45,7 +45,7 @@
 #' par(mfrow=c(3, 3))
 #' plot(L)
 #' results <- results(L)
-#' xyplot(mu ~ log(conc + 1)|strain, data=results)
+#' xyplot(mumax ~ log(conc + 1)|strain, data=results)
 #'
 #' @rdname all_splines
 #' @export all_splines

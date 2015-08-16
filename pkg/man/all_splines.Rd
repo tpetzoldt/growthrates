@@ -49,7 +49,7 @@ L <- all_splines(bactgrowth,
 par(mfrow=c(3, 3))
 plot(L)
 results <- results(L)
-xyplot(mu ~ log(conc + 1)|strain, data=results)
+xyplot(mumax ~ log(conc + 1)|strain, data=results)
 }
 \references{
 Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
