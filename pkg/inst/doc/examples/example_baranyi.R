@@ -33,38 +33,12 @@ fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
 coef(fit)
 plot(fit)
 
-## baranyi model with log transformed y0 and K
-px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
-
-lowerx   <- c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0)
-upperx   <- c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10)
-fitx <- fit_growthmodel(FUN=grow_baranyi_test, p=px, time=dat$time, y=dat$value,
-                        lower=lowerx, upper=upperx,
-                       control=list(trace=TRUE))
-
-
-coef(fitx)
-plot(fitx)
-
-
 
 ## fit growth models to all data using (log transformed residuals)
-system.time(
-  L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
-                        criteria = c("strain", "conc", "replicate"),
-                        lower = lower, upper=upper, 
-                        log="y")
-)
-
-
-system.time({
-  px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
-  Lx <- all_growthmodels(grow_baranyi_test, p=px, df=bactgrowth, 
-                        criteria = c("strain", "conc", "replicate"),
-                        lower   = c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0),
-                        upper   = c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10),
-                        log="y")
-})
+L <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
+                      criteria = c("strain", "conc", "replicate"),
+                      lower = lower, upper=upper, 
+                      log="y")
 
 
 
