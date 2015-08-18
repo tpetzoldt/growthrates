@@ -34,7 +34,7 @@ The method was inspired by an algorithm of Kahm et al. (2010),
   \pkg{stats}, that is highly user configurable. Normally, smoothness is
   automatically determined via cross-validation. This works well in many cases,
   whereas manual adjustment is required otherwise, e.g. by setting \code{spar}
-  to a fixed value \eqn{[0,1]} that also disables cross-validation.
+  to a fixed value \eqn{[0, 1]} that also disables cross-validation.
 }
 \examples{
 data(bactgrowth)

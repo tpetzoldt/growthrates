@@ -54,5 +54,3 @@ grow_baranyi <- function(time, parms) {
 attr(grow_baranyi, "pnames") <- c("y0", "mumax", "K", "h0")
 class(grow_baranyi) <- c("growthmodel", "function")
 
-## idea for future extension
-#attr(grow_baranyi, "pnames") <- list(c("y0", "mumax", "K", "h0"), c("log_y0", "mumax", "log_K", "h0"))

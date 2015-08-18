@@ -37,6 +37,7 @@ p <- coef(fit1)
 first10 <-  dat[1:10, ]
 fit2 <- fit_growthmodel(grow_exponential, p=p, time=first10$time, y=first10$value)
 
+## use parameters from spline fit and take K from the data maximum
 p <- c(coef(fit1), K = max(dat$value))
 fit3 <- fit_growthmodel(grow_logistic, p=p, time=dat$time, y=dat$value, transform="log")
 
