@@ -37,10 +37,15 @@ plot(time, y, type="l")
 plot(time, y, type="l", log="y")
 }
 \references{
-Huang, L. (2011) A new mechanistic growth model for simultaneous
+Huang, Lihan (2011) A new mechanistic growth model for simultaneous
 determination of lag phase duration and exponential growth rate and a new
 Belehdradek-type model for evaluating the effect of temperature on growth rate.
 Food Microbiology , 2011, 28, 770 - 776
+
+Huang, Lihan (2013) Introduction to USDA Integrated Pathogen Modeling
+Program (IPMP). Residue Chemistry and Predictive Microbiology Research
+Unit. USDA Agricultural Research Service.
+http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial%201-9-14.pdf
 }
 \seealso{
 Other growth models: \code{\link{grow_baranyi}};
