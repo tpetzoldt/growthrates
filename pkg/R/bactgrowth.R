@@ -1,6 +1,6 @@
 #' Plate Reader Data of Bacterial Growth
 #'
-#' Example data set from growth experiments with different 
+#' Example data set from growth experiments with different
 #' concentrations of antibiotics.
 #'
 #' @format Data frame with the following columns:
@@ -20,11 +20,11 @@
 #'
 #' @examples
 #' ## plot data and determine growth rates
-#' data(growthrates)
+#' data(bactgrowth)
 #'
-#' 
+#'
 #' library(lattice)
-#' xyplot(value ~ time | strain + as.factor(conc), 
+#' xyplot(value ~ time | strain + as.factor(conc),
 #'       data = bactgrowth, groups = replicate)
 
 NULL
