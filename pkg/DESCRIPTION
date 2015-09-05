@@ -1,7 +1,7 @@
 Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
-Version: 0.4.4
+Version: 0.5
 Date: 2015-09-05
 LazyData: yes
 Author: Thomas Petzoldt
