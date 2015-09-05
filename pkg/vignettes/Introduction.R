@@ -119,7 +119,7 @@ upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
 many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       lower = lower, upper=upper, 
-                      log="y")
+                      log="y", ncores = 2)
 
 ## ------------------------------------------------------------------------
 ## use coefficients of first fit as new initial parameters
@@ -130,7 +130,7 @@ pp[,"h0"] <- 0.65
 many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, df=bactgrowth, 
                       criteria = c("strain", "conc", "replicate"),
                       which=c("y0", "mumax", "K"),
-                      lower = lower, upper=upper, log="y")
+                      lower = lower, upper=upper, log="y", ncores = 2)
 
 ## ----fig.width=14, fig.height=20-----------------------------------------
 par(mfrow=c(12,6))

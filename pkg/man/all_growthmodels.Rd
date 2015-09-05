@@ -70,7 +70,7 @@ lower = c(y0=0, mumax=0, K=0)
 ## fit all models
 fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
   lower = lower,
-  criteria=c("strain", "conc", "replicate"), ncores=1)
+  criteria = c("strain", "conc", "replicate"), ncores = 1)
 
 results1 <- results(fit1)
 results2 <- results(fit2)
