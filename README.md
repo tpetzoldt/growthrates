@@ -47,7 +47,7 @@ Introduction to the main functions
 ----------------------------------
 
 * html: https://github.com/tpetzoldt/growthrates/blob/master/doc/Introduction.html
-* pdf: https://github.com/tpetzoldt/growthrates/blob/master/doc/Introduction.pdf
+* pdf: https://rawgit.com/tpetzoldt/growthrates/blob/master/doc/Introduction.pdf
 
 * R markdown (without figures): https://github.com/tpetzoldt/growthrates/blob/master/pkg/vignettes/Introduction.Rmd
 
