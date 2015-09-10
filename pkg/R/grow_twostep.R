@@ -1,12 +1,12 @@
 #' Twostep Growth Model
 #'
-#' System of two differential equations describing bacterial growth as two-step 
+#' System of two differential equations describing bacterial growth as two-step
 #' process of activation (or adaptation) and growth.
 #'
 #'
 #' @param time actual time (for the ode) resp. vector of simulation time steps
-#' @param y named vector with state of the system 
-#'   (yi, ya: abundance of inactive and active organisms, e.g. 
+#' @param y named vector with state of the system
+#'   (yi, ya: abundance of inactive and active organisms, e.g.
 #'   concentration of inactive resp. active cells)
 #' @param parms parameters of the two-step growth model
 #'   \itemize{
@@ -18,11 +18,11 @@
 #' @param \dots placeholder for additional parameters (for user-extended versions of this function)
 #'
 #' @return
-#' 
-#' For \code{ode_twostep}: matrix containing the simulation outputs. 
+#'
+#' For \code{ode_twostep}: matrix containing the simulation outputs.
 #' The return value of has also class \code{deSolve}.
-#'   
-#' For \code{grow_twostep}: vector of dependend variable (\code{y}) and 
+#'
+#' For \code{grow_twostep}: vector of dependend variable (\code{y}) and
 #'   its log-transformed values (\code{log_y}).
 #'
 #'
@@ -34,8 +34,16 @@
 #' \item \code{log_y} natural log of total cell concentration
 #' }
 #'
-#' @details Function \code{ode_twostep} is the system of differential equations, 
+#' @details Function \code{ode_twostep} is the system of differential equations,
 #' whereas \code{grow_twostep} runs a numerical simulation over time.
+#'
+#' A similar two-compartment model, but without the logistic term, was discussed by Baranyi (1998).
+#'
+#'
+#' @references
+#'
+#' Baranyi, J. (1998). Comparison of stochastic and deterministic concepts of bacterial lag.
+#' J. theor. Biol. 192, 403--408.
 #'
 #' @examples
 #'
@@ -45,10 +53,10 @@
 #' out   <- ode(y0, time, ode_twostep, parms)
 #'
 #' plot(out)
-#' 
+#'
 #' o <- grow_twostep(0:100, c(yi=0.01, ya=0.0, kw = 0.1,	mumax=0.2, K=0.1))
 #' plot(o)
-#' 
+#'
 #' @family growth models
 #'
 #' @rdname grow_twostep
@@ -86,7 +94,7 @@ grow_twostep <- function(time, parms, ...) {
   out <- ode(y0, time, func = "d_twostep", parms = parms,
              dllname = "growthrates",
              initfunc = "ini_twostep", nout = 2, outnames=c("y", "log_y"), ...)
-  
+
 }
 ## attach names of parameters as attributes
 attr(grow_twostep, "pnames") <- c("yi","ya", "mumax", "K")
