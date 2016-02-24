@@ -2,7 +2,7 @@
 title: "Estimation of Growth Rates with package `growthrates`"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_document
+output: rmarkdown::pdf_document
 bibliography: growthrates.bib
 vignette: >
   %\VignetteIndexEntry{Estimation of Growth Rates}
@@ -83,8 +83,8 @@ in dependence of a gradient of the antibiotics Tetracycline.
 
 
 ```{r eval=TRUE, echo=FALSE, results="hide"}
-#suppressMessages(require("growthrates"))
-require("growthrates")
+suppressMessages(require("growthrates"))
+#require("growthrates")
 ```
 
 ```{r eval=FALSE}

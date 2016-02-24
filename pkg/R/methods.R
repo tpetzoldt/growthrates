@@ -4,41 +4,41 @@
 
 
 #' Accessor Methods of Package \pkg{growthrates}
-#' 
+#'
 #' Functions to access the results of fitted growthrate objects.
-#' 
+#'
 #' @param object name of a 'growthrate' object
 #' @param cov boolean if the covariance matrix should be printed
 #' @param \dots other arguments passed to the methods
-#' 
+#'
 #' @rdname methods
 #' @export rsquared
 #' @exportMethod rsquared
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' data(bactgrowth)
 #' splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
-#' 
+#'
 #' ## get table from single experiment
 #' dat <- splitted.data[[10]]
-#' 
+#'
 #' fit1 <- fit_spline(dat$time, dat$value, spar=0.5)
 #' coef(fit1)
 #' summary(fit1)
-#' 
+#'
 #' ## derive start parameters from spline fit
 #' p <- c(coef(fit1), K = max(dat$value))
 #' fit2 <- fit_growthmodel(grow_logistic, p=p, time=dat$time, y=dat$value, transform="log")
 #' coef(fit2)
 #' rsquared(fit2)
 #' deviance(fit2)
-#' 
+#'
 #' summary(fit2)
-#' 
+#'
 #' plot(residuals(fit2) ~ obs(fit2)[,2])
-#' 
-#' 
+#'
+#'
 setMethod("rsquared", "growthrates_fit",
           function(object, ...) {
             object@rsquared
@@ -48,7 +48,7 @@ setMethod("rsquared", "growthrates_fit",
 
 #' @rdname methods
 #' @exportMethod obs
-#' 
+#'
 setMethod("obs", "growthrates_fit",
           function(object, ...) {
             object@obs
@@ -62,7 +62,7 @@ setMethod("obs", "growthrates_fit",
 
 #' @rdname methods
 #' @exportMethod coef
-#'  
+#'
 setMethod("coef", "growthrates_fit",
           function(object, ...) {
             #coef(object@fit, ...)
@@ -73,7 +73,7 @@ setMethod("coef", "growthrates_fit",
 ## necessary because intercept in fit (=lm) is log-transformed
 #' @rdname methods
 #' @exportMethod coef
-#'  
+#'
 setMethod("coef", "easylinear_fit",
           function(object, ...) {
             object@par
@@ -83,7 +83,7 @@ setMethod("coef", "easylinear_fit",
 
 #' @rdname methods
 #' @exportMethod coef
-#'  
+#'
 setMethod("coef", "smooth.spline_fit",
           function(object, ...) {
             object@par
@@ -92,16 +92,16 @@ setMethod("coef", "smooth.spline_fit",
 
 #' @rdname methods
 #' @exportMethod deviance
-#'  
+#'
 setMethod("deviance", "growthrates_fit",
           function(object, ...) {
             deviance(object@fit, ...)
           }
-) 
+)
 
 #' @rdname methods
 #' @exportMethod summary
-#'  
+#'
 setMethod("summary", "growthrates_fit",
           function(object, ...) {
             summary(object@fit, cov=cov, ...)
@@ -110,7 +110,7 @@ setMethod("summary", "growthrates_fit",
 
 #' @rdname methods
 #' @exportMethod summary
-#'  
+#'
 setMethod("summary", "nonlinear_fit",
           function(object, cov=TRUE, ...) {
             summary(object@fit, cov=cov, ...)
@@ -120,7 +120,7 @@ setMethod("summary", "nonlinear_fit",
 
 #' @rdname methods
 #' @exportMethod residuals
-#'  
+#'
 setMethod("residuals", "growthrates_fit",
           function(object, ...) {
             residuals(object@fit, ...)
@@ -129,7 +129,7 @@ setMethod("residuals", "growthrates_fit",
 
 #' @rdname methods
 #' @exportMethod df.residual
-#'  
+#'
 setMethod("df.residual", "growthrates_fit",
           function(object, ...) {
             df.residual(object@fit, ...)
@@ -142,7 +142,7 @@ setMethod("df.residual", "growthrates_fit",
 
 #' @rdname methods
 #' @exportMethod summary
-#'  
+#'
 setMethod("summary", "smooth.spline_fit",
           function(object, cov=TRUE, ...) {
             coef <- coef(object)
@@ -151,7 +151,7 @@ setMethod("summary", "smooth.spline_fit",
             print(object@fit, ...)
             cat("\n")
             cat("Parameter values of exponential growth curve:\n")
-            
+
             cat("Maximum growth at x=", xy[1], ", y=", xy[2], "\n")
             cat("y0 =", coef["y0"], "\n")
             cat("mumax =", coef["mumax"], "\n")
@@ -163,7 +163,7 @@ setMethod("summary", "smooth.spline_fit",
 
 #' @rdname methods
 #' @exportMethod df.residual
-#'  
+#'
 setMethod("df.residual", "smooth.spline_fit",
           function(object, ...) {
             object@fit$df
@@ -172,7 +172,7 @@ setMethod("df.residual", "smooth.spline_fit",
 
 #' @rdname methods
 #' @exportMethod deviance
-#'  
+#'
 setMethod("deviance", "smooth.spline_fit",
           function(object, ...) {
             sum(residuals(object)^2)
@@ -186,7 +186,7 @@ setMethod("deviance", "smooth.spline_fit",
 
 #' @rdname methods
 #' @exportMethod coef
-#'  
+#'
 setMethod("coef", "multiple_fits",
           function(object, ...) {
             t(sapply(object@fits, function(x) coef(x, ...)))
@@ -194,7 +194,7 @@ setMethod("coef", "multiple_fits",
 
 #' @rdname methods
 #' @exportMethod rsquared
-#'  
+#'
 setMethod("rsquared", "multiple_fits",
           function(object, ...) {
             sapply(object@fits, function(x) rsquared(x, ...))
@@ -203,7 +203,7 @@ setMethod("rsquared", "multiple_fits",
 
 #' @rdname methods
 #' @exportMethod deviance
-#'  
+#'
 setMethod("deviance", "multiple_fits",
           function(object, ...) {
             sapply(object@fits, function(x) deviance(x, ...))
@@ -211,48 +211,48 @@ setMethod("deviance", "multiple_fits",
 
 #' @rdname methods
 #' @exportMethod results
-#'  
+#'
 setMethod("results", "multiple_fits",
           function(object, ...) {
-            criteria <- object@criteria
+            grouping <- object@grouping
             ret <- cbind(coef(object, ...), r2=rsquared(object, ...))
-            keys <- matrix(unlist(strsplit(row.names(ret), ":")), 
-                           ncol=length(criteria), byrow=TRUE)
-            
+            keys <- matrix(unlist(strsplit(row.names(ret), ":")),
+                           ncol=length(grouping), byrow=TRUE)
+
             keys <- as.data.frame(keys, stringsAsFactors = FALSE)
-            
+
             ## try to convert keys to numeric or factor
             keys <- as.data.frame(lapply(keys, type.convert))
-            
+
             ret <- cbind(keys, ret)
-            names(ret)[1:length(criteria)] <- c(criteria)
+            names(ret)[1:length(grouping)] <- c(grouping)
             ret
           })
 
 
 #' @rdname methods
 #' @exportMethod results
-#'  
+#'
 setMethod("results", "multiple_easylinear_fits",
           function(object, ...) {
             ret <- cbind(coef(object, ...), r2=rsquared(object, ...))
-            keys <- matrix(unlist(strsplit(row.names(ret), ":")), 
-                           ncol=length(object@criteria), byrow=TRUE)
-            
+            keys <- matrix(unlist(strsplit(row.names(ret), ":")),
+                           ncol=length(object@grouping), byrow=TRUE)
+
             keys <- as.data.frame(keys, stringsAsFactors = FALSE)
-            
+
             ## try to convert keys to numeric or factor
             keys <- as.data.frame(lapply(keys, type.convert))
-            
+
             ret <- cbind(keys, ret)
-            names(ret) <- c(object@criteria, "y0", "mumax", "r2")
+            names(ret) <- c(object@grouping, "y0", "mumax", "r2")
             ret
           })
 
 
 #' @rdname methods
 #' @exportMethod summary
-#'  
+#'
 setMethod("summary", "multiple_fits",
           function(object, ...) {
             lapply(object@fits, summary)
@@ -261,7 +261,7 @@ setMethod("summary", "multiple_fits",
 
 #' @rdname methods
 #' @exportMethod residuals
-#'  
+#'
 setMethod("residuals", "multiple_fits",
           function(object, ...) {
             unlist(lapply(object@fits, residuals))

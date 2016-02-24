@@ -7,6 +7,9 @@ o "masking" of parameters during fit
 o multiple start parameters, as lists (or data frames)
 --> done
 
+o formula interface
+--> work in progress
+
 o interfaces to related packages (Suggests)
   - growthmodels (generic function interface)
   - grofit

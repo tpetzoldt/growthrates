@@ -22,17 +22,17 @@ setClassUnion("function_growthmodel", c("growthmodel", "function"))
 #' S4 Classes of Package \pkg{growthrates}
 #'
 #'
-#' \code{growthrates_fit}: top-level class representing a growthrates fit with 
+#' \code{growthrates_fit}: top-level class representing a growthrates fit with
 #' any method
 #'
 #' @slot FUN model function used
 #' @slot fit results of the model fit
 #' @slot obs observation data used for model fitting
 #' @slot rsquared coefficient of determination
-#' 
+#'
 #' @rdname growthrates-classes
 #' @exportClass growthrates_fit
-#' 
+#'
 setClass("growthrates_fit",
          representation(
            #names = "character",
@@ -50,7 +50,7 @@ setClass("growthrates_fit",
 #'
 #' @rdname growthrates-classes
 #' @exportClass nonlinear_fit
-#' 
+#'
 setClass("nonlinear_fit",
          representation(
            fit = "modFit",
@@ -64,7 +64,7 @@ setClass("nonlinear_fit",
 #'
 #' @rdname growthrates-classes
 #' @exportClass easylinear_fit
-#' 
+#'
 setClass("easylinear_fit",
          representation(
            fit = "lm",
@@ -78,7 +78,7 @@ setClass("easylinear_fit",
 #'
 #' @rdname growthrates-classes
 #' @exportClass smooth.spline_fit
-#' 
+#'
 setClass("smooth.spline_fit",
          representation(
            fit = "smooth.spline",
@@ -95,45 +95,45 @@ setClass("smooth.spline_fit",
 ### ----------------------------------------------------------------------------
 
 
-#' \code{multiple_fits}: top-level class representing multiple fits with 
+#' \code{multiple_fits}: top-level class representing multiple fits with
 #' any method
 #'
 #' @rdname growthrates-classes
 #' @exportClass multiple_fits
-#' 
+#'
 setClass("multiple_fits",
          representation(
            fits = "list",
-           criteria = "character"
+           grouping = "character"
          )
 )
 
 
-#' \code{multiple_easylinear_fits}: class representing multiple fits with 
+#' \code{multiple_easylinear_fits}: class representing multiple fits with
 #' the ``growthrates made easy''-method
 #'
 #' @rdname growthrates-classes
 #' @exportClass multiple_easylinear_fits
-#' 
+#'
 setClass("multiple_easylinear_fits",
          contains = "multiple_fits"
 )
 
 
-#' \code{multiple_nonlinear_fits}: class representing multiple nonlinear fits 
+#' \code{multiple_nonlinear_fits}: class representing multiple nonlinear fits
 #'
 #' @rdname growthrates-classes
 #' @exportClass multiple_nonlinear_fits
-#' 
+#'
 setClass("multiple_nonlinear_fits",
          contains = "multiple_fits"
 )
 
-#' \code{multiple_smooth.spline_fits}: class representing multiple smooth.spline fits 
+#' \code{multiple_smooth.spline_fits}: class representing multiple smooth.spline fits
 #'
 #' @rdname growthrates-classes
 #' @exportClass multiple_smooth.spline_fits
-#' 
+#'
 setClass("multiple_smooth.spline_fits",
          contains = "multiple_fits"
 )

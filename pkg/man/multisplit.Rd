@@ -3,12 +3,18 @@
 \docType{methods}
 \name{multisplit}
 \alias{multisplit}
+\alias{multisplit,data.frame,character-method}
 \alias{multisplit,data.frame,formula-method}
+\alias{parse_formula}
 \title{Split Data Frame According to Multiple groups}
 \usage{
 multisplit(data, grouping, ...)
 
+parse_formula(grouping)
+
 \S4method{multisplit}{data.frame,formula}(data, grouping, ...)
+
+\S4method{multisplit}{data.frame,character}(data, grouping, ...)
 }
 \arguments{
 \item{data}{data frame containing several subsets}
@@ -51,6 +57,7 @@ summary(spl[["D:0:1"]])
 lapply(spl, FUN=function(x)
  plot(x$time, x$value,
       main=paste(x[1, "strain"], x[1, "conc"], x[1, "replicate"], sep=":")))
+
 
 }
 \seealso{

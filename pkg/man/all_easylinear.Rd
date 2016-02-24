@@ -4,13 +4,13 @@
 \alias{all_easylinear}
 \title{Easy Growth Rates Fit to data Frame}
 \usage{
-all_easylinear(df, criteria, time = "time", y = "value", h = 5,
+all_easylinear(data, grouping, time = "time", y = "value", h = 5,
   quota = 0.95)
 }
 \arguments{
-\item{df}{data frame of observational data}
+\item{data}{data frame of observational data}
 
-\item{criteria}{vector of criteria defining subsets in the data frame}
+\item{grouping}{model formula or character vector of criteria defining subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}
 
@@ -24,14 +24,14 @@ all_easylinear(df, criteria, time = "time", y = "value", h = 5,
 list with parameters of all  fits
 }
 \description{
-Determine maximum growth rates from log-linear part of the growth curve for 
+Determine maximum growth rates from log-linear part of the growth curve for
 a series of experiments.
 }
 \examples{
 
 library("growthrates")
-L <- all_easylinear(bactgrowth, 
-                     criteria=c("strain", "conc", "replicate"), 
+L <- all_easylinear(bactgrowth,
+                     grouping=c("strain", "conc", "replicate"),
                      time="time", y="value")
 summary(L)
 coef(L)
@@ -44,7 +44,7 @@ xyplot(mumax ~ conc|strain, data=results)
 
 }
 \references{
-Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy. 
+Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy.
   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
 }
 \seealso{

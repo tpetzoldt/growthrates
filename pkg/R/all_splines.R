@@ -52,6 +52,15 @@
 #'
 all_splines <- function(data, grouping, time="time", y="value",  optgrid = 50, ...) {
   splitted.data <- multisplit(data, grouping)
+
+  ## todo: consider to attach parsed formula as attr to splitted.data
+  if (inherits(grouping, "formula")) {
+    p <- parse_formula(grouping)
+    time     <- p$timevar
+    y        <- p$valuevar
+    grouping <- p$groups
+  }
+
   ## supress warnings, esp. in case of "perfect fit"
   fits <- lapply(splitted.data,
     function(tmp)

@@ -4,7 +4,7 @@
 \alias{all_growthmodels}
 \title{Fit Nonlinear Growth Models to Data Frame}
 \usage{
-all_growthmodels(FUN, p, df, criteria, time = "time", y = "value",
+all_growthmodels(FUN, p, data, grouping, time = "time", y = "value",
   lower = -Inf, upper = Inf, which = names(p), method = "Marq",
   transform = c("none", "log"), ..., ncores = detectCores(logical = FALSE))
 }
@@ -13,9 +13,9 @@ all_growthmodels(FUN, p, df, criteria, time = "time", y = "value",
 
 \item{p}{named vector of start parameters and initial values of the growth model}
 
-\item{df}{data frame of observational data}
+\item{data}{data frame of observational data}
 
-\item{criteria}{vector of criteria defining subsets in the data frame}
+\item{grouping}{vector of criteria defining subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}
 
@@ -52,14 +52,14 @@ data(bactgrowth)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 
 ## show which experiments are in splitted.data
-names(dat)
+names(splitted.data)
 
 ## get table from single experiment
 dat <- splitted.data[["D:0:1"]]
 
 fit0 <- fit_spline(dat$time, dat$value)
 
-fit1 <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"),
+fit1 <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"),
   spar=0.5)
 
 ## initial parameters
@@ -69,9 +69,9 @@ p <- c(coef(fit0), K = max(dat$value))
 lower = c(y0=0, mumax=0, K=0)
 
 ## fit all models
-fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
+fit2 <- all_growthmodels(FUN=grow_logistic, p=p, data=bactgrowth,
   lower = lower,
-  criteria = c("strain", "conc", "replicate"), ncores = 1)
+  grouping = c("strain", "conc", "replicate"), ncores = 1)
 
 results1 <- results(fit1)
 results2 <- results(fit2)

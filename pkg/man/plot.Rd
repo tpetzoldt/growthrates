@@ -26,7 +26,7 @@
 \S4method{plot}{multiple_fits,missing}(x, y, ...)
 }
 \arguments{
-\item{x}{an object returned by a model fitting function of package 
+\item{x}{an object returned by a model fitting function of package
 \pkg{growthrates}, that can contain one or multiple fits}
 
 \item{y}{(ignored) for compatibility with the default plot method}
@@ -43,12 +43,12 @@ Methods to plot growth model fits together with the data and, alternatively,
 plot diagnostics
 }
 \details{
-The plot methods detect automatically which type of plot is 
-  appropriate, depending on the class of \code{x} and can plot either one 
+The plot methods detect automatically which type of plot is
+  appropriate, depending on the class of \code{x} and can plot either one
   single model fit or a complete series (multiple fits). In the latter case
   it may be wise to redirect the graphics to an external file (e.g. a pdf)
   and / or to use tomething like \code{par(mfrow=c(3,3))}.
-  
+
   The \code{lines}-method is currently only available for single fits.
 }
 \examples{
@@ -78,13 +78,13 @@ lines(fit2, col="green")
 lines(fit3, col="red")
 
 
-all.fits <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"))
+all.fits <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"))
 par(mfrow=c(3,3))
 plot(all.fits)
-  
+
 }
 \seealso{
-\code{\link{plot.default}}, \code{\link{par}}, 
+\code{\link{plot.default}}, \code{\link{par}},
   \code{\link{fit_growthmodel}}, \code{\link{fit_easylinear}},
   \code{\link{all_growthmodels}}, \code{\link{all_easylinear}}
 }

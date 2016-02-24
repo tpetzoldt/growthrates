@@ -4,19 +4,19 @@
 \alias{all_splines}
 \title{Fit Exponential Growth Model with Smoothing Spline}
 \usage{
-all_splines(df, criteria, time = "time", y = "value", optgrid = 50, ...)
+all_splines(data, grouping, time = "time", y = "value", optgrid = 50, ...)
 }
 \arguments{
-\item{df}{data frame of observational data}
+\item{data}{data frame of observational data}
 
-\item{criteria}{vector of criteria defining subsets in the data frame}
+\item{grouping}{vector of criteria defining subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}
 
 \item{y}{character vector with name of dependent variable}
 
-\item{optgrid}{number of steps on the x-axis used for the optimum search 
-algorithm. The default should work in most cases, as long as the data are equally spaced. 
+\item{optgrid}{number of steps on the x-axis used for the optimum search
+algorithm. The default should work in most cases, as long as the data are equally spaced.
 A smaller number may lead to non-detectable speed-up, but has the risk that
 the search is trapped in a local minimum. ............ change this ........}
 
@@ -26,18 +26,18 @@ the search is trapped in a local minimum. ............ change this ........}
 object with parameters of the fit
 }
 \description{
-Determine maximum growth rates from log-linear part of the growth curve for 
+Determine maximum growth rates from log-linear part of the growth curve for
 a series of experiments by using smoothing splines.
 }
 \details{
-The method was inspired by an algorithm of Kahm et al. (2010), 
+The method was inspired by an algorithm of Kahm et al. (2010),
   with different settings and assumptions. In the moment, spline fitting
   is always done with log-transformed data, assuming exponential growth
   at the time point of the maximum of the first derivative of the spline fit.
-  
-  All the hard work is done by function \code{\link{smooth.spline}} from package 
-  \pkg{stats}, that is highly user configurable. Normally, smoothness is 
-  automatically determined via cross-validation. This works well in many cases, 
+
+  All the hard work is done by function \code{\link{smooth.spline}} from package
+  \pkg{stats}, that is highly user configurable. Normally, smoothness is
+  automatically determined via cross-validation. This works well in many cases,
   whereas manual adjustment is required otherwise, e.g. by setting \code{spar}
   to a fixed value \eqn{[0,1]} that also disables cross-validation.
 }
@@ -45,8 +45,8 @@ The method was inspired by an algorithm of Kahm et al. (2010),
 
 data(bactgrowth)
 
-L <- all_splines(bactgrowth, 
-       criteria=c("strain", "conc", "replicate"), spar = 0.5)
+L <- all_splines(bactgrowth,
+       grouping=c("strain", "conc", "replicate"), spar = 0.5)
 par(mfrow=c(3, 3))
 plot(L)
 results <- results(L)
@@ -55,8 +55,8 @@ xyplot(mumax ~ log(conc + 1)|strain, data=results)
 }
 \references{
 Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
-(2010). grofit: Fitting Biological Growth Curves with R. 
-Journal of Statistical Software, 33(7), 1-21. URL 
+(2010). grofit: Fitting Biological Growth Curves with R.
+Journal of Statistical Software, 33(7), 1-21. URL
 \url{http://www.jstatsoft.org/v33/i07/}
 }
 \seealso{

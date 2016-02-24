@@ -35,7 +35,7 @@
 #' splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 #'
 #' ## show which experiments are in splitted.data
-#' names(dat)
+#' names(splitted.data)
 #'
 #' ## get table from single experiment
 #' dat <- splitted.data[["D:0:1"]]
@@ -72,7 +72,8 @@ all_growthmodels <- function(FUN, p, data, grouping, time = "time", y = "value",
   ## check arguments -----------------------------------------------------------
 
   if (!is.data.frame(data)) stop("data must be a data frame")
-  if (!is.character(grouping) & !is.formula(grouping)) stop("grouping must be a formula or character vector")
+  if (!is.character(grouping) & !inherits(grouping, "formula"))
+    stop("grouping must be a formula or character vector")
   # todo:
   #if (!all(grouping %in% names(data))) stop("all grouping criteria must be column names of data")
   if (!is.function(FUN)) stop("FUN needs to be a valid growth model")
@@ -80,6 +81,14 @@ all_growthmodels <- function(FUN, p, data, grouping, time = "time", y = "value",
     stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
 
   splitted.data <- multisplit(data, grouping)
+
+  ## todo: consider to attach parsed formula as attr to splitted.data
+  if (inherits(grouping, "formula")) {
+    parsed   <- parse_formula(grouping)
+    time     <- parsed$timevar
+    y        <- parsed$valuevar
+    grouping <- parsed$groups
+  }
 
   ndata <- length(splitted.data)
 
