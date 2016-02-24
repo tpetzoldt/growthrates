@@ -1,16 +1,14 @@
-## -------------------------------------------------------------
 #' Additional Generic Functions
-## -------------------------------------------------------------
-#' 
-#' The following functions are specifically defined for package \pkg{growthrates}, 
+#'
+#' The following functions are specifically defined for package \pkg{growthrates},
 #' all other generics are imported.
-#' 
+#'
 #' @param object name of a 'growthrate' object
 #' @param \dots other arguments passed to the methods
-#' 
+#'
 #' @rdname generics
 #' @keywords internal
-#' 
+#'
 #' @exportMethod rsquared
 #'
 setGeneric("rsquared", function(object, ...) standardGeneric("rsquared"))
@@ -20,11 +18,13 @@ setGeneric("rsquared", function(object, ...) standardGeneric("rsquared"))
 #'
 setGeneric("obs", function(object, ...) standardGeneric("obs"))
 
-
-#' 
 #' @rdname generics
 #' @exportMethod results
-#'  
+#'
 setGeneric("results", function(object, ...) standardGeneric("results"))
 
+#' @rdname multisplit
+#' @exportMethod multisplit
+#'
+setGeneric("multisplit", function(data, grouping, ...) standardGeneric("multisplit"))
 

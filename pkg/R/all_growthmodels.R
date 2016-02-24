@@ -3,10 +3,10 @@
 #' Determine maximum growth rates by nonlinear fits for
 #' a series of experiments.
 #'
-#' @param df data frame of observational data
+#' @param data data frame of observational data
 #' @param time character vectors with name independent variable
 #' @param y character vector with name of dependent variable
-#' @param criteria vector of criteria defining subsets in the data frame
+#' @param grouping vector of criteria defining subsets in the data frame
 #' @param FUN function of growth model to be fitted
 #' @param p named vector of start parameters and initial values of the growth model
 #' @param lower lower bound of the parameter vector
@@ -42,7 +42,7 @@
 #'
 #' fit0 <- fit_spline(dat$time, dat$value)
 #'
-#' fit1 <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"),
+#' fit1 <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"),
 #'   spar=0.5)
 #'
 #' ## initial parameters
@@ -52,9 +52,9 @@
 #' lower = c(y0=0, mumax=0, K=0)
 #'
 #' ## fit all models
-#' fit2 <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
+#' fit2 <- all_growthmodels(FUN=grow_logistic, p=p, data=bactgrowth,
 #'   lower = lower,
-#'   criteria = c("strain", "conc", "replicate"), ncores = 1)
+#'   grouping = c("strain", "conc", "replicate"), ncores = 1)
 #'
 #' results1 <- results(fit1)
 #' results2 <- results(fit2)
@@ -62,7 +62,7 @@
 #' plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
 #' }
 #'
-all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
+all_growthmodels <- function(FUN, p, data, grouping, time = "time", y = "value",
                              lower = -Inf, upper = Inf,
                              which = names(p),
                              method = "Marq",
@@ -71,14 +71,15 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
 
   ## check arguments -----------------------------------------------------------
 
-  if (!is.data.frame(df)) stop("df must be a data frame")
-  if (!is.character(criteria)) stop("criteria must be a character vector")
-  if (!all(criteria %in% names(df))) stop("all criteria must be column names of df")
+  if (!is.data.frame(data)) stop("data must be a data frame")
+  if (!is.character(grouping) & !is.formula(grouping)) stop("grouping must be a formula or character vector")
+  # todo:
+  #if (!all(grouping %in% names(data))) stop("all grouping criteria must be column names of data")
   if (!is.function(FUN)) stop("FUN needs to be a valid growth model")
   if (!is.numericOrNull(lower) & is.numericOrNull(upper))
     stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
 
-  splitted.data <- multisplit(df, criteria)
+  splitted.data <- multisplit(data, grouping)
 
   ndata <- length(splitted.data)
 
@@ -168,6 +169,6 @@ all_growthmodels <- function(FUN, p, df, criteria, time = "time", y = "value",
   names(fits) <- names(splitted.data)
 
   ## create S4 object
-  new("multiple_nonlinear_fits", fits = fits, criteria = criteria)
+  new("multiple_nonlinear_fits", fits = fits, grouping = grouping)
 }
 
