@@ -26,7 +26,7 @@ lines(fit2, col="green")
 lines(fit3, col="red")
 
 ## use spline method with user-definded smoothness (spar)
-sfit <- all_splines(bactgrowth, criteria=c("strain", "conc", "replicate"),
+sfit <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"),
   spar=0.5)
 
 ## initial parameters
@@ -36,9 +36,13 @@ p <- c(coef(fit1), K = max(dat$value))
 lower = c(y0=0, mu=0, K=0)
 
 ## fit all models
-pfit <- all_growthmodels(FUN=grow_logistic, p=p, df=bactgrowth,
-  lower = lower, 
-  criteria=c("strain", "conc", "replicate"), ncores=1)
+pfit <- all_growthmodels(FUN=grow_logistic, p=p, data=bactgrowth,
+  lower = lower,
+  grouping=c("strain", "conc", "replicate"), ncores=2)
+
+## test test test
+par(mfrow=c(3, 3))
+plot(pfit)
 
 ## extract and compare results
 results1 <- results(sfit)
@@ -46,3 +50,4 @@ results2 <- results(pfit)
 
 plot(results1$mu, results2$mu, xlab="smooth splines", ylab="logistic")
 abline(a=0, b=1, lty="dashed")
+

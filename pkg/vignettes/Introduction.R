@@ -3,11 +3,11 @@ library("knitr")
 #knitr::opts_chunk$set(eval = FALSE)
 
 ## ----eval=TRUE, echo=FALSE, results="hide"-------------------------------
-#suppressMessages(require("growthrates"))
-require("growthrates")
+suppressMessages(require("growthrates"))
+#require("growthrates")
 
 ## ----eval=FALSE----------------------------------------------------------
-#  library("growthrates")
+## library("growthrates")
 
 ## ----eval=TRUE-----------------------------------------------------------
 data(bactgrowth)
@@ -102,7 +102,7 @@ coef(res)
 
 ## ----fig.width=14, fig.height=20-----------------------------------------
 many_spline_fits <- all_splines(bactgrowth, 
-                    criteria=c("strain", "conc", "replicate"), spar=0.5)
+                    grouping=c("strain", "conc", "replicate"), spar=0.5)
 
 par(mfrow=c(12,6))
 par(mar=c(2.5,4,2,1))
@@ -116,8 +116,8 @@ lower   <- c(y0=0.001, mumax=1e-2, K=0.005, h0=0)
 upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
 
 ## fit growth models to all data using log transformed residuals
-many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
+many_baranyi1 <- all_growthmodels(grow_baranyi, p=p, data=bactgrowth, 
+                      grouping = c("strain", "conc", "replicate"),
                       lower = lower, upper=upper, 
                       log="y", ncores = 2)
 
@@ -127,8 +127,8 @@ pp   <- coef(many_baranyi1)
 ## but set h0 to a fixed value
 pp[,"h0"] <- 0.65
 ## re-fit models
-many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
+many_baranyi2 <- all_growthmodels(grow_baranyi, p=pp, data=bactgrowth, 
+                      grouping = c("strain", "conc", "replicate"),
                       which=c("y0", "mumax", "K"),
                       lower = lower, upper=upper, log="y", ncores = 2)
 

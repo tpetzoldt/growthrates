@@ -2,7 +2,7 @@
 ##
 ## Note: the original model formulation works in log space, so that
 ##       y(t), y_0 and y_max are all given as natural log.
-##  This is advantageous for model fitting, but here we use y_0 and K in 
+##  This is advantageous for model fitting, but here we use y_0 and K in
 ##  untransformed space to be compatible with the growth parameters of
 ##  most other models. The downside is, that we need box constraints in most
 ##  cases and possibly more iterations.
@@ -15,8 +15,8 @@ library("lattice")
 
 ## load data
 data(bactgrowth)
-criteria <- c("strain", "conc", "replicate")
-splitted.data <- multisplit(bactgrowth, criteria)
+grouping <- c("strain", "conc", "replicate")
+splitted.data <- multisplit(bactgrowth, grouping)
 dat <- splitted.data[[23]]
 
 ## initial parameters and box constraints
@@ -50,9 +50,9 @@ pp <- rep(list(p), ndata)
 pp[[30]] <- c(y0=0.01, mumax=.1, K=0.02, alpha=1, lambda=2)
 
 ## fit growth models to all data using (log transformed residuals)
-L <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
-                      lower = lower, upper=upper, 
+L <- all_growthmodels(grow_huang, p=p, data=bactgrowth,
+                      grouping = c("strain", "conc", "replicate"),
+                      lower = lower, upper=upper,
                       log="y", ncores=4)
 
 
@@ -76,10 +76,10 @@ xyplot(mumax ~ log(conc + 1)| strain, data=res)
 ## 2nd approach: fit selected parameters, fix the remaining (here: alpha)
 ## alpha = 4 from the IPMP tutorial
 p   <- c(y0=0.03, mumax=.1, K=0.1, alpha=4, lambda=2)
-L2 <- all_growthmodels(grow_huang, p=p, df=bactgrowth, 
-                      criteria = c("strain", "conc", "replicate"),
+L2 <- all_growthmodels(grow_huang, p=p, data=bactgrowth,
+                      grouping = c("strain", "conc", "replicate"),
                       which=c("y0", "mumax", "K", "lambda"),
-                      lower = lower, upper=upper, 
+                      lower = lower, upper=upper,
                       method="Marq", log="y")
 
 

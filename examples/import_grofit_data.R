@@ -20,7 +20,7 @@ database <- cbind(m.time, m.data)[c("experiment", "conc", "time", "value", "info
 xyplot(value ~ time|experiment+conc, data=database)
 
 ## determine growth rate from maximum of 1st derivative of smoothing splines
-sfit <- all_splines(database, criteria = c("experiment", "conc"), spar=.8)
+sfit <- all_splines(database, grouping = c("experiment", "conc"), spar=.8)
 
 ## plot results in log scale
 par(mfrow=c(3,3))
@@ -33,16 +33,16 @@ plot(sfit)
 ## fit parametric model
 p <- c(y0=0.01, mumax=0.2, K=0.2)
 
-pfit <- all_growthmodels(grow_logistic, p=p, database, criteria=c("experiment", "conc"))
+pfit <- all_growthmodels(grow_logistic, p=p, database, grouping=c("experiment", "conc"))
 par(mfrow=c(3,3))
 plot(pfit)
 
 ## easy linear fit with default parameters
-efit <- all_easylinear(database, criteria=c("conc")) # variable experiment is redundant
+efit <- all_easylinear(database, grouping=c("conc")) # variable experiment is redundant
 plot(efit, log="y")
 
 ## easy linear fit with adapted settings
-efit2 <- all_easylinear(database, criteria=c("conc"), h=10, quota=0.95)
+efit2 <- all_easylinear(database, grouping=c("conc"), h=10, quota=0.95)
 mfrow=c(3,3)
 plot(efit2, log="y")
 
