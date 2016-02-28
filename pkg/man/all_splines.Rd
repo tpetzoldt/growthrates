@@ -8,25 +8,29 @@
 \usage{
 all_splines(...)
 
-\method{all_splines}{data.frame}(data, grouping, time = "time", y = "value",
-  optgrid = 50, ...)
+\method{all_splines}{formula}(formula, data, optgrid = 50, ...)
 
-\method{all_splines}{formula}(formula, data, time = "time", y = "value",
+\method{all_splines}{data.frame}(data, grouping, time = "time", y = "value",
   optgrid = 50, ...)
 }
 \arguments{
+\item{formula}{model formula specifying dependent, independent and grouping
+variables in the form:
+\code{dependend ~ independend | group1 + group2 + ...}}
+
 \item{data}{data frame of observational data}
+
+\item{optgrid}{number of steps on the x-axis used for searching the maximum
+of the first derivative of the spline.
+The default should work in most cases, as long as the data are equally spaced.
+A smaller number may lead to non-detectable speed-up, but has the risk that
+the search is trapped in a local minimum.}
 
 \item{grouping}{vector of criteria defining subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}
 
 \item{y}{character vector with name of dependent variable}
-
-\item{optgrid}{number of steps on the x-axis used for the optimum search
-algorithm. The default should work in most cases, as long as the data are equally spaced.
-A smaller number may lead to non-detectable speed-up, but has the risk that
-the search is trapped in a local minimum. ............ change this ........}
 
 \item{\dots}{other parameters passed to \code{\link{smooth.spline}}, see details.}
 }

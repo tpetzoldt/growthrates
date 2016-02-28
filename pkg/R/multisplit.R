@@ -3,12 +3,12 @@
 #' A data frame is split into a list of data subsets defined by multiple groups.
 #'
 #' @param formula model formula specifying dependent, independent and grouping
-#'   variables in the form:<cr>
+#'   variables in the form:
 #'   \code{dependend ~ independend | group1 + group2 + ...}
 #' @param data data frame containing several subsets
 #' @param grouping either a model formula specifying dependent,
 #'   independent and grouping variables in the form:<cr>
-#'   \code{dependend ~ independend | group1 + group2 + ...}</cr>
+#'   \code{dependend ~ independend | group1 + group2 + ...}
 #' or a character vector of column names defining the groups
 #'
 #'
