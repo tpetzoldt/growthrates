@@ -47,10 +47,14 @@
 #' results <- results(L)
 #' xyplot(mumax ~ log(conc + 1)|strain, data=results)
 #'
-#' @rdname all_splines
 #' @export all_splines
 #'
-all_splines <- function(data, grouping, time="time", y="value",  optgrid = 50, ...) {
+all_splines <- function(...) UseMethod("all_splines")
+
+#' @rdname all_splines
+#' @export all_splines.data.frame
+#'
+all_splines.data.frame <- function(data, grouping, time="time", y="value",  optgrid = 50, ...) {
   splitted.data <- multisplit(data, grouping)
 
   ## todo: consider to attach parsed formula as attr to splitted.data
@@ -66,4 +70,11 @@ all_splines <- function(data, grouping, time="time", y="value",  optgrid = 50, .
     function(tmp)
       suppressWarnings(fit_spline(tmp[,time], tmp[,y], optgrid=optgrid, ...)))
   new("multiple_smooth.spline_fits", fits=fits, grouping=grouping)
+}
+
+#' @rdname all_splines
+#' @export all_splines.formula
+#'
+all_splines.formula <- function(formula, data, time="time", y="value",  optgrid = 50, ...) {
+  all_splines.data.frame(data=data, grouping=formula, ...)
 }

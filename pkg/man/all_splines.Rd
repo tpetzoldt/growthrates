@@ -2,9 +2,17 @@
 % Please edit documentation in R/all_splines.R
 \name{all_splines}
 \alias{all_splines}
+\alias{all_splines.data.frame}
+\alias{all_splines.formula}
 \title{Fit Exponential Growth Model with Smoothing Spline}
 \usage{
-all_splines(data, grouping, time = "time", y = "value", optgrid = 50, ...)
+all_splines(...)
+
+\method{all_splines}{data.frame}(data, grouping, time = "time", y = "value",
+  optgrid = 50, ...)
+
+\method{all_splines}{formula}(formula, data, time = "time", y = "value",
+  optgrid = 50, ...)
 }
 \arguments{
 \item{data}{data frame of observational data}
