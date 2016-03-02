@@ -59,7 +59,8 @@ all_splines <- function(...) UseMethod("all_splines")
 #' @export
 #'
 all_splines.formula <- function(formula, data, optgrid = 50, ...) {
-  all_splines.data.frame(data=data, grouping=formula, ...)
+  X <- get_all_vars(formula, data, ...)
+  all_splines.data.frame(data = X, grouping = formula, ...)
 }
 
 #' @rdname all_splines
