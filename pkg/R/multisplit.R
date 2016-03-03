@@ -1,8 +1,8 @@
-#' Split Data Frame According to Multiple groups
+#' Split Data Frame into Multiple Groups
 #'
 #' A data frame is split into a list of data subsets defined by multiple groups.
 #'
-#' @param data data frame, matrix or vector containing several subsets
+#' @param data data frame, matrix or vector containing several subsets of data
 #' @param grouping either a character vector containing the names of the grouping variables
 #'   or a model formula specifying dependent,
 #'   independent and grouping variables in the form:
@@ -15,9 +15,10 @@
 #'
 #' @details This function is wrapper around \code{\link{split}} with
 #'   different defaults, slightly different behavior, and methods for additional
-#'   argument classes. \code{multisplit} returns always a data frame
+#'   argument classes. \code{multisplit} returns always a data frame.
 #'
-#' @return list containing data frames of the data subsets as its elements
+#' @return list containing data frames of the data subsets as its elements.
+#'   The components of the list are named by their grouping levels.
 #'
 #' @seealso \code{\link{split}}
 #'
