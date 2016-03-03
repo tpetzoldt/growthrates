@@ -3,8 +3,11 @@
 \docType{methods}
 \name{multisplit}
 \alias{multisplit}
+\alias{multisplit,ANY,ANY-method}
 \alias{multisplit,data.frame,character-method}
+\alias{multisplit,data.frame,factor-method}
 \alias{multisplit,data.frame,formula-method}
+\alias{multisplit,data.frame,list-method}
 \alias{parse_formula}
 \title{Split Data Frame According to Multiple groups}
 \usage{
@@ -12,27 +15,45 @@ multisplit(data, grouping, ...)
 
 parse_formula(grouping)
 
-\S4method{multisplit}{data.frame,formula}(data, grouping, ...)
+\S4method{multisplit}{data.frame,formula}(data, grouping, drop = TRUE,
+  sep = ":", ...)
 
-\S4method{multisplit}{data.frame,character}(data, grouping, ...)
+\S4method{multisplit}{data.frame,character}(data, grouping, drop = TRUE,
+  sep = ":", ...)
+
+\S4method{multisplit}{data.frame,factor}(data, grouping, drop = TRUE,
+  sep = ":", ...)
+
+\S4method{multisplit}{data.frame,list}(data, grouping, drop = TRUE,
+  sep = ":", ...)
+
+\S4method{multisplit}{ANY,ANY}(data, grouping, drop = TRUE, sep = ":", ...)
 }
 \arguments{
-\item{data}{data frame containing several subsets}
+\item{data}{data frame, matrix or vector containing several subsets}
 
-\item{grouping}{either a model formula specifying dependent,
-  independent and grouping variables in the form:<cr>
-  \code{dependend ~ independend | group1 + group2 + ...}
-or a character vector of column names defining the groups}
+\item{grouping}{either a character vector containing the names of the grouping variables
+or a model formula specifying dependent,
+independent and grouping variables in the form:
+\code{dependend ~ independend | group1 + group2 + ...}.
+It may also be a factor or list of factors as in \code{\link{split}}.}
 
-\item{formula}{model formula specifying dependent, independent and grouping
-variables in the form:
-\code{dependend ~ independend | group1 + group2 + ...}}
+\item{drop}{if drop is TRUE, unused factor levels are dropped from the result.
+The default is to drop all factor levels.}
+
+\item{sep}{string to construct the new level labels by joining the
+constituent ones.}
 }
 \value{
-list containing the data subsets as its elements
+list containing data frames of the data subsets as its elements
 }
 \description{
 A data frame is split into a list of data subsets defined by multiple groups.
+}
+\details{
+This function is wrapper around \code{\link{split}} with
+  different defaults, slightly different behavior, and methods for additional
+  argument classes. \code{multisplit} returns always a data frame
 }
 \examples{
 

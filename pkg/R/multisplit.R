@@ -2,18 +2,22 @@
 #'
 #' A data frame is split into a list of data subsets defined by multiple groups.
 #'
-#' @param formula model formula specifying dependent, independent and grouping
-#'   variables in the form:
-#'   \code{dependend ~ independend | group1 + group2 + ...}
-#' @param data data frame containing several subsets
-#' @param grouping either a model formula specifying dependent,
-#'   independent and grouping variables in the form:<cr>
-#'   \code{dependend ~ independend | group1 + group2 + ...}
-#' or a character vector of column names defining the groups
+#' @param data data frame, matrix or vector containing several subsets
+#' @param grouping either a character vector containing the names of the grouping variables
+#'   or a model formula specifying dependent,
+#'   independent and grouping variables in the form:
+#'   \code{dependend ~ independend | group1 + group2 + ...}.
+#'   It may also be a factor or list of factors as in \code{\link{split}}.
+#' @param drop if drop is TRUE, unused factor levels are dropped from the result.
+#'   The default is to drop all factor levels.
+#' @param sep	string to construct the new level labels by joining the
+#'   constituent ones.
 #'
+#' @details This function is wrapper around \code{\link{split}} with
+#'   different defaults, slightly different behavior, and methods for additional
+#'   argument classes. \code{multisplit} returns always a data frame
 #'
-#'
-#' @return list containing the data subsets as its elements
+#' @return list containing data frames of the data subsets as its elements
 #'
 #' @seealso \code{\link{split}}
 #'
@@ -66,7 +70,7 @@ parse_formula <- function(grouping) {
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("data.frame", "formula"),
-          function(data, grouping, ...) {
+          function(data, grouping, drop = TRUE, sep=":", ...) {
             if (missing(grouping) || (length(grouping) != 3L))
               stop("'grouping' missing or incorrect")
 
@@ -77,25 +81,46 @@ setMethod("multisplit", c("data.frame", "formula"),
 
             p <- parse_formula(grouping)
             nm <- names(data)
+            if (is.na(p$groups[1]))
+              stop("grouping variable(s) missing")
             if (!all(c(p$valuevar, p$timevar) %in% names(data)))
               stop("dependend and independend variables must be column names of data")
-            if (!all(p$groups %in% names(data))) stop("all grouping criteria must be column names of data")
+            if (!all(p$groups %in% names(data)))
+              stop("all grouping criteria must be column names of data")
 
             split(data[c(p$timevar, p$valuevar)], data[p$groups],
-                  drop = TRUE, sep = ":")
+                  drop = drop, sep = sep)
           })
 
 
 #' @rdname multisplit
 #' @exportMethod multisplit
 setMethod("multisplit", c("data.frame", "character"),
-          function(data, grouping, ...) {
-            if (!is.data.frame(data))
-              stop("'data' must be a data frame")
+          function(data, grouping, drop = TRUE, sep = ":", ...) {
             if (!all(grouping %in% names(data)))
               stop("Not all groups found in data frame")
-            split(data, data[, grouping], drop = TRUE, sep = ":")
+            split(data, data[, grouping], drop = drop, sep = sep)
           })
 
+#' @rdname multisplit
+#' @exportMethod multisplit
+setMethod("multisplit", c("data.frame", "factor"),
+          function(data, grouping, drop = TRUE, sep = ":", ...) {
+            split(data, list(grouping), drop = drop, sep = sep, ...)
+          })
 
+#' @rdname multisplit
+#' @exportMethod multisplit
+setMethod("multisplit", c("data.frame", "list"),
+          function(data, grouping, drop = TRUE, sep = ":", ...) {
+            split(data, grouping, drop = drop, sep = sep, ...)
+          })
+
+#' @rdname multisplit
+#' @exportMethod multisplit
+setMethod("multisplit", c("ANY", "ANY"),
+          function(data, grouping, drop = TRUE, sep = ":", ...) {
+              data <- as.data.frame(data)
+              multisplit(data, grouping, drop = drop, sep = sep, ...)
+            })
 
