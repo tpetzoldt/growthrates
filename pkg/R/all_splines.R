@@ -60,26 +60,28 @@ all_splines <- function(...) UseMethod("all_splines")
 #'
 all_splines.formula <- function(formula, data, optgrid = 50, ...) {
   X <- get_all_vars(formula, data, ...)
-  all_splines.data.frame(data = X, grouping = formula, ...)
+  all_splines.data.frame(data = X, grouping = formula, optgrid = optgrid, ...)
 }
 
 #' @rdname all_splines
 #' @export
 #'
-all_splines.data.frame <- function(data, grouping, time="time", y="value",  optgrid = 50, ...) {
-  splitted.data <- multisplit(data, grouping)
+all_splines.data.frame <-
+  function(data, grouping, time = "time", y = "value",  optgrid = 50, ...) {
+    splitted.data <- multisplit(data, grouping)
 
-  ## todo: consider to attach parsed formula as attr to splitted.data
-  if (inherits(grouping, "formula")) {
-    p <- parse_formula(grouping)
-    time     <- p$timevar
-    y        <- p$valuevar
-    grouping <- p$groups
+    ## todo: consider to attach parsed formula as attr to splitted.data
+    if (inherits(grouping, "formula")) {
+      p <- parse_formula(grouping)
+      time     <- p$timevar
+      y        <- p$valuevar
+      grouping <- p$groups
+    }
+
+    ## supress warnings, esp. in case of "perfect fit"
+    fits <- lapply(splitted.data,
+                   function(tmp)
+                     suppressWarnings(fit_spline(tmp[,time], tmp[,y],
+                                                 optgrid = optgrid, ...)))
+    new("multiple_smooth.spline_fits", fits = fits, grouping = grouping)
   }
-
-  ## supress warnings, esp. in case of "perfect fit"
-  fits <- lapply(splitted.data,
-                 function(tmp)
-                   suppressWarnings(fit_spline(tmp[,time], tmp[,y], optgrid=optgrid, ...)))
-  new("multiple_smooth.spline_fits", fits=fits, grouping=grouping)
-}

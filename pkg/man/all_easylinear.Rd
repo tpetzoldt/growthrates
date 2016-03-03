@@ -2,26 +2,40 @@
 % Please edit documentation in R/all_easylinear.R
 \name{all_easylinear}
 \alias{all_easylinear}
+\alias{all_easylinear.data.frame}
+\alias{all_easylinear.formula}
 \title{Easy Growth Rates Fit to data Frame}
 \usage{
-all_easylinear(data, grouping, time = "time", y = "value", h = 5,
-  quota = 0.95)
+all_easylinear(formula, data, h = 5, quota = 0.95, ...)
+
+\method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95, ...)
+
+\method{all_easylinear}{data.frame}(data, grouping, time = "time",
+  y = "value", h = 5, quota = 0.95, ...)
 }
 \arguments{
+\item{formula}{model formula specifying dependent, independent and grouping
+variables in the form:
+\code{dependend ~ independend | group1 + group2 + ...}}
+
 \item{data}{data frame of observational data}
 
-\item{grouping}{model formula or character vector of criteria defining subsets in the data frame}
+\item{h}{with of the window (number of data)}
+
+\item{quota}{part of window fits considered for the overall linear fit
+(relative to max. growth rate)}
+
+\item{grouping}{model formula or character vector of criteria defining
+subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}
 
 \item{y}{character vector with name of dependent variable}
 
-\item{h}{with of the window (number of data)}
-
-\item{quota}{part of window fits considered for the overall linear fit (relative to max. growth rate)}
+\item{optional}{arguments passed to \code{\link{interaction}}}
 }
 \value{
-list with parameters of all  fits
+list with parameters of all fits
 }
 \description{
 Determine maximum growth rates from log-linear part of the growth curve for

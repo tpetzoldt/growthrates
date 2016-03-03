@@ -9,7 +9,7 @@
 \alias{multisplit,data.frame,formula-method}
 \alias{multisplit,data.frame,list-method}
 \alias{parse_formula}
-\title{Split Data Frame According to Multiple groups}
+\title{Split Data Frame into Multiple Groups}
 \usage{
 multisplit(data, grouping, ...)
 
@@ -30,7 +30,7 @@ parse_formula(grouping)
 \S4method{multisplit}{ANY,ANY}(data, grouping, drop = TRUE, sep = ":", ...)
 }
 \arguments{
-\item{data}{data frame, matrix or vector containing several subsets}
+\item{data}{data frame, matrix or vector containing several subsets of data}
 
 \item{grouping}{either a character vector containing the names of the grouping variables
 or a model formula specifying dependent,
@@ -45,7 +45,8 @@ The default is to drop all factor levels.}
 constituent ones.}
 }
 \value{
-list containing data frames of the data subsets as its elements
+list containing data frames of the data subsets as its elements.
+  The components of the list are named by their grouping levels.
 }
 \description{
 A data frame is split into a list of data subsets defined by multiple groups.
@@ -53,7 +54,7 @@ A data frame is split into a list of data subsets defined by multiple groups.
 \details{
 This function is wrapper around \code{\link{split}} with
   different defaults, slightly different behavior, and methods for additional
-  argument classes. \code{multisplit} returns always a data frame
+  argument classes. \code{multisplit} returns always a data frame.
 }
 \examples{
 
