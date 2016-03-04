@@ -40,7 +40,7 @@ Determine maximum growth rates by fitting nonlinear models
 \details{
 This function calls \code{modFit} from package \pkg{FME}.
 Syntax of control parameters and available options may differ, depending
-on the optimizer used, except \code{control=list(trace=...)} that switches 
+on the optimizer used, except \code{control=list(trace=...)} that switches
   tracing on and off in all methods and is either \code{TRUE}, or \code{FALSE},
   or an integer value like 0, 1, 2, 3, depending on the optimizer.
 }

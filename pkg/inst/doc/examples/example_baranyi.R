@@ -50,7 +50,8 @@ system.time(
                         data = bactgrowth,
                         FUN = grow_baranyi, p=p,
                         lower = lower, upper=upper,
-                        log="y")
+                        log="y"
+                        )
 )
 
 

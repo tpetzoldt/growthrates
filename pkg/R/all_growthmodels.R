@@ -69,8 +69,11 @@ all_growthmodels <- function(...) UseMethod("all_growthmodels")
 #' @export
 #'
 all_growthmodels.formula <- function(formula, data, FUN, p, ...) {
-  X <- get_all_vars(formula, data, ...)
-  all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
+
+  ## todo: pass appropriate dots arguments to  get_all_vars
+
+  X <- get_all_vars(formula, data)
+  #all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
 }
 
 #' @rdname all_growthmodels
@@ -96,6 +99,7 @@ all_growthmodels.function <-
     stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
 
   splitted.data <- multisplit(data, grouping)
+  ndata <- length(splitted.data)
 
   ## todo: consider to attach parsed formula as attr to splitted.data
   if (inherits(grouping, "formula")) {
@@ -104,8 +108,6 @@ all_growthmodels.function <-
     y        <- parsed$valuevar
     grouping <- parsed$groups
   }
-
-  ndata <- length(splitted.data)
 
   ## convert p to data frame if matrix
   if (is.matrix(p)) {
