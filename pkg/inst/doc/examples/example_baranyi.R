@@ -15,7 +15,9 @@ library("lattice")
 
 ## load data
 data(bactgrowth)
-splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
+#splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
+splitted.data <- multisplit(value ~ time|strain + conc + replicate, data = bactgrowth)
+
 dat <- splitted.data[[23]]
 
 ## initial parameters and bocx constraints
@@ -33,20 +35,6 @@ fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
 coef(fit)
 plot(fit)
 
-## baranyi model with log transformed y0 and K
-px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
-
-lowerx   <- c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0)
-upperx   <- c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10)
-fitx <- fit_growthmodel(FUN=grow_baranyi_test, p=px, time=dat$time, y=dat$value,
-                        lower=lowerx, upper=upperx,
-                       control=list(trace=TRUE))
-
-
-coef(fitx)
-plot(fitx)
-
-
 
 ## fit growth models to all data using (log transformed residuals)
 system.time(
@@ -55,6 +43,16 @@ system.time(
                         lower = lower, upper=upper,
                         log="y")
 )
+
+## same with formula interface
+system.time(
+  L <- all_growthmodels(value ~ time|strain + conc + replicate,
+                        data = bactgrowth,
+                        FUN = grow_baranyi, p=p,
+                        lower = lower, upper=upper,
+                        log="y")
+)
+
 
 
 system.time({

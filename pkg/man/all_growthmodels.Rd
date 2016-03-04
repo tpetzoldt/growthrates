@@ -2,18 +2,25 @@
 % Please edit documentation in R/all_growthmodels.R
 \name{all_growthmodels}
 \alias{all_growthmodels}
+\alias{all_growthmodels.formula}
+\alias{all_growthmodels.function}
 \title{Fit Nonlinear Growth Models to Data Frame}
 \usage{
-all_growthmodels(FUN, p, data, grouping, time = "time", y = "value",
-  lower = -Inf, upper = Inf, which = names(p), method = "Marq",
-  transform = c("none", "log"), ..., ncores = detectCores(logical = FALSE))
+all_growthmodels(...)
+
+\method{all_growthmodels}{formula}(formula, data, FUN, p, ...)
+
+\method{all_growthmodels}{function}(FUN, p, data, grouping, time = "time",
+  y = "value", lower = -Inf, upper = Inf, which = names(p),
+  method = "Marq", transform = c("none", "log"), ...,
+  ncores = detectCores(logical = FALSE))
 }
 \arguments{
+\item{data}{data frame of observational data}
+
 \item{FUN}{function of growth model to be fitted}
 
 \item{p}{named vector of start parameters and initial values of the growth model}
-
-\item{data}{data frame of observational data}
 
 \item{grouping}{vector of criteria defining subsets in the data frame}
 

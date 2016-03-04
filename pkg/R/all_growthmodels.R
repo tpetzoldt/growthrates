@@ -25,8 +25,6 @@
 #'
 #' @family fitting functions
 #'
-#' @rdname all_growthmodels
-#' @export all_growthmodels
 #'
 #' @examples
 #'
@@ -62,7 +60,24 @@
 #' plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
 #' }
 #'
-all_growthmodels <- function(FUN, p, data, grouping, time = "time", y = "value",
+#' @rdname all_growthmodels
+#' @export
+#'
+all_growthmodels <- function(...) UseMethod("all_growthmodels")
+
+#' @rdname all_growthmodels
+#' @export
+#'
+all_growthmodels.formula <- function(formula, data, FUN, p, ...) {
+  X <- get_all_vars(formula, data, ...)
+  all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
+}
+
+#' @rdname all_growthmodels
+#' @export
+#'
+all_growthmodels.function <-
+  function(FUN, p, data, grouping, time = "time", y = "value",
                              lower = -Inf, upper = Inf,
                              which = names(p),
                              method = "Marq",

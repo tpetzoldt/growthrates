@@ -2,6 +2,8 @@
 
 S3method(all_easylinear,data.frame)
 S3method(all_easylinear,formula)
+S3method(all_growthmodels,"function")
+S3method(all_growthmodels,formula)
 S3method(all_splines,data.frame)
 S3method(all_splines,formula)
 S3method(names,growthmodel)
