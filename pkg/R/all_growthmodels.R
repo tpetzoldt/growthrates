@@ -73,7 +73,7 @@ all_growthmodels.formula <- function(formula, data, FUN, p, ...) {
   ## todo: pass appropriate dots arguments to  get_all_vars
 
   X <- get_all_vars(formula, data)
-  #all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
+  all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
 }
 
 #' @rdname all_growthmodels
