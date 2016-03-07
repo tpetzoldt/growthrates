@@ -8,7 +8,8 @@
 \usage{
 all_splines(...)
 
-\method{all_splines}{formula}(formula, data, optgrid = 50, ...)
+\method{all_splines}{formula}(formula, data = NULL, optgrid = 50,
+  subset = NULL, ...)
 
 \method{all_splines}{data.frame}(data, grouping, time = "time", y = "value",
   optgrid = 50, ...)

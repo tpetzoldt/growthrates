@@ -15,6 +15,7 @@
 #'  The default should work in most cases, as long as the data are equally spaced.
 #'  A smaller number may lead to non-detectable speed-up, but has the risk that
 #'  the search is trapped in a local minimum.
+#' @param subset a specification of the rows to be used: defaults to all rows.
 #' @param \dots other parameters passed to \code{\link{smooth.spline}}, see details.
 #'
 #' @return object with parameters of the fit
@@ -58,8 +59,9 @@ all_splines <- function(...) UseMethod("all_splines")
 #' @rdname all_splines
 #' @export
 #'
-all_splines.formula <- function(formula, data, optgrid = 50, ...) {
-  X <- get_all_vars(formula, data, ...)
+all_splines.formula <- function(formula, data=NULL, optgrid = 50, subset=NULL,  ...) {
+  X <- get_all_vars(formula, data,  ...)
+  if (!is.null(subset)) X <- X[subset, ]
   all_splines.data.frame(data = X, grouping = formula, optgrid = optgrid, ...)
 }
 
