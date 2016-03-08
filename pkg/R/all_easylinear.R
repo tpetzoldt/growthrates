@@ -42,7 +42,8 @@
 #' @rdname all_easylinear
 #' @export
 #'
-all_easylinear <- function(formula, data,  h = 5, quota = 0.95, ...) UseMethod("all_easylinear")
+all_easylinear <- function(...)
+  UseMethod("all_easylinear")
 
 #' @rdname all_easylinear
 #' @export

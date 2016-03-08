@@ -3,6 +3,9 @@
 #' Determine maximum growth rates by nonlinear fits for
 #' a series of experiments.
 #'
+#' @param formula model formula specifying dependent, independent and grouping
+#'   variables in the form:
+#'   \code{dependend ~ independend | group1 + group2 + ...}
 #' @param data data frame of observational data
 #' @param time character vectors with name independent variable
 #' @param y character vector with name of dependent variable
@@ -22,7 +25,6 @@
 #'   Usage of logical (hyperthreading) cores does not speed up computation.
 #'
 #' @return object containing the parameters of all fits
-
 #'
 #' @family fitting functions
 #'

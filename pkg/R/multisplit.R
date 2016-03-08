@@ -12,6 +12,7 @@
 #'   The default is to drop all factor levels.
 #' @param sep	string to construct the new level labels by joining the
 #'   constituent ones.
+#' @param \dots other parameters passed to \code{\link{split}}, see details.
 #'
 #' @details This function is wrapper around \code{\link{split}} with
 #'   different defaults, slightly different behavior, and methods for additional
@@ -96,6 +97,7 @@ setMethod("multisplit", c("data.frame", "formula"),
 
 #' @rdname multisplit
 #' @exportMethod multisplit
+#'
 setMethod("multisplit", c("data.frame", "character"),
           function(data, grouping, drop = TRUE, sep = ":", ...) {
             if (!all(grouping %in% names(data)))
@@ -105,6 +107,7 @@ setMethod("multisplit", c("data.frame", "character"),
 
 #' @rdname multisplit
 #' @exportMethod multisplit
+#'
 setMethod("multisplit", c("data.frame", "factor"),
           function(data, grouping, drop = TRUE, sep = ":", ...) {
             split(data, list(grouping), drop = drop, sep = sep, ...)
@@ -112,6 +115,7 @@ setMethod("multisplit", c("data.frame", "factor"),
 
 #' @rdname multisplit
 #' @exportMethod multisplit
+#'
 setMethod("multisplit", c("data.frame", "list"),
           function(data, grouping, drop = TRUE, sep = ":", ...) {
             split(data, grouping, drop = drop, sep = sep, ...)
@@ -119,6 +123,7 @@ setMethod("multisplit", c("data.frame", "list"),
 
 #' @rdname multisplit
 #' @exportMethod multisplit
+#'
 setMethod("multisplit", c("ANY", "ANY"),
           function(data, grouping, drop = TRUE, sep = ":", ...) {
               data <- as.data.frame(data)
