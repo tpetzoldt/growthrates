@@ -4,7 +4,10 @@
 #'
 #' @param x object of class multiple_fits
 #' @param i numeric or character index
-#' @param j NULL (for compatibility with other uses of  \code{[} or \code{[[]]})
+#' @param j NULL (for compatibility with other uses of  \code{[} or \code{[[})
+#' @param drop	If \code{TRUE} the result is coerced to the lowest possible
+#'   dimension
+#' @param \dots optional arguments passed to \code{[}
 #'
 #' @examples
 #'
@@ -46,4 +49,3 @@ setMethod("[[", c(x="multiple_fits", i="ANY", j="missing"),
              stop("[[ can only be used to select one single element")
             x@fits[[i]]
           })
-

@@ -18,6 +18,10 @@ all_growthmodels(...)
   ncores = detectCores(logical = FALSE))
 }
 \arguments{
+\item{formula}{model formula specifying dependent, independent and grouping
+variables in the form:
+\code{dependend ~ independend | group1 + group2 + ...}}
+
 \item{data}{data frame of observational data}
 
 \item{FUN}{function of growth model to be fitted}

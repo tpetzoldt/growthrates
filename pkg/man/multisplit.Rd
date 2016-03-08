@@ -43,6 +43,8 @@ The default is to drop all factor levels.}
 
 \item{sep}{string to construct the new level labels by joining the
 constituent ones.}
+
+\item{\dots}{other parameters passed to \code{\link{split}}, see details.}
 }
 \value{
 list containing data frames of the data subsets as its elements.

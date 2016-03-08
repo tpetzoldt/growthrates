@@ -6,7 +6,7 @@
 \alias{all_easylinear.formula}
 \title{Easy Growth Rates Fit to data Frame}
 \usage{
-all_easylinear(formula, data, h = 5, quota = 0.95, ...)
+all_easylinear(...)
 
 \method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95,
   subset = NULL, ...)
