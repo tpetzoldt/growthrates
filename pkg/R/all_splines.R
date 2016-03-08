@@ -44,8 +44,8 @@
 #'
 #' data(bactgrowth)
 #'
-#' L <- all_splines(bactgrowth,
-#'        grouping=c("strain", "conc", "replicate"), spar = 0.5)
+#' L <- all_splines(value ~ time | strain + conc + replicate,
+#'                  data = bactgrowth, spar = 0.5)
 #' par(mfrow=c(3, 3))
 #' plot(L)
 #' results <- results(L)

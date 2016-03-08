@@ -12,7 +12,7 @@
 #' @examples
 #'
 #' data(bactgrowth)
-#' L <- all_splines(bactgrowth, value ~ time | strain + conc +replicate)
+#' L <- all_splines(value ~ time | strain + conc +replicate, data=bactgrowth)
 #'
 #' coef(L[[1]])
 #'
