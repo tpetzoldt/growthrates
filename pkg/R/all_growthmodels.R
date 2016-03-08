@@ -14,11 +14,12 @@
 #' @param which vector of parameter names that are to be fitted
 #' @param method character vector specifying the optimization algorithm
 #' @param transform fit model to non-transformed or log-transformed data
+#' @param subset a specification of the rows to be used: defaults to all rows.
 #' @param \dots additional parameters passed to the optimizer
 #' @param ncores number of CPU cores used for parallel computation. The number
 #'   of real cores is detected automatically by default,
 #'   but fort debugging purposes it could be wise to set \code{ncores = 1}.
-#'   Usage of logical cores does not speed up computation.
+#'   Usage of logical (hyperthreading) cores does not speed up computation.
 #'
 #' @return object containing the parameters of all fits
 
@@ -68,12 +69,25 @@ all_growthmodels <- function(...) UseMethod("all_growthmodels")
 #' @rdname all_growthmodels
 #' @export
 #'
-all_growthmodels.formula <- function(formula, data, FUN, p, ...) {
-
-  ## todo: pass appropriate dots arguments to  get_all_vars
+all_growthmodels.formula <- function(formula, data, FUN, p,
+                                     lower = -Inf, upper = Inf,
+                                     which = names(p),
+                                     method = "Marq",
+                                     transform = c("none", "log"), ...,
+                                     subset = NULL,
+                                     ncores = detectCores(logical = FALSE)
+                                     ) {
 
   X <- get_all_vars(formula, data)
-  all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula, ...)
+  if (!is.null(subset)) X <- X[subset, ]
+
+  ## pass all arguments except subset
+  ## grouping is formula from which y and time vars will be taken
+  all_growthmodels.function(FUN=FUN, p=p, data = X, grouping = formula,
+                            lower = lower, upper = upper,
+                            which = which, method = method,
+                            transform = transform, ...,
+                            ncores = ncores)
 }
 
 #' @rdname all_growthmodels

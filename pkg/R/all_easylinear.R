@@ -14,7 +14,8 @@
 #' @param h with of the window (number of data)
 #' @param quota part of window fits considered for the overall linear fit
 #'   (relative to max. growth rate)
-#' @param optional arguments passed to \code{\link{interaction}}
+#' @param subset a specification of the rows to be used: defaults to all rows.
+#' @param \dots optional arguments passed to \code{\link{interaction}}
 #'
 #' @return list with parameters of all fits
 #'
@@ -46,8 +47,10 @@ all_easylinear <- function(formula, data,  h = 5, quota = 0.95, ...) UseMethod("
 #' @rdname all_easylinear
 #' @export
 #'
-all_easylinear.formula <- function(formula, data,  h = 5, quota = 0.95, ...) {
-  X <- get_all_vars(formula, data, ...)
+all_easylinear.formula <- function(formula, data,  h = 5, quota = 0.95,
+                                   subset = NULL, ...) {
+  X <- get_all_vars(formula, data)
+  if (!is.null(subset)) X <- X[subset, ]
   all_easylinear.data.frame(data = X, grouping = formula, h = h, quota = quota)
 }
 

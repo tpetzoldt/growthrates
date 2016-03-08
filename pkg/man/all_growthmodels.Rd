@@ -8,7 +8,9 @@
 \usage{
 all_growthmodels(...)
 
-\method{all_growthmodels}{formula}(formula, data, FUN, p, ...)
+\method{all_growthmodels}{formula}(formula, data, FUN, p, lower = -Inf,
+  upper = Inf, which = names(p), method = "Marq", transform = c("none",
+  "log"), ..., subset = NULL, ncores = detectCores(logical = FALSE))
 
 \method{all_growthmodels}{function}(FUN, p, data, grouping, time = "time",
   y = "value", lower = -Inf, upper = Inf, which = names(p),
@@ -22,12 +24,6 @@ all_growthmodels(...)
 
 \item{p}{named vector of start parameters and initial values of the growth model}
 
-\item{grouping}{vector of criteria defining subsets in the data frame}
-
-\item{time}{character vectors with name independent variable}
-
-\item{y}{character vector with name of dependent variable}
-
 \item{lower}{lower bound of the parameter vector}
 
 \item{upper}{upper bound of the parameter vector}
@@ -38,10 +34,18 @@ all_growthmodels(...)
 
 \item{transform}{fit model to non-transformed or log-transformed data}
 
+\item{subset}{a specification of the rows to be used: defaults to all rows.}
+
 \item{ncores}{number of CPU cores used for parallel computation. The number
 of real cores is detected automatically by default,
 but fort debugging purposes it could be wise to set \code{ncores = 1}.
-Usage of logical cores does not speed up computation.}
+Usage of logical (hyperthreading) cores does not speed up computation.}
+
+\item{grouping}{vector of criteria defining subsets in the data frame}
+
+\item{time}{character vectors with name independent variable}
+
+\item{y}{character vector with name of dependent variable}
 
 \item{\dots}{additional parameters passed to the optimizer}
 }

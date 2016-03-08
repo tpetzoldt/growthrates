@@ -27,6 +27,8 @@ The default should work in most cases, as long as the data are equally spaced.
 A smaller number may lead to non-detectable speed-up, but has the risk that
 the search is trapped in a local minimum.}
 
+\item{subset}{a specification of the rows to be used: defaults to all rows.}
+
 \item{grouping}{vector of criteria defining subsets in the data frame}
 
 \item{time}{character vectors with name independent variable}

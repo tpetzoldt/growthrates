@@ -8,7 +8,8 @@
 \usage{
 all_easylinear(formula, data, h = 5, quota = 0.95, ...)
 
-\method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95, ...)
+\method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95,
+  subset = NULL, ...)
 
 \method{all_easylinear}{data.frame}(data, grouping, time = "time",
   y = "value", h = 5, quota = 0.95, ...)
@@ -25,6 +26,8 @@ variables in the form:
 \item{quota}{part of window fits considered for the overall linear fit
 (relative to max. growth rate)}
 
+\item{subset}{a specification of the rows to be used: defaults to all rows.}
+
 \item{grouping}{model formula or character vector of criteria defining
 subsets in the data frame}
 
@@ -32,7 +35,7 @@ subsets in the data frame}
 
 \item{y}{character vector with name of dependent variable}
 
-\item{optional}{arguments passed to \code{\link{interaction}}}
+\item{\dots}{optional arguments passed to \code{\link{interaction}}}
 }
 \value{
 list with parameters of all fits
