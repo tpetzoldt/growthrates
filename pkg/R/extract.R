@@ -26,7 +26,8 @@
 #'
 setMethod("[", c(x="multiple_fits", i="ANY", j="missing"),
           function(x, i, j=NULL, ...) {
-            #if (!is.null(j)) stop("incorrect number of subscripts")
+            ## if (!is.null(j))
+            ##   stop("incorrect number of subscripts")
             if (length(i) == 1) {
               x@fits[i=i]
             } else {
@@ -42,9 +43,8 @@ setMethod("[", c(x="multiple_fits", i="ANY", j="missing"),
 #'
 setMethod("[[", c(x="multiple_fits", i="ANY", j="missing"),
          function(x, i, j, ...) {
-           ## already handled by generic
-           #if (!is.null(j))
-           #   stop("incorrect number of subscripts")
+           ## if (!is.null(j))
+           ##   stop("incorrect number of subscripts")
            if (length(i) > 1)
              stop("[[ can only be used to select one single element")
             x@fits[[i]]

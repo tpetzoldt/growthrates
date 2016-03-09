@@ -47,9 +47,7 @@ a series of experiments.
 \examples{
 
 library("growthrates")
-L <- all_easylinear(bactgrowth,
-                     grouping=c("strain", "conc", "replicate"),
-                     time="time", y="value")
+L <- all_easylinear(value ~ time | strain + conc + replicate, data=bactgrowth)
 summary(L)
 coef(L)
 rsquared(L)

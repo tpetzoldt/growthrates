@@ -64,7 +64,8 @@ a series of experiments.
 
 \dontrun{
 data(bactgrowth)
-splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
+splitted.data <- multisplit(value ~ time | strain + conc + replicate,
+                 data = bactgrowth)
 
 ## show which experiments are in splitted.data
 names(splitted.data)
@@ -74,8 +75,8 @@ dat <- splitted.data[["D:0:1"]]
 
 fit0 <- fit_spline(dat$time, dat$value)
 
-fit1 <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"),
-  spar=0.5)
+fit1 <- all_splines(value ~ time | strain + conc + replicate,
+                 data = bactgrowth, spar=0.5)
 
 ## initial parameters
 p <- c(coef(fit0), K = max(dat$value))
@@ -84,9 +85,9 @@ p <- c(coef(fit0), K = max(dat$value))
 lower = c(y0=0, mumax=0, K=0)
 
 ## fit all models
-fit2 <- all_growthmodels(FUN=grow_logistic, p=p, data=bactgrowth,
-  lower = lower,
-  grouping = c("strain", "conc", "replicate"), ncores = 1)
+fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
+                 data = bactgrowth, FUN=grow_logistic,
+                 p=p, lower = lower, ncores = 1)
 
 results1 <- results(fit1)
 results2 <- results(fit2)
