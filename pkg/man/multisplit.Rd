@@ -8,12 +8,9 @@
 \alias{multisplit,data.frame,factor-method}
 \alias{multisplit,data.frame,formula-method}
 \alias{multisplit,data.frame,list-method}
-\alias{parse_formula}
 \title{Split Data Frame into Multiple Groups}
 \usage{
-multisplit(data, grouping, ...)
-
-parse_formula(grouping)
+multisplit(data, grouping, drop = TRUE, sep = ":", ...)
 
 \S4method{multisplit}{data.frame,formula}(data, grouping, drop = TRUE,
   sep = ":", ...)
@@ -87,4 +84,5 @@ lapply(spl, FUN=function(x)
 \seealso{
 \code{\link{split}}
 }
+\keyword{internal}
 

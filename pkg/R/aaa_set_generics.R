@@ -26,5 +26,5 @@ setGeneric("results", function(object, ...) standardGeneric("results"))
 #' @rdname multisplit
 #' @exportMethod multisplit
 #'
-setGeneric("multisplit", function(data, grouping, ...) standardGeneric("multisplit"))
+setGeneric("multisplit", function(data, grouping, drop = TRUE, sep = ":", ...) standardGeneric("multisplit"))
 

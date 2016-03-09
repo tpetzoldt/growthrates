@@ -53,7 +53,7 @@ http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial%201-9-14.pdf
 Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_exponential}},
   \code{\link{grow_gompertz}}, \code{\link{grow_logistic}},
-  \code{\link{grow_richards}},
+  \code{\link{grow_richards}}, \code{\link{growthmodel}},
   \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}}
 }
 

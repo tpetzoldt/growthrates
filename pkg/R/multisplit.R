@@ -49,26 +49,7 @@
 #'
 #'
 #' @rdname multisplit
-#'
-parse_formula <- function(grouping) {
-  tm <- terms(grouping)
-
-  valuevar <- as.character(tm[[2]])
-  RHS      <- as.character(tm[[3]])
-  timevar  <- RHS[2]
-  groups   <-
-    gsub("[*:]", "+", RHS[3])       # convert "*" or ":" to "+"
-  groups   <-
-    unlist(strsplit(groups, "[+]")) # split right hand side
-  groups   <- gsub("^\\s+|\\s+$", "", groups) # trim
-
-  list(valuevar = valuevar,
-       timevar = timevar,
-       groups = groups)
-}
-
-#' @docType methods
-#' @rdname multisplit
+#' @keywords internal
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("data.frame", "formula"),
@@ -96,6 +77,7 @@ setMethod("multisplit", c("data.frame", "formula"),
 
 
 #' @rdname multisplit
+#' @keywords internal
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("data.frame", "character"),
@@ -106,6 +88,7 @@ setMethod("multisplit", c("data.frame", "character"),
           })
 
 #' @rdname multisplit
+#' @keywords internal
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("data.frame", "factor"),
@@ -114,6 +97,7 @@ setMethod("multisplit", c("data.frame", "factor"),
           })
 
 #' @rdname multisplit
+#' @keywords internal
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("data.frame", "list"),
@@ -122,6 +106,7 @@ setMethod("multisplit", c("data.frame", "list"),
           })
 
 #' @rdname multisplit
+#' @keywords internal
 #' @exportMethod multisplit
 #'
 setMethod("multisplit", c("ANY", "ANY"),

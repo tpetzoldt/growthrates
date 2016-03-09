@@ -53,7 +53,7 @@ Res. Lett. Inf. Math. Sci, (2001) 2, 23--46.
 Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_exponential}},
   \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
-  \code{\link{grow_logistic}},
+  \code{\link{grow_logistic}}, \code{\link{growthmodel}},
   \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}}
 }
 

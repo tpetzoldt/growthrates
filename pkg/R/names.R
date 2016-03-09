@@ -1,19 +1,42 @@
-#' Get Parameter Names of a Growth Model
+#' Get Names Attributes of Growth Models
 #'
-#' Method to get the parameter names of a growth model
+#' Methods to get the parameter names of a growth model or to get or set
+#'   identifiers of \code{\link{multiple_fits}} objects.
 #'
-#' @param x a function that is parametric growth model in \pkg{growthmodels}
+#' @param x either a function being a parametric growth model of
+#'   package \pkg{growthmodels} or an object with multiple fits.
+#' @param value a character vector of up to the same length as x, or NULL
 #'
 #' @return character vector of the parameter names
 #'
-#' @details This function returns information about valid varameter names
-#'   and allows automatic checking. For functions containing no \code{pnames}
-#'   attribute \code{names} returns \code{NULL}.
+#' @details The \code{\link{growthmodel}} meththod returns information about
+#'   valid varameter names and allows automatic checking.
+#'   For functions containing no \code{pnames} attribute \code{names} returns
+#'   \code{NULL}.\cr
+#'   The \code{\link{multiple_fits}} method can be applied to the objects
+#'   returned by \code{\link{all_growthmodels}}, \code{\link{all_splines}} or
+#'   \code{\link{all_easylinear}} respectively. This can be useful for selecting
+#'   subsets, e.g. for plotting.
+#'
+#' @seealso \code{\link{multiple_fits}}, \code{\link{all_growthmodels}},
+#'   \code{\link{all_splines}}, \code{\link{all_easylinear}}
 #'
 #' @examples
 #'
+#' ## growthmodel-method
 #' names(grow_baranyi)
 #'
+#' ## multiple_fits-method
+#' L <- all_splines(value ~ time | strain + conc + replicate,
+#'        data = bactgrowth)
+#'
+#' names(L)
+#'
+#' ## plot only the 'R' strain
+#' par(mfrow=c(4, 6))
+#' plot(all.fits[grep("R:", names(all.fits))])
+#'
+#' @rdname names
 #' @aliases names-growthmodel
 #' @exportMethod names
 #'
@@ -24,29 +47,8 @@ setMethod("names", "growthmodel",
 )
 
 
-#' Get Names of a Multiple Growth Models Object
-#'
-#' Method to get or set names of a multiple growth models object
-#'
-#' @param x an object containing multiple growth models
-#' @param value a character vector of up to the same length as x, or NULL
-#'
-#' @return character vector of the parameter names
-#'
-#' @details This function can be applied to the objects returned by
-#'   \code{\link{all_growthmodels}}, \code{\link{all_splines}} and
-#'   \code{\link{all_easylinear}}
-#'
-#' @examples
-#'
-#' L <- all_splines(value ~ time | strain + conc + replicate,
-#'        data = bactgrowth)
-#'
-#' names(L)
-#'
-#' @rdname names-multiple_fits
-#' @aliases names-multiple_fits-method
-#' @exportMethod names
+#' @rdname names
+#' @aliases names-multiple_fits
 #'
 setMethod("names", "multiple_fits",
           function(x) {
@@ -54,7 +56,8 @@ setMethod("names", "multiple_fits",
           }
 )
 
-#' @rdname names-multiple_fits
+#' @rdname names
+#' @aliases names-multiple_fits<-
 #' @exportMethod "names<-"
 #'
 setMethod("names<-", c("multiple_fits", "ANY"),

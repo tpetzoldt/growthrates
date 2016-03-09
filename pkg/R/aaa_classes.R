@@ -6,13 +6,11 @@
 ### Helper Classes
 ### ----------------------------------------------------------------------------
 
+#' @include aaa_growthmodel-class.R
+
 setOldClass(c("modFit", "summary.modFit")) # classes from package FME
 
 setOldClass("smooth.spline")
-
-setOldClass("growthmodel") # S3 class
-
-setClassUnion("function_growthmodel", c("growthmodel", "function"))
 
 
 ### ----------------------------------------------------------------------------
