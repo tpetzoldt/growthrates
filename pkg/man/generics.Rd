@@ -4,6 +4,7 @@
 \alias{obs}
 \alias{results}
 \alias{rsquared}
+\title{Additional Generic Functions}
 \usage{
 rsquared(object, ...)
 
@@ -15,6 +16,10 @@ results(object, ...)
 \item{object}{name of a 'growthrate' object}
 
 \item{\dots}{other arguments passed to the methods}
+}
+\description{
+These functions are specifically defined for package \pkg{growthrates},
+all other generics are imported.
 }
 \keyword{internal}
 

@@ -1,15 +1,15 @@
-#' @include aac_classes.R
-
 #' Additional Generic Functions
 #'
-#' The following functions are specifically defined for package \pkg{growthrates},
+#' These functions are specifically defined for package \pkg{growthrates},
 #' all other generics are imported.
 #'
 #' @param object name of a 'growthrate' object
 #' @param \dots other arguments passed to the methods
+#
 #'
 #' @rdname generics
 #' @keywords internal
+#' @include aac_classes.R
 #'
 #' @exportMethod rsquared
 #'
