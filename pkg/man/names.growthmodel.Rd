@@ -17,7 +17,7 @@ Method to get the parameter names of a growth model
 }
 \details{
 This function returns information about valid varameter names
-  and allows automatic checking. For functions containing no \code{pnames} 
+  and allows automatic checking. For functions containing no \code{pnames}
   attribute \code{names} returns \code{NULL}.
 }
 \examples{

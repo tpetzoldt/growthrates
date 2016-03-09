@@ -50,6 +50,11 @@
 #' par(mfrow=c(3,3))
 #' plot(all.fits)
 #'
+#' ## it is also possible to plot a single fit or a subset of the fits
+#' par(mfrow=c(1,1))
+#' plot(all.fits[["D:0:1"]])
+#' plot(all.fits[1:9])
+#'
 #' @seealso \code{\link{plot.default}}, \code{\link{par}},
 #'   \code{\link{fit_growthmodel}}, \code{\link{fit_easylinear}},
 #'   \code{\link{all_growthmodels}}, \code{\link{all_easylinear}}
