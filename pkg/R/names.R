@@ -37,17 +37,15 @@
 #'
 #' ## plot only the 'R' strain
 #' par(mfrow=c(4, 6))
-#' plot(all.fits[grep("R:", names(all.fits))])
+#' plot(L[grep("R:", names(L))])
 #'
 #'
-## S3 method
 #' @rdname names
-#' @export names
-#' @export names.growthmodel
+#' @export
 #'
 names.growthmodel <- function(x) attr(x, "pnames")
 
-## S4 method does not work here (even if a setGeneric 'pnames' would)
+## S4 method does not work here (even if a setGeneric 'pnames' would do)
 ##    so we use the S3 method above
 #setMethod("names", "growthmodel",
 #          function(x) {

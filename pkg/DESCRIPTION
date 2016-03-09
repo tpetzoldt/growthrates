@@ -26,6 +26,7 @@ Suggests:
     knitr
 RoxygenNote: 5.0.1
 Collate:
+    'growthmodel-constructor.R'
     'aaa_growthmodel-class.R'
     'aaa_classes.R'
     'aaa_set_generics.R'

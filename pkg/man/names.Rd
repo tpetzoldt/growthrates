@@ -51,7 +51,7 @@ names(L)
 
 ## plot only the 'R' strain
 par(mfrow=c(4, 6))
-plot(all.fits[grep("R:", names(all.fits))])
+plot(L[grep("R:", names(L))])
 
 
 }
