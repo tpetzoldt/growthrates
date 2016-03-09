@@ -97,6 +97,7 @@ setClass("smooth.spline_fit",
 #' any method
 #'
 #' @rdname growthrates-classes
+#' @aliases multiple_fits
 #' @exportClass multiple_fits
 #'
 setClass("multiple_fits",

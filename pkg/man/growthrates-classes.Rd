@@ -5,6 +5,7 @@
 \alias{easylinear_fit-class}
 \alias{growthrates_fit-class}
 \alias{multiple_easylinear_fits-class}
+\alias{multiple_fits}
 \alias{multiple_fits-class}
 \alias{multiple_nonlinear_fits-class}
 \alias{multiple_smooth.spline_fits-class}

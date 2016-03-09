@@ -9,14 +9,17 @@
 #'
 #' @return character vector of the parameter names
 #'
-#' @details The \code{\link{growthmodel}} meththod returns information about
-#'   valid varameter names and allows automatic checking.
-#'   For functions containing no \code{pnames} attribute \code{names} returns
-#'   \code{NULL}.\cr
-#'   The \code{\link{multiple_fits}} method can be applied to the objects
-#'   returned by \code{\link{all_growthmodels}}, \code{\link{all_splines}} or
-#'   \code{\link{all_easylinear}} respectively. This can be useful for selecting
-#'   subsets, e.g. for plotting.
+#' @section Methods:
+#' \describe{
+#'   \item{Method for class \code{\link{growthmodel}}:}{ returns information about
+#'   valid parameter names if a \code{pnames} attribute exists, else \code{NULL}.
+#'   \code{NULL}.}
+#'   \item{Method for class \code{\link{multiple_fits}}:}{ can be applied to objects
+#'   returned by \code{all_growthmodels}, \code{all_splines} or
+#'   \code{all_easylinear} respectively. This can be useful for selecting
+#'   subsets, e.g. for plotting, see example below.}
+#' }
+
 #'
 #' @seealso \code{\link{multiple_fits}}, \code{\link{all_growthmodels}},
 #'   \code{\link{all_splines}}, \code{\link{all_easylinear}}
@@ -36,19 +39,25 @@
 #' par(mfrow=c(4, 6))
 #' plot(all.fits[grep("R:", names(all.fits))])
 #'
-#' @rdname names
-#' @aliases names-growthmodel
-#' @exportMethod names
 #'
-setMethod("names", "growthmodel",
-          function(x) {
-            attr(x, "pnames")
-          }
-)
+## S3 method
+#' @rdname names
+#' @export names
+#' @export names.growthmodel
+#'
+names.growthmodel <- function(x) attr(x, "pnames")
+
+## S4 method does not work here (even if a setGeneric 'pnames' would)
+##    so we use the S3 method above
+#setMethod("names", "growthmodel",
+#          function(x) {
+#            attr(x, "pnames")
+#          }
+#)
 
 
 #' @rdname names
-#' @aliases names-multiple_fits
+#' @exportMethod names
 #'
 setMethod("names", "multiple_fits",
           function(x) {
@@ -57,14 +66,12 @@ setMethod("names", "multiple_fits",
 )
 
 #' @rdname names
-#' @aliases names-multiple_fits<-
-#' @exportMethod "names<-"
+#' @exportMethod names<-
 #'
 setMethod("names<-", c("multiple_fits", "ANY"),
           function(x, value) {
             if (!is.character(value))
               value <- as.character(value)
-            cat("match\n")
             ## todo: check length?
             names(x@fits) <- value
           }
