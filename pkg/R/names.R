@@ -14,6 +14,7 @@
 #'
 #' names(grow_baranyi)
 #'
+#' @aliases names-growthmodel
 #' @exportMethod names
 #'
 setMethod("names", "growthmodel",
@@ -44,6 +45,7 @@ setMethod("names", "growthmodel",
 #' names(L)
 #'
 #' @rdname names-multiple_fits
+#' @aliases names-multiple_fits-method
 #' @exportMethod names
 #'
 setMethod("names", "multiple_fits",

@@ -78,14 +78,19 @@ lines(fit2, col="green")
 lines(fit3, col="red")
 
 
-all.fits <- all_splines(bactgrowth, grouping=c("strain", "conc", "replicate"))
+all.fits <- all_splines(value ~ time | strain + conc + replicate, data = bactgrowth)
 par(mfrow=c(3,3))
 plot(all.fits)
 
 ## it is also possible to plot a single fit or a subset of the fits
 par(mfrow=c(1,1))
 plot(all.fits[["D:0:1"]])
-plot(all.fits[1:9])
+par(mfrow=c(2,2))
+plot(all.fits[1:4])
+
+## plot only the 'R' strain
+par(mfrow=c(4, 6))
+plot(all.fits[grep("R:", names(all.fits))])
 
 }
 \seealso{
