@@ -26,10 +26,10 @@ Suggests:
     knitr
 RoxygenNote: 5.0.1
 Collate:
-    'growthmodel-constructor.R'
     'aaa_growthmodel-class.R'
-    'aaa_classes.R'
-    'aaa_set_generics.R'
+    'aab_growthmodel-constructor.R'
+    'aac_classes.R'
+    'aad_set_generics.R'
     'all_easylinear.R'
     'all_growthmodels.R'
     'all_splines.R'

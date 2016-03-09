@@ -6,7 +6,7 @@
 ### Helper Classes
 ### ----------------------------------------------------------------------------
 
-#' @include aaa_growthmodel-class.R growthmodel-constructor.R
+#' @include aaa_growthmodel-class.R aab_growthmodel-constructor.R
 
 setOldClass(c("modFit", "summary.modFit")) # classes from package FME
 

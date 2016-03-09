@@ -1,3 +1,5 @@
+#' @include aac_classes.R
+
 #' Additional Generic Functions
 #'
 #' The following functions are specifically defined for package \pkg{growthrates},
