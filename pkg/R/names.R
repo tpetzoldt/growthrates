@@ -14,11 +14,13 @@
 #'
 #' names(grow_baranyi)
 #'
-#' @export
+#' @exportMethod names
 #'
-names.growthmodel <- function(x) {
-  attr(x, "pnames")
-}
+setMethod("names", "growthmodel",
+          function(x) {
+            attr(x, "pnames")
+          }
+)
 
 
 #' Get Names of a Multiple Growth Models Object
@@ -41,18 +43,26 @@ names.growthmodel <- function(x) {
 #'
 #' names(L)
 #'
-#' @rdname names.multiple_fits
-#' @export
+#' @rdname names-multiple_fits
+#' @exportMethod names
 #'
-names.all_growthmodels <- function(x) {
-  names(x@fits)
-}
+setMethod("names", "multiple_fits",
+          function(x) {
+            names(x@fits)
+          }
+)
 
-#' @rdname names.multiple_fits
-#' @export
+#' @rdname names-multiple_fits
+#' @exportMethod "names<-"
 #'
-"names.all_growthmodels<-" <- function(x, value) {
-  names(x@fits) <- value
-}
+setMethod("names<-", c("multiple_fits", "ANY"),
+          function(x, value) {
+            if (!is.character(value))
+              value <- as.character(value)
+            cat("match\n")
+            ## todo: check length?
+            names(x@fits) <- value
+          }
+)
 
 
