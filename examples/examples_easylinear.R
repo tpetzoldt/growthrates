@@ -4,7 +4,7 @@ library(lattice)
 data(bactgrowth)
 
 
-xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
+xyplot(value ~ time|strain + as.factor(conc), data=bactgrowth, groups = replicate)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 
 dat <- splitted.data[[1]]
@@ -27,3 +27,6 @@ lines(fitx, pch="+", col="blue")
 plot(fit)
 lines(fitx, pch="+", col="blue")
 
+allFits <- all_easylinear(value ~ time|strain + conc + replicate, data=bactgrowth, sep=".")
+
+coef(allFits)
