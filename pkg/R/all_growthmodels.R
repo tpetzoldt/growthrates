@@ -67,11 +67,6 @@
 #' @rdname all_growthmodels
 #' @export
 #'
-all_growthmodels <- function(...) UseMethod("all_growthmodels")
-
-#' @rdname all_growthmodels
-#' @export
-#'
 all_growthmodels.formula <- function(formula, data, FUN, p,
                                      lower = -Inf, upper = Inf,
                                      which = names(p),

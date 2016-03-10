@@ -40,12 +40,6 @@
 #' @rdname all_easylinear
 #' @export
 #'
-all_easylinear <- function(...)
-  UseMethod("all_easylinear")
-
-#' @rdname all_easylinear
-#' @export
-#'
 all_easylinear.formula <- function(formula, data,  h = 5, quota = 0.95,
                                    subset = NULL, ...) {
   X <- get_all_vars(formula, data)
