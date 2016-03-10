@@ -22,7 +22,7 @@ This simple formula interface handles formulae of the form
   \code{dependent ~ FUN(independent, parms) | group1 + group2 + ...}.
 }
 \details{
-This function is used by \code{\link{all_growthrates}} and normally not
+This function is used by \code{\link{all_growthmodels}} and normally not
   called for the user.
 }
 \examples{

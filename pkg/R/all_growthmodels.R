@@ -60,7 +60,7 @@
 #'
 #' ## experimental: nonlinear model as part of the formula
 #' fit3 <- all_growthmodels(
-#'           value ~ grow_logistic(time) | strain + conc + replicate, FUN=grow_logistic,
+#'           value ~ grow_logistic(time) | strain + conc + replicate,
 #'           data = bactgrowth, p = p, lower = lower, ncores=2)
 #'
 #' results1 <- results(fit1)
