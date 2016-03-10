@@ -32,7 +32,7 @@ multisplit(data, grouping, drop = TRUE, sep = ":", ...)
 \item{grouping}{either a character vector containing the names of the grouping variables
 or a model formula specifying dependent,
 independent and grouping variables in the form:
-\code{dependend ~ independend | group1 + group2 + ...}.
+\code{dependent ~ independent | group1 + group2 + ...}.
 It may also be a factor or list of factors as in \code{\link{split}}.}
 
 \item{drop}{if drop is TRUE, unused factor levels are dropped from the result.

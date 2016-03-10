@@ -5,7 +5,7 @@
 #'
 #' @param formula model formula specifying dependent, independent and grouping
 #'   variables in the form:
-#'   \code{dependend ~ independend | group1 + group2 + ...}
+#'   \code{dependent ~ independent | group1 + group2 + ...}
 #' @param data data frame of observational data
 #' @param time character vectors with name independent variable
 #' @param y character vector with name of dependent variable
@@ -55,8 +55,13 @@
 #'
 #' ## fit all models
 #' fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
-#'                  data = bactgrowth, FUN=grow_logistic,
-#'                  p=p, lower = lower, ncores = 1)
+#'           data = bactgrowth, FUN=grow_logistic,
+#'           p = p, lower = lower, ncores = 2)
+#'
+#' ## experimental: nonlinear model as part of the formula
+#' fit3 <- all_growthmodels(
+#'           value ~ grow_logistic(time) | strain + conc + replicate, FUN=grow_logistic,
+#'           data = bactgrowth, p = p, lower = lower, ncores=2)
 #'
 #' results1 <- results(fit1)
 #' results2 <- results(fit2)
@@ -67,7 +72,7 @@
 #' @rdname all_growthmodels
 #' @export
 #'
-all_growthmodels.formula <- function(formula, data, FUN, p,
+all_growthmodels.formula <- function(formula, data, FUN = NULL, p,
                                      lower = -Inf, upper = Inf,
                                      which = names(p),
                                      method = "Marq",
@@ -75,6 +80,21 @@ all_growthmodels.formula <- function(formula, data, FUN, p,
                                      subset = NULL,
                                      ncores = detectCores(logical = FALSE)
                                      ) {
+
+  ## experimental: FUN is part of the formula, y ~ f(x, parms) | groups
+  #if (is.null(FUN)) {
+  if (length(grep("^.*[(].*[)]$", as.formula(formula)[[3]]))) {   # RHS
+    if (!is.null(FUN))
+      warning("Nonlinear model in formula overrules value of argument FUN")
+    parsed_fun <- parse_formula_nonlin(formula)
+
+    ## simplify formula removing a nonlinear function
+    formula <- with(parsed_fun, as.formula(paste(valuevar, "~", timevar, "|",
+                                           paste(groups, collapse="+"))))
+
+    ## FUN1 = full expression; FUN2 = function name only
+    FUN <- eval(parse(text = parsed_fun$FUN2))
+  }
 
   X <- get_all_vars(formula, data)
   if (!is.null(subset)) X <- X[subset, ]

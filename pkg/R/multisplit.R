@@ -6,7 +6,7 @@
 #' @param grouping either a character vector containing the names of the grouping variables
 #'   or a model formula specifying dependent,
 #'   independent and grouping variables in the form:
-#'   \code{dependend ~ independend | group1 + group2 + ...}.
+#'   \code{dependent ~ independent | group1 + group2 + ...}.
 #'   It may also be a factor or list of factors as in \code{\link{split}}.
 #' @param drop if drop is TRUE, unused factor levels are dropped from the result.
 #'   The default is to drop all factor levels.
@@ -67,7 +67,7 @@ setMethod("multisplit", c("data.frame", "formula"),
             if (is.na(p$groups[1]))
               stop("grouping variable(s) missing")
             if (!all(c(p$valuevar, p$timevar) %in% names(data)))
-              stop("dependend and independend variables must be column names of data")
+              stop("dependent and independent variables must be column names of data")
             if (!all(p$groups %in% names(data)))
               stop("all grouping criteria must be column names of data")
 

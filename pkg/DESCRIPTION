@@ -53,5 +53,6 @@ Collate:
     'multisplit.R'
     'names.R'
     'parse_formula.R'
+    'parse_formula_nonlin.R'
     'plot.R'
     'utilities.R'

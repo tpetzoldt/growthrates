@@ -5,9 +5,10 @@
 \alias{all_growthmodels.function}
 \title{Fit Nonlinear Growth Models to Data Frame}
 \usage{
-\method{all_growthmodels}{formula}(formula, data, FUN, p, lower = -Inf,
-  upper = Inf, which = names(p), method = "Marq", transform = c("none",
-  "log"), ..., subset = NULL, ncores = detectCores(logical = FALSE))
+\method{all_growthmodels}{formula}(formula, data, FUN = NULL, p,
+  lower = -Inf, upper = Inf, which = names(p), method = "Marq",
+  transform = c("none", "log"), ..., subset = NULL,
+  ncores = detectCores(logical = FALSE))
 
 \method{all_growthmodels}{function}(FUN, p, data, grouping, time = "time",
   y = "value", lower = -Inf, upper = Inf, which = names(p),
@@ -17,7 +18,7 @@
 \arguments{
 \item{formula}{model formula specifying dependent, independent and grouping
 variables in the form:
-\code{dependend ~ independend | group1 + group2 + ...}}
+\code{dependent ~ independent | group1 + group2 + ...}}
 
 \item{data}{data frame of observational data}
 
@@ -83,8 +84,13 @@ lower = c(y0=0, mumax=0, K=0)
 
 ## fit all models
 fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
-                 data = bactgrowth, FUN=grow_logistic,
-                 p=p, lower = lower, ncores = 1)
+          data = bactgrowth, FUN=grow_logistic,
+          p = p, lower = lower, ncores = 2)
+
+## experimental: nonlinear model as part of the formula
+fit3 <- all_growthmodels(
+          value ~ grow_logistic(time) | strain + conc + replicate, FUN=grow_logistic,
+          data = bactgrowth, p = p, lower = lower, ncores=2)
 
 results1 <- results(fit1)
 results2 <- results(fit2)

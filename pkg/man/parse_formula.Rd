@@ -2,14 +2,14 @@
 % Please edit documentation in R/parse_formula.R
 \name{parse_formula}
 \alias{parse_formula}
-\title{Simple Formula Interface.}
+\title{Simple Formula Interface}
 \usage{
 parse_formula(grouping)
 }
 \arguments{
 \item{grouping}{a model formula specifying dependent,
 independent and grouping variables in the form:
-\code{dependend ~ independend | group1 + group2 + ...}.}
+\code{dependent ~ independent | group1 + group2 + ...}.}
 }
 \value{
 a list with the elements \code{valuevar},  \code{timevar}, and
@@ -20,8 +20,8 @@ This simple formula interface handles formulae of the form
   \code{dependend ~ independend | group1 + group2 + ...}.
 }
 \details{
-This function is used by \code{\link{multisplit}} and normally not necessary
-  for the user.
+This function is used by \code{\link{multisplit}} and normally not called
+  by the user.
 }
 \examples{
 
