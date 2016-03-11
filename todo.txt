@@ -1,38 +1,51 @@
+Planned features
+================
+
 o implement ODE models in C or Fortran
---> done
+  --> done
 
 o "masking" of parameters during fit
---> done
+  --> done
 
 o multiple start parameters, as lists (or data frames)
---> done
-
-o formula interface
---> work in progress
-  - use all.vars() ?
-  - parse nonlinear formula
-
-o interfaces to related packages (Suggests)
-  - growthmodels (generic function interface)
-  - grofit
-  - drc
-
-o more argument checking
---> work in progress
+  --> done
 
 o enable "trace" for all optimizers
---> done
+  --> done
 
+o formula interface
+  - simple innterface: done
+  - parse nonlinear formula: experimental
+  - for single fits: to do
+
+o predict method
+
+o more argument checking
+  - can always be improved
 
 o streamline documentation
---> work in progress
+  - done
+  - can always be improved
 
 o data conversion functions
   - plate reader
   - grofit --> see examples/import_grofit_data.R
 
 o direct use of log-transformed parameters y0 and ymax = K
+   - tested, was less advantageous than expected.
+   --> not implemented to avoid confusion.
+
+Ideas
+=====
+
+o estimate lag phase
 
 o estimate and plot confidence intervals
 
 o interactive data brushing
+
+o interfaces to related packages (Suggests)
+  - growthmodels (generic function interface)
+  - grofit
+  - drc
+  - ccSolve
