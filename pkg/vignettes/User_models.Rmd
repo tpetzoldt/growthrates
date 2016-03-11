@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
 bibliography: growthrates.bib
 vignette: >
-  %\VignetteIndexEntry{Estimation of Growth Rates}
+  %\VignetteIndexEntry{Estimation of Growth Rates, Part 2}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
@@ -28,48 +28,50 @@ LANG=en_US.UTF-8
 -->
 
 
-Introduction
-============
+1. Introduction
+===============
 
 Package growthrates comes with a set of pararametric growth models built-in, 
 that should be sufficient for many application scenarios, but of 
-course not for all circumstances. This document describes how to extend
-the set of available functions with own user-defined models. Section (3) describes
-how simple regression functions existing in a closed form can be implemented. 
+course not for all circumstances. This document describes how the set of 
+available functions can be extended with own user-defined models. Section (3) 
+describes how simple regression functions existing in a `closed form' can be implemented. 
 In Section (4) we will see how growth models defined by systems of ordinary 
 differential equations (ODE) can be implemented directy in R and finally Section 
 (5) describes how ODE models can be implemented as C inline functions.
 
-Diferential equation or closed form?
-------------------------------------
+2. Differential equations or closed form?
+=========================================
 
-Growth models can be available either in `closed form', that a allows to get values 
-for the dependend variable $y$ immediately from any given value of an independent 
-variable $x$ or $time$ without the need of iteration, or as a differential equation model
-that needs numerical integration. Sometimes, a model can be given in either of these forms.
+Growth models can be available either `ordinary functions' of time $f(t)$ 
+in `closed form', that a allow to get values for the dependend variable $y$ 
+immediately from any given value of an independent variable $t$ (or $time$)
+without the need of iteration. Or, they can be a differential equation model $dy/dt$
+that needs numerical integration. 
 
-As an example, the logistic growth model can be written as a differential equation:
+Sometimes, a model can be given in either of these forms. As an example, the 
+logistic growth model can be written as a differential equation:
 
-$$dy/dt = mumax * y + (1-y/K)$$
+$$\frac{dy}{dt} = \mu_{max} \cdot y + \left(1 - \frac{y}{K}\right)$$
 
-while its analytical solution over time can also be given in closed form:
+or as its analytical solution in closed form:
 
-$$ y = (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) $$
+$$y(t) = \frac{K \cdot y_0)}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}}$$
 
 We see, that it is much easier to use the second form, because $y$ can immediately 
-be calculated from time, while for the first form, we would need either calculus 
-(and get the second form as its solution), or otherwise would need a method to
+be calculated from $t$, while for the first version, we would need either calculus 
+(and get the second form as its solution), or we could use numerical a method to
 simulate the evolution of $y$ stepwise over time.
 
 
-Growth models in closed form
-----------------------------
+3. Growth models in closed form
+===============================
 
 Let's assume we want to extend the logistic growth model with an additional shift 
 parameter in $y$ direction, for example, because a part of the population does not
 participate growing. This leads to an equation like:
 
-$$ y = (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift$$
+$$y(t) = \frac{K \cdot y_0)}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}} + y_{shift}$$
 
 After loading package growthrates:
 
@@ -84,14 +86,15 @@ library("growthrates")
 ```
 
 we can immediately define our own function in the user workspace, without 
-moddifying the package itself. In order to make it compatible with package 
-growthrates, it is sufficient to follow the input and output interfaces as 
-described in help page *?growthmodel*. 
+modifying the package itself. In order to make it compatible with package 
+growthrates, it is sufficient to streamline the input and output interfaces in
+the style described in help page *?growthmodel*. 
 
 The function can have any valid name, but:
 
 1. it must have exactly two arguments **time** and **parms** as input and
-2. its return value (output) must be a matrix with at least 3 columns with the column names `time', `y' and `log_y'.
+2. its return value (output) must be a matrix with at least 3 columns with the 
+column names `time`, `y` and `log_y`.
 
 The inner part of the function can be adapted as necessary, as long as the 
 connection between input and output makes sense from a scientific viewpoint.
@@ -100,35 +103,38 @@ connection between input and output makes sense from a scientific viewpoint.
 grow_logistic_yshift <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+    as.matrix(data.frame(time=time, y=y, log_y=log(y)))
   })
 }
 ```
 
-Therefore, it is of course a good idea, to thest this function beforehand, for 
+The, at a first look circumstantial `as.matrix(data.frame(()))` construction is
+a simple way to create the required output format.
+
+Then, it is of course a good idea, to thest the function beforehand, for 
 example:
 
-```{r}
+```{r,fig.width=4, fig.height=3}
 time <- 1:10
 out <- grow_logistic_yshift(time, parms=list(y0=1, mumax=0.5, K=10, y_shift=2))
 plot(time, out[, "y"])
 ```
 
-Future versions of package growthrates may introduce additional checks, so it 
-may be a good idea to convert the function into an object with the so-called 
-constructor function `growthmodel':
+Future versions of the growthrates package may introduce additional checks, so it 
+is already a good idea to convert the function into an appropriate object of 
+class `growthmodel' with the so-called constructor function:
 
 ```
 grow_logistic_yshift <- growthmodel(grow_logistic_yshift,
                                     c("y0", "mumax", "K", "y_shift"))
 ```
 
-That's all and the new model is ready for use:
+Now the new model is ready to be fitted to test data:
 
 
-```{r}
+```{r,fig.width=4, fig.height=3}
+
 x <- seq(5, 100, 5)
-
 y <- c(2.1, 2.3, 5, 4.7, 4.3, 6.9, 8.2, 11.5, 8.8, 10.2, 14.5, 12.5,
        13.6, 12.7, 14.2, 12.5, 13.8, 15.1, 12.7, 14.9)
 
@@ -140,8 +146,8 @@ summary(fit)
 ```
 
 
-Differential equation models in R
----------------------------------
+4. Differential equation models in R
+====================================
 
 Differential equation models can be used quite similar to this. It is a little 
 bit more complex because:
@@ -149,15 +155,17 @@ bit more complex because:
 1. we need two functions. One for the ODE model (the derivatives) and one for the numerical integration.
 2. the ODE model distinguishes between time dependent *state variables* and constant *parameters*, that can both
 be considered as *parameters* in a statistical sense. This distinction between
-**statistical parameters*** (from the viewpoint of model fitting) and the **ODE model parameters** should not be confused.
-3. numerical integration is itself a broad field that needs experience and care.
+**statistical parameters** (from the viewpoint of model fitting) and **ODE model parameters** should not be confused.
+3. the numerical integration is itself a broad field that needs experience and care.
 A short overview on this topic can be found in @Soetaert2010c.
 
 In the following, let's assume a model where the carrying capacity is a function of time.
-That's why we have now two differential equations, one for the carrying capacity ($K$) and
-one for the population abundance ($y$). We assume a linear increase for $K$, because of simplicity,
-but more complex models are of course also possible, e.g. biochemical conversion of a mixed substrate,
-density dependence or a continuos culture.
+This can be modelled with a system of two differential equations, one for the 
+carrying capacity ($K$) and another for the population abundance ($y$).
+For sake of simplicity we assume a linear increase for $K$,
+but more complex models are of course also possible, e.g. 
+biochemical conversion of a mixed substrate, density dependence or a semi-continuos 
+addition of nutrients.
 
 The growth model is built from two parts:
 
@@ -197,7 +205,7 @@ head(grow_K_linear(time=1:10, c(y0=.1, K=1, mumax=0.1, dK = 0.5)))
 
 before we fit the model to data:
 
-```{r}
+```{r,fig.width=4, fig.height=3}
 x <- seq(5, 100, 5)
 y <- c(0.1, 2.2, 3.1, 1.5, 8.9, 8, 8.4, 9.8, 9.3, 10.6, 12, 13.6,
   13.1, 13.3, 11.6, 14.7, 12.6, 13.9, 16.9, 14.4)
@@ -210,19 +218,19 @@ summary(fit)
 
 
 
-Inline C code with package cOde
--------------------------------
+5. Inline C code with package cOde
+==================================
 
-Numerical simulation of ODE models can be time consuming, so we may be tempted 
-to speed it up. This is indeed possible by calling `compiled code', i.e. the model
-is written in another programming language, Fortran or C, that are faster 
-compared to R. Several methods exist how this can be done, see for example @Soetaert2010
+A numerical simulation of ODE models can sometimes be slow, so we may be tempted 
+to speed it up. This is indeed possible with `compiled code', i.e. the model
+is written in another programming language (Fortran or C) that are faster 
+compared to R. Several methods exist how this can be done, see for example @Soetaert2010c
 or @Kneis2015. In the following, we use a method that allows ``inline code', i.e. 
 direkt integration of C code in the R script using package **cOde** @Kaschek2016.
 
 Note, however, that compiled code needs some additional developer tools on your computer.
-These are often already installed on Linux systems, but need additional installation on Windows
-and Mac systems.
+These are often already available on Linux systems, but need additional installation on Windows
+and Mac OS.
 
 
 ```{r, eval=FALSE}
