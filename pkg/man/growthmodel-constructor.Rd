@@ -21,14 +21,16 @@ This constructor method allows to create user-defined functions
 }
 \details{
 Package \pkg{growthrates} has a plug-in architecture allowing
-  user-defined growth models of the following form:\cr
+  user-defined growth models of the following form:
+
 \preformatted{
-  identifier <- function(time, parms){
+  identifier <- function(time, parms) {
     ... content of function here ...
     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
   }
-}\cr
-  where \code{time} is a numeric vector and \code{parms} a named, non-nested
+}
+
+where \code{time} is a numeric vector and \code{parms} a named, non-nested
     list of model parameters. The constructor function \code{growthmodel}
     is used to attach the names of the parameters as an optional
     attribute.

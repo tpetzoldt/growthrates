@@ -10,7 +10,7 @@
 #' Date:     \tab 2016-03-10\cr
 #' License:  \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
-#' }\cr
+#' }
 #' The package contains basically three methods:
 #' \itemize{
 #'   \item fit a linear regression to a subset of data with the steepest
