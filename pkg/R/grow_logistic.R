@@ -2,6 +2,9 @@
 #'
 #' Classical logistic growth model written as analytical solution of the differential equation.
 #'
+#' The equation used is:
+#' \deqn{y = (K * y0) / (y0 + (K - y0) * exp(-mumax * time))}
+#'
 #' @param time vector of time steps (independent variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{

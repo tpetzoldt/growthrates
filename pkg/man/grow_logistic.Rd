@@ -23,6 +23,10 @@ vector of dependent variable (\code{y}) and its log-transformed
 \description{
 Classical logistic growth model written as analytical solution of the differential equation.
 }
+\details{
+The equation used is:
+\deqn{y = (K * y0) / (y0 + (K - y0) * exp(-mumax * time))}
+}
 \examples{
 
 time <- seq(0, 30, length=200)
