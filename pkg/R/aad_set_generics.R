@@ -30,21 +30,6 @@ setGeneric("results", function(object, ...) standardGeneric("results"))
 #'
 setGeneric("multisplit", function(data, grouping, drop = TRUE, sep = ":", ...) standardGeneric("multisplit"))
 
-#' @rdname generics
-#' @export
-#'
-all_easylinear <- function(...) UseMethod("all_easylinear")
-
-
-#' @rdname generics
-#' @export
-#'
-all_splines <- function(...) UseMethod("all_splines")
-
-#' @rdname generics
-#' @export
-#'
-all_growthmodels <- function(...) UseMethod("all_growthmodels")
 
 
 

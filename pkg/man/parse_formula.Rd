@@ -17,7 +17,7 @@ a list with the elements \code{valuevar},  \code{timevar}, and
 }
 \description{
 This simple formula interface handles formulae of the form
-  \code{dependend ~ independend | group1 + group2 + ...}.
+  \code{dependent ~ independent | group1 + group2 + ...}.
 }
 \details{
 This function is used by \code{\link{multisplit}} and normally not called

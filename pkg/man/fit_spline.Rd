@@ -7,14 +7,14 @@
 fit_spline(time, y, optgrid = length(time), ...)
 }
 \arguments{
-\item{time}{vector of independend variable}
+\item{time}{vector of independent variable.}
 
-\item{y}{vector of dependend variable (concentration of organisms)}
+\item{y}{vector of dependent variable (concentration of organisms).}
 
-\item{optgrid}{number of steps on the x-axis used for the optimum search 
-algorithm. The default should work in most cases, as long as the data are equally spaced. 
+\item{optgrid}{number of steps on the x-axis used for the optimum search .
+algorithm. The default should work in most cases, as long as the data are equally spaced.
 A smaller number may lead to non-detectable speed-up, but has the risk that
-the search is trapped in a local minimum.}
+the search gets trapped in a local minimum.}
 
 \item{\dots}{other parameters passed to \code{\link{smooth.spline}}, see details.}
 }
@@ -25,14 +25,14 @@ object with parameters of the fit
 Determine maximum growth rates from the first derivative of a smoothing spline.
 }
 \details{
-The method was inspired by an algorithm of Kahm et al. (2010), 
+The method was inspired by an algorithm of Kahm et al. (2010),
   with different settings and assumptions. In the moment, spline fitting
   is always done with log-transformed data, assuming exponential growth
   at the time point of the maximum of the first derivative of the spline fit.
-  
-  All the hard work is done by function \code{\link{smooth.spline}} from package 
-  \pkg{stats}, that is highly user configurable. Normally, smoothness is 
-  automatically determined via cross-validation. This works well in many cases, 
+
+  All the hard work is done by function \code{\link{smooth.spline}} from package
+  \pkg{stats}, that is highly user configurable. Normally, smoothness is
+  automatically determined via cross-validation. This works well in many cases,
   whereas manual adjustment is required otherwise, e.g. by setting \code{spar}
   to a fixed value \eqn{[0, 1]} that also disables cross-validation.
 }
@@ -74,15 +74,14 @@ plot(res, ylim=c(0.005, 0.03))
 }
 \references{
 Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
-(2010). grofit: Fitting Biological Growth Curves with R. 
-Journal of Statistical Software, 33(7), 1-21. URL 
+2010. grofit: Fitting Biological Growth Curves with R.
+Journal of Statistical Software, 33(7), 1-21. URL
 \url{http://www.jstatsoft.org/v33/i07/}
 }
 \seealso{
-Other fitting functions: \code{\link{all_easylinear.formula}},
-  \code{\link{all_growthmodels.formula}},
-  \code{\link{all_splines.formula}},
-  \code{\link{fit_easylinear}},
+Other fitting functions: \code{\link{all_easylinear}},
+  \code{\link{all_growthmodels}},
+  \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_growthmodel}}
 }
 

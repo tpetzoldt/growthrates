@@ -14,33 +14,39 @@
 \title{S4 Classes of Package \pkg{growthrates}}
 \description{
 \code{growthrates_fit}: top-level class representing a growthrates fit with
-any method
+any method.
 
-\code{nonlinear_fit}: single nonlinear growthrates fit with package FME
+\code{nonlinear_fit}: single nonlinear growthrates fit with package FME.
 
-\code{easylinear_fit}: single fit with the ``growthrates made easy''-method
+\code{easylinear_fit}: single fit from the ``growthrates made easy''-method.
 
-\code{spline_fit}: single fit with cross-validated smoothing splines
+\code{spline_fit}: single fit with (optionally cross-validated) smoothing splines.
 
 \code{multiple_fits}: top-level class representing multiple fits with
-any method
+any method.
 
 \code{multiple_easylinear_fits}: class representing multiple fits with
-the ``growthrates made easy''-method
+the ``growthrates made easy''-method.
 
-\code{multiple_nonlinear_fits}: class representing multiple nonlinear fits
+\code{multiple_nonlinear_fits}: class representing multiple nonlinear fits.
 
-\code{multiple_smooth.spline_fits}: class representing multiple smooth.spline fits
+\code{multiple_smooth.spline_fits}: class representing multiple smooth.spline fits.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{FUN}}{model function used}
+\item{\code{FUN}}{model function used.}
 
-\item{\code{fit}}{results of the model fit}
+\item{\code{fit}}{results of the model fit.}
 
-\item{\code{obs}}{observation data used for model fitting}
+\item{\code{obs}}{observation data used for model fitting.}
 
-\item{\code{rsquared}}{coefficient of determination}
+\item{\code{rsquared}}{coefficient of determination.}
+
+\item{\code{par}}{parameters of the fit.}
+
+\item{\code{ndx}}{index values of the time points used (for \code{easylinear_fit}).}
+
+\item{\code{xy}}{x and y values at the maximum of the spline.}
 }}
 

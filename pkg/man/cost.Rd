@@ -7,21 +7,29 @@
 cost(p, obs, FUN, fixed.p = NULL, ...)
 }
 \arguments{
-\item{p}{vector of fitted parameters of the growth model}
+\item{p}{vector of fitted parameters of the growth model.}
 
-\item{FUN}{function of growth model to be fitted}
+\item{FUN}{function of growth model to be fitted.}
 
-\item{fixed.p}{vector of fixed  parameters of the growth model}
+\item{fixed.p}{vector of fixed  parameters of the growth model.}
 
-\item{\dots}{additional parameters passed to the optimizer}
+\item{\dots}{additional parameters passed to the optimizer.}
 }
 \value{
-an object of class \code{modCost}, see \code{\link{modCost}} in 
+an object of class \code{modCost}, see \code{\link{modCost}} in
   package \pkg{FME}
 }
 \description{
 Defines a cost function from the residual sum of squares between model
 and observational data.
 }
-\keyword{internal}
+\details{
+Function 'cost' is implemented as follows, see package FME for details:
+\preformatted{
+cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
+  out <- FUN(obs$time, c(p, fixed.p))
+  modCost(out, obs, weight = "none", ...)
+}
+}
+}
 

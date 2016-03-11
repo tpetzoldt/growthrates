@@ -4,7 +4,12 @@
 \alias{growthmodel-class}
 \title{Class of Growth Model Functions}
 \description{
-This class defines formal requirements for package and user-provided functions
-  that can be used as models describing time-dependent growth of organisms.
+This class is used for the parametric \code{grow_\dots} functions of the
+package and can also be used for user-defined functions to describe
+time-dependent growth of organisms.
+}
+\seealso{
+the constructor function \code{\link{growthmodel}} how to create
+  instances of this class.
 }
 

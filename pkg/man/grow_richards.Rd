@@ -7,29 +7,33 @@
 grow_richards(time, parms)
 }
 \arguments{
-\item{time}{vector of time steps (independend variable)}
+\item{time}{vector of time steps (independent variable).}
 
 \item{parms}{named parameter vector of the Richards growth model with:
 \itemize{
-  \item \code{y0} initial value of population measure
-  \item \code{mumax} maximum growth rate (note different interpretation compared 
-    to exponential growth)
-  \item \code{K} carrying capacity (max. total concentration of cells)
-  \item \code{beta} shape parameter determining the curvature
-  
+  \item \code{y0} initial value of abundance,
+  \item \code{mumax} maximum growth rate (note different interpretation compared
+    to exponential growth),
+  \item \code{K} carrying capacity (max. total concentration of cells),
+  \item \code{beta} shape parameter determining the curvature.
+
 }}
 }
 \value{
-vector of dependend variable (\code{y}) and its log-transformed
+vector of dependent variable (\code{y}) and its log-transformed
   values (\code{log_y}).
 }
 \description{
 Richards growth model written as analytical solution of the differential equation.
 }
 \details{
-The naming of parameters used here follows the convention of Tsoularis 2001
-but uses \code{mumax} for growtrate and \code{y} for abundance to make them 
-more compatible with other growth functions.
+The equation used is:
+
+\deqn{y = K*(1-exp(-beta * mumax * time)*(1-(y0/K)^-beta))^(-1/beta)}
+
+The naming of parameters used here follows the convention of Tsoularis (2001),
+but uses \code{mumax} for growtrate and \code{y} for abundance to make them
+consistent to other growth functions.
 }
 \examples{
 
@@ -43,7 +47,7 @@ lines(time, y, col="blue")
 
 }
 \references{
-Richards, F. J. (1959) A Flexible Growth Function for Empirical Use. 
+Richards, F. J. (1959) A Flexible Growth Function for Empirical Use.
 Journal of Experimental Botany 10 (2): 290--300.
 
 Tsoularis, A. (2001) Analysis of Logistic Growth Models.

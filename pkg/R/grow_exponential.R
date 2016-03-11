@@ -2,14 +2,17 @@
 #'
 #' Unlimited exponential growth model.
 #'
-#' @param time vector of time steps (independend variable)
+#' The equation used is:
+#' \deqn{y = y0 * exp(mumax * time)}
+#'
+#' @param time vector of time steps (independent variable).
 #' @param parms named parameter vector of the exponential growth model with:
 #' \itemize{
-#'   \item \code{y0} initial abundance (e.g. concentration of bacterial cells)
-#'   \item \code{mumax} maximum growth rate (1/time)
+#'   \item \code{y0} initial abundance (e.g. concentration of bacterial cells).
+#'   \item \code{mumax} maximum growth rate (1/time).
 #' }
 #'
-#' @return vector of dependend variable (\code{y}) and its log-transformed
+#' @return vector of dependent variable (\code{y}) and its log-transformed
 #'   values (\code{log_y}).
 #'
 #' @examples

@@ -7,20 +7,24 @@
 grow_exponential(time, parms)
 }
 \arguments{
-\item{time}{vector of time steps (independend variable)}
+\item{time}{vector of time steps (independent variable).}
 
 \item{parms}{named parameter vector of the exponential growth model with:
 \itemize{
-  \item \code{y0} initial abundance (e.g. concentration of bacterial cells)
-  \item \code{mumax} maximum growth rate (1/time)
+  \item \code{y0} initial abundance (e.g. concentration of bacterial cells).
+  \item \code{mumax} maximum growth rate (1/time).
 }}
 }
 \value{
-vector of dependend variable (\code{y}) and its log-transformed
+vector of dependent variable (\code{y}) and its log-transformed
   values (\code{log_y}).
 }
 \description{
 Unlimited exponential growth model.
+}
+\details{
+The equation used is:
+\deqn{y = y0 * exp(mumax * time)}
 }
 \examples{
 

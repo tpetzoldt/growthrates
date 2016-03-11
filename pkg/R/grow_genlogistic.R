@@ -2,6 +2,11 @@
 #'
 #' Generalized logistic growth model solved as differential equation.
 #'
+#' The model is given as its first derivative:
+#'
+#' \deqn{dy/dt = mumax * y^alpha * (1-(y/K)^beta)^gamma}
+#'
+#' that is then numerically integrated ('simulated') according to time (t).
 #'
 #' @param time vector of simulation time steps
 #' @param y named vector with initial value of the system (e.g. cell concentration)
@@ -19,7 +24,7 @@
 #' For \code{ode_genlogistic}: matrix containing the simulation outputs.
 #' The return value of has also class \code{deSolve}.
 #'
-#' For \code{grow_genlogistic}: vector of dependend variable (\code{y}) and
+#' For \code{grow_genlogistic}: vector of dependent variable (\code{y}) and
 #'   its log-transformed values (\code{log_y}).
 #'
 #' \itemize{
@@ -33,15 +38,14 @@
 #'   Bertalanffy, and some more as special cases.
 #'
 #'   The differential equation is solved numerically, where function
-#'   \code{ode_genlogistic} is the differential equation, while
+#'   \code{ode_genlogistic} is the differential equation, and
 #'   \code{grow_genlogistic} runs a numerical simulation over time.
 #'
 #'   The default version \code{grow_genlogistic} is run directly as compiled code,
 #'   whereas the R versions \code{ode_logistic} is
 #'   provided for testing by the user.
 #'
-#'  @references
-#'
+#' @references
 #' Tsoularis, A. (2001) Analysis of Logistic Growth Models.
 #' Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 #'

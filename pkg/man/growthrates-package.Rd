@@ -6,18 +6,33 @@
 \alias{growthrates-package}
 \title{Estimate Growth Rates from Experimental Data}
 \description{
+A collection of methods to determine growth rates from experimental data,
+in particular from batch experiments and plate reader trials.
+}
+\details{
 \tabular{ll}{
 Package:  \tab growthrates\cr
 Type:     \tab Package\cr
-Version:  \tab 0.6.1\cr
-Date:     \tab 2016-03-10\cr
+Version:  \tab 0.6.2\cr
+Date:     \tab 2016-03-11\cr
 License:  \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
+}\cr
+The package contains basically three methods:
+\itemize{
+  \item fit a linear regression to a subset of data with the steepest
+    log-linear increase (a method, similar to Hall et al., 2013),
+  \item fit parametric nonlinear models to the complete data set, where the
+     model functions can be given either in closed form or as numerically
+     solved (system of) differential equation(s),
+  \item use maximum of the 1st derivative of a smoothing spline with
+    log-transformed y-values (similar to Kahm et al., 2010).
 }
-}
-\details{
-A collection of methods to determine growth rates from experimental data,
-in particular from batch experiments and plate reader trials.
+The package can fit data sets of single experiments or complete series
+containing multiple data sets. Included are functions for extracting
+estimates and for plotting. The package supports growth models given as
+numerically solved differential equations. Multi-core computation is used to
+speed up fitting of parametric models.
 }
 \examples{
 
@@ -48,10 +63,7 @@ lines(fit3, col="red")
 
 }
 \author{
-Thomas Petzoldt (package)\cr
-
-
-Maintainer: Thomas Petzoldt <thomas.petzoldt@tu-dresden.de>\cr
+Thomas Petzoldt
 }
 \references{
 Hall, B. G., Acar, H. and Barlow, M. 2013. Growth Rates Made Easy.
@@ -73,8 +85,8 @@ Soetaert, K., Petzoldt, T. Setzer, R. W. 2010. Solving Differential Equations
 }
 \seealso{
 package \code{\link[grofit:grofit-package]{grofit}}
-for a related package from other authors that implements a different
-approach.
+for a related package from Kahm et al. (2010) that implements a
+different approach.
 }
 \keyword{package}
 

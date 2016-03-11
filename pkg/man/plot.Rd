@@ -27,16 +27,17 @@
 }
 \arguments{
 \item{x}{an object returned by a model fitting function of package
-\pkg{growthrates}, that can contain one or multiple fits}
+\pkg{growthrates}, that can contain one or multiple fits.}
 
-\item{y}{(ignored) for compatibility with the default plot method}
+\item{y}{(ignored) for compatibility with the default plot method.}
 
 \item{log}{a character string which contains \code{"y"} if the y axis is to
-be logarithmic}
+be logarithmic.}
 
-\item{which}{either \code{"fit"} (default) or \code{"diagnostics"}}
+\item{which}{either \code{"fit"} (default) or \code{"diagnostics"}.}
 
-\item{\dots}{other arguments pased to the methods}
+\item{\dots}{other arguments pased to the plotting methods,
+see \code{\link{plot.default}} and \code{\link{par}}.}
 }
 \description{
 Methods to plot growth model fits together with the data and, alternatively,
@@ -50,6 +51,8 @@ The plot methods detect automatically which type of plot is
   and / or to use tomething like \code{par(mfrow=c(3,3))}.
 
   The \code{lines}-method is currently only available for single fits.
+
+  If you need more control, you can of course also write own plotting functions.
 }
 \examples{
 

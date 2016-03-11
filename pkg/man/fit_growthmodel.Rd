@@ -9,39 +9,39 @@ fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
   control = NULL, ...)
 }
 \arguments{
-\item{FUN}{function of growth model to be fitted}
+\item{FUN}{function of growth model to be fitted.}
 
-\item{p}{named vector of start parameters and initial values of the growth model}
+\item{p}{named vector of start parameters and initial values of the growth model.}
 
-\item{time}{vector of independend variable}
+\item{time}{vector of independent variable.}
 
-\item{y}{vector of dependend variable (concentration of organisms)}
+\item{y}{vector of dependent variable (concentration of organisms).}
 
-\item{lower}{lower bound of the parameter vector (optional)}
+\item{lower}{lower bound of the parameter vector (optional).}
 
-\item{upper}{upper bound of the parameter vector (optional)}
+\item{upper}{upper bound of the parameter vector (optional).}
 
-\item{which}{vector of parameter names that are to be fitted}
+\item{which}{vector of parameter names that are to be fitted.}
 
-\item{method}{character vector specifying the optimization algorithm}
+\item{method}{character vector specifying the optimization algorithm.}
 
-\item{transform}{fit model to non-transformed or log-transformed data}
+\item{transform}{fit model to non-transformed or log-transformed data.}
 
 \item{control}{A list of control parameters for the optimizers. See Details.}
 
-\item{\dots}{additional parameters passed to the optimizer}
+\item{\dots}{additional parameters passed to the optimizer.}
 }
 \value{
-list with parameters of the fit
+object  with parameters of the fit.
 }
 \description{
-Determine maximum growth rates by fitting nonlinear models
+Determine maximum growth rates by fitting nonlinear models.
 }
 \details{
 This function calls \code{modFit} from package \pkg{FME}.
 Syntax of control parameters and available options may differ, depending
 on the optimizer used, except \code{control=list(trace=...)} that switches
-  tracing on and off in all methods and is either \code{TRUE}, or \code{FALSE},
+  tracing on and off for all methods and is either \code{TRUE}, or \code{FALSE},
   or an integer value like 0, 1, 2, 3, depending on the optimizer.
 }
 \examples{
@@ -71,11 +71,11 @@ plot(fit1, log="y")
 
 }
 \seealso{
-\code{link{modFit}} about constrained fitting of models to data
+\code{\link{modFit}} about constrained fitting of models to data
 
-Other fitting functions: \code{\link{all_easylinear.formula}},
-  \code{\link{all_growthmodels.formula}},
-  \code{\link{all_splines.formula}},
-  \code{\link{fit_easylinear}}, \code{\link{fit_spline}}
+Other fitting functions: \code{\link{all_easylinear}},
+  \code{\link{all_growthmodels}},
+  \code{\link{all_splines}}, \code{\link{fit_easylinear}},
+  \code{\link{fit_spline}}
 }
 

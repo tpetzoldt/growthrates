@@ -5,21 +5,21 @@
 #'
 #' @param formula model formula specifying dependent, independent and grouping
 #'   variables in the form:
-#'   \code{dependend ~ independend | group1 + group2 + ...}
-#' @param data data frame of observational data
-#' @param time character vectors with name independent variable
+#'   \code{dependent ~ independent | group1 + group2 + \dots}.
+#' @param data data frame of observational data.
+#' @param time character vectors with name independent variabl.e.
 #' @param y character vector with name of dependent variable
 #' @param grouping model formula or character vector of criteria defining
-#'   subsets in the data frame
-#' @param h with of the window (number of data)
+#'   subsets in the data frame.
+#' @param h with of the window (number of data).
 #' @param quota part of window fits considered for the overall linear fit
-#'   (relative to max. growth rate)
+#'   (relative to max. growth rate).
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots optional arguments passed to \code{\link{interaction}}
+#' @param \dots reserved for future extensions.
 #'
-#' @return list with parameters of all fits
+#' @return object with parameters of all fits.
 #'
-#' @references Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy.
+#' @references Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
 #'   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
 #'
 #' @family fitting functions
@@ -37,6 +37,12 @@
 #' library(lattice)
 #' xyplot(mumax ~ conc|strain, data=results)
 #'
+#' @rdname all_easylinear
+#' @export
+#'
+all_easylinear <- function(...) UseMethod("all_easylinear")
+
+
 #' @rdname all_easylinear
 #' @export
 #'

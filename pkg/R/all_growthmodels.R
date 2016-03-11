@@ -5,26 +5,26 @@
 #'
 #' @param formula model formula specifying dependent, independent and grouping
 #'   variables in the form:
-#'   \code{dependent ~ independent | group1 + group2 + ...}
-#' @param data data frame of observational data
-#' @param time character vectors with name independent variable
-#' @param y character vector with name of dependent variable
-#' @param grouping vector of criteria defining subsets in the data frame
-#' @param FUN function of growth model to be fitted
-#' @param p named vector of start parameters and initial values of the growth model
-#' @param lower lower bound of the parameter vector
-#' @param upper upper bound of the parameter vector
-#' @param which vector of parameter names that are to be fitted
-#' @param method character vector specifying the optimization algorithm
-#' @param transform fit model to non-transformed or log-transformed data
+#'   \code{dependent ~ independent | group1 + group2 + \dots}.
+#' @param data data frame of observational data.
+#' @param time character vector with name of independent variable.
+#' @param y character vector with name of dependent variable.
+#' @param grouping vector of grouping variables defining subsets in the data frame.
+#' @param FUN function of growth model to be fitted.
+#' @param p named vector of start parameters and initial values of the growth model.
+#' @param lower lower bound of the parameter vector.
+#' @param upper upper bound of the parameter vector.
+#' @param which vector of parameter names that are to be fitted.
+#' @param method character vector specifying the optimization algorithm.
+#' @param transform fit model to non-transformed or log-transformed data.
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots additional parameters passed to the optimizer
+#' @param \dots additional parameters passed to the optimizer.
 #' @param ncores number of CPU cores used for parallel computation. The number
 #'   of real cores is detected automatically by default,
 #'   but fort debugging purposes it could be wise to set \code{ncores = 1}.
 #'   Usage of logical (hyperthreading) cores does not speed up computation.
 #'
-#' @return object containing the parameters of all fits
+#' @return object containing the parameters of all fits.
 #'
 #' @family fitting functions
 #'
@@ -45,13 +45,13 @@
 #' fit0 <- fit_spline(dat$time, dat$value)
 #'
 #' fit1 <- all_splines(value ~ time | strain + conc + replicate,
-#'                  data = bactgrowth, spar=0.5)
+#'                  data = bactgrowth, spar = 0.5)
 #'
 #' ## initial parameters
 #' p <- c(coef(fit0), K = max(dat$value))
 #'
 #' ## avoid negative parameters
-#' lower = c(y0=0, mumax=0, K=0)
+#' lower = c(y0 = 0, mumax = 0, K = 0)
 #'
 #' ## fit all models
 #' fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
@@ -61,7 +61,7 @@
 #' ## experimental: nonlinear model as part of the formula
 #' fit3 <- all_growthmodels(
 #'           value ~ grow_logistic(time) | strain + conc + replicate,
-#'           data = bactgrowth, p = p, lower = lower, ncores=2)
+#'           data = bactgrowth, p = p, lower = lower, ncores = 2)
 #'
 #' results1 <- results(fit1)
 #' results2 <- results(fit2)
@@ -69,6 +69,11 @@
 #' plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
 #' }
 #'
+#' @rdname all_growthmodels
+#' @export
+#'
+all_growthmodels <- function(...) UseMethod("all_growthmodels")
+
 #' @rdname all_growthmodels
 #' @export
 #'

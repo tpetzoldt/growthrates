@@ -28,7 +28,7 @@ grow_genlogistic(time, parms, ...)
 For \code{ode_genlogistic}: matrix containing the simulation outputs.
 The return value of has also class \code{deSolve}.
 
-For \code{grow_genlogistic}: vector of dependend variable (\code{y}) and
+For \code{grow_genlogistic}: vector of dependent variable (\code{y}) and
   its log-transformed values (\code{log_y}).
 
 \itemize{
@@ -41,22 +41,23 @@ For \code{grow_genlogistic}: vector of dependend variable (\code{y}) and
 Generalized logistic growth model solved as differential equation.
 }
 \details{
+The model is given as its first derivative:
+
+\deqn{dy/dt = mumax * y^alpha * (1-(y/K)^beta)^gamma}
+
+that is then numerically integrated ('simulated') according to time (t).
+
 The generalized logistic according to Tsoularis (2001) is a flexible
   model that covers exponential and logistic growth, Richards, Gompertz, von
   Bertalanffy, and some more as special cases.
 
   The differential equation is solved numerically, where function
-  \code{ode_genlogistic} is the differential equation, while
+  \code{ode_genlogistic} is the differential equation, and
   \code{grow_genlogistic} runs a numerical simulation over time.
 
   The default version \code{grow_genlogistic} is run directly as compiled code,
   whereas the R versions \code{ode_logistic} is
   provided for testing by the user.
-
- @references
-
-Tsoularis, A. (2001) Analysis of Logistic Growth Models.
-Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 }
 \examples{
 
@@ -78,6 +79,10 @@ plot(out, out2, out3, out4, out5, out6, out7)
 plot(ode(y0, time, ode_genlogistic, parms = c(mumax=1, K=10, alpha=2, beta=.8, gamma=5)))
 
 
+}
+\references{
+Tsoularis, A. (2001) Analysis of Logistic Growth Models.
+Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 }
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},

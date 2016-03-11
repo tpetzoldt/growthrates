@@ -7,25 +7,31 @@
 grow_baranyi(time, parms)
 }
 \arguments{
-\item{time}{vector of time steps (independend variable)}
+\item{time}{vector of time steps (independent variable).}
 
 \item{parms}{named parameter vector of the Baranyi growth model with:
 \itemize{
-  \item \code{y0} initial value of abundance
-  \item \code{mumax} maximum growth rate (1/time)
-  \item \code{K} carrying capacity (max. abundance)
-  \item \code{h0} parameter specifying the initial physiological state of 
-    organisms (e.g. cells) and in consequence the lag phase 
+  \item \code{y0} initial value of abundance,
+  \item \code{mumax} maximum growth rate (1/time),
+  \item \code{K} carrying capacity (max. abundance),
+  \item \code{h0} parameter specifying the initial physiological state of
+    organisms (e.g. cells) and in consequence the lag phase
     (h0 = max growth rate * lag phase).
 }}
 }
 \value{
-vector of dependend variable (\code{y}) and its log-transformed
+vector of dependent variable (\code{y}) and its log-transformed
   values (\code{log_y}).
 }
 \description{
-The growth model of Baranyi and Roberts (1995) written as analytical solution 
+The growth model of Baranyi and Roberts (1995) written as analytical solution
 of the system of differential equations.
+}
+\details{
+The version of the equation used in this package has the following form:
+
+\deqn{A = time + 1/mumax * log(exp(-mumax * time) + exp(-h0) - exp(-mumax * time - h0))}
+\deqn{log(y) = log(y0) + mumax * A - log(1 + (exp(mumax * A) - 1) / exp(log(K) - log(y0)))}
 }
 \examples{
 
@@ -36,11 +42,11 @@ plot(time, y, type="l", log="y")
 
 }
 \references{
-Baranyi, J. and Roberts, T. A. (1994). 
+Baranyi, J. and Roberts, T. A. (1994).
 A dynamic approach to predicting bacterial growth in food.
 International Journal of Food Microbiology, 23, 277-294.
 
-Baranyi, J. and Roberts, T.A. (1995). Mathematics of predictive microbiology. 
+Baranyi, J. and Roberts, T.A. (1995). Mathematics of predictive microbiology.
 International Journal of Food Microbiology, 26, 199-218.
 }
 \seealso{

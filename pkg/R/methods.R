@@ -3,13 +3,15 @@
 ## -------------------------------------------------------------
 
 
-#' Accessor Methods of Package \pkg{growthrates}
+#' Accessor Methods of Package \pkg{growthrates}.
 #'
-#' Functions to access the results of fitted growthrate objects.
+#' Functions to access the results of fitted growthrate objects:  \code{summary},
+#'  \code{coeff}, \code{rsquared}, \code{deviance}, \code{residuals},
+#'  \code{df.residual}, \code{obs}, \code{results}.
 #'
-#' @param object name of a 'growthrate' object
-#' @param cov boolean if the covariance matrix should be printed
-#' @param \dots other arguments passed to the methods
+#' @param object name of a 'growthrate' object.
+#' @param cov boolean if the covariance matrix should be printed.
+#' @param \dots other arguments passed to the methods.
 #'
 #' @rdname methods
 #' @export rsquared

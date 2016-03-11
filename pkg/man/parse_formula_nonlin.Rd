@@ -9,7 +9,7 @@ parse_formula_nonlin(formula)
 \arguments{
 \item{formula}{a model formula specifying dependent and
 independent variables, nonlinear model and grouping variables in the form:
-\code{dependend ~ FUN(independent, parms) | group1 + group2 + ...}.
+\code{dependent ~ FUN(independent, parms) | group1 + group2 + ...}.
 FUN can be a name of an existing growth model (e.g. \code{grow_logistic})
 or a valid user-defined function (see \code{\link{growthmodel}}).}
 }

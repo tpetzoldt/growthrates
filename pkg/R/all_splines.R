@@ -5,11 +5,11 @@
 #'
 #' @param formula model formula specifying dependent, independent and grouping
 #'   variables in the form:
-#'   \code{dependend ~ independend | group1 + group2 + ...}
-#' @param data data frame of observational data
-#' @param grouping vector of criteria defining subsets in the data frame
-#' @param time character vectors with name independent variable
-#' @param y character vector with name of dependent variable
+#'   \code{dependent ~ independent | group1 + group2 + \dots}.
+#' @param data data frame of observational data.
+#' @param grouping vector of grouping variables defining subsets in the data frame.
+#' @param time character vectors with name independent variable.
+#' @param y character vector with name of dependent variable.
 #' @param optgrid number of steps on the x-axis used for searching the maximum
 #'  of the first derivative of the spline.
 #'  The default should work in most cases, as long as the data are equally spaced.
@@ -18,23 +18,25 @@
 #' @param subset a specification of the rows to be used: defaults to all rows.
 #' @param \dots other parameters passed to \code{\link{smooth.spline}}, see details.
 #'
-#' @return object with parameters of the fit
+#' @return object with parameters of the fit.
 #'
 #' @details The method was inspired by an algorithm of Kahm et al. (2010),
 #'   with different settings and assumptions. In the moment, spline fitting
 #'   is always done with log-transformed data, assuming exponential growth
-#'   at the time point of the maximum of the first derivative of the spline fit.
+#'   at the time point of the maximum of its first derivative.
 #'
 #'   All the hard work is done by function \code{\link{smooth.spline}} from package
 #'   \pkg{stats}, that is highly user configurable. Normally, smoothness is
 #'   automatically determined via cross-validation. This works well in many cases,
 #'   whereas manual adjustment is required otherwise, e.g. by setting \code{spar}
 #'   to a fixed value \eqn{[0,1]} that also disables cross-validation.
+#'   A typical case where cross validation does not work is, if time dependent
+#'   measurements are taken as pseudoreplicates from the same experimental unit.
 #'
 #' @references
 #'
 #' Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
-#' (2010). grofit: Fitting Biological Growth Curves with R.
+#' 2010. grofit: Fitting Biological Growth Curves with R.
 #' Journal of Statistical Software, 33(7), 1-21. URL
 #' \url{http://www.jstatsoft.org/v33/i07/}
 #'
@@ -51,6 +53,11 @@
 #' results <- results(L)
 #' xyplot(mumax ~ log(conc + 1)|strain, data=results)
 #'
+#' @rdname all_splines
+#' @export
+#'
+all_splines <- function(...) UseMethod("all_splines")
+
 #' @rdname all_splines
 #' @export
 #'

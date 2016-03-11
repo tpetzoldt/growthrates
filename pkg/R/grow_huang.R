@@ -2,38 +2,48 @@
 #'
 #' Huangs growth model written as analytical solution of the differential equations.
 #'
-#' @param time vector of time steps (independend variable)
+#' The version of the equation used in this package has the following form:
+#' \deqn{B = time + 1/alpha * log((1+exp(-alpha * (time - lambda)))/(1 + exp(alpha * lambda)))}
+#' \deqn{log(y) = log(y0) + log(K) - log(y0 + (K - y0) * exp(-mumax * B))}
+#'
+#' In contrast to the original publication, all parameters related to population
+#' abundance (y, y0, K) are given as untransformed values.
+#' They are not log-transformed.\cr
+#' In general, using log-transformed parameters would indeed be a good idea to
+#' avoid the need of constained optimization, but tests showed that
+#' box-constrained optimization worked resonably well.
+#' Therefore, handling of optionally log-transformed parameters was removed
+#' from the package to avoid confusion. If you want to discuss this, please
+#' let me know.
+#'
+#' @param time vector of time steps (independent variable).
 #' @param parms named parameter vector of Huang's growth model with:
 #' \itemize{
-#'   \item \code{y0} initial value of population measure
-#'   \item \code{mumax} maximum growth rate (1/time)
-#'   \item \code{K} carrying capacity (max. total concentration of cells)
-#'   \item \code{alpha} shape parameter determining the curvature
-#'   \item \code{lambda} parameter determining the lag time
-#'   
+#'   \item \code{y0} initial value of abundance,
+#'   \item \code{mumax} maximum growth rate (1/time),
+#'   \item \code{K} carrying capacity (max. total concentration of cells),
+#'   \item \code{alpha} shape parameter determining the curvature,
+#'   \item \code{lambda} parameter determining the lag time.
+#'
 #' }
 #'
-#' @return vector of dependend variable (\code{y}) and its log-transformed
+#' @return vector of dependent variable (\code{y}) and its log-transformed
 #'   values (\code{log_y}).
-#' 
-#' @details 
-#' 
-#' In contrast to the original publication, all measures of population abundance
-#' (y, y0, K) are given as untransformed values. They are not log-transformed.
-#' 
-#' @references 
-#' 
-#' Huang, Lihan (2011) A new mechanistic growth model for simultaneous 
-#' determination of lag phase duration and exponential growth rate and a new 
+#'
+#'
+#' @references
+#'
+#' Huang, Lihan (2011) A new mechanistic growth model for simultaneous
+#' determination of lag phase duration and exponential growth rate and a new
 #' Belehdradek-type model for evaluating the effect of temperature on growth rate.
 #' Food Microbiology , 2011, 28, 770 - 776
-#' 
+#'
 #' Huang, Lihan (2013) Introduction to USDA Integrated Pathogen Modeling
 #' Program (IPMP). Residue Chemistry and Predictive Microbiology Research
 #' Unit. USDA Agricultural Research Service.
 #' http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial%201-9-14.pdf
-#' 
-#' 
+#'
+#'
 #'
 #' @examples
 #'
@@ -52,7 +62,6 @@ grow_huang <- function(time, parms) {
     B <- time + 1/alpha * log((1+exp(-alpha * (time - lambda)))/(1 + exp(alpha * lambda)))
     #log_y <- y0 + K - log(exp(y0) + (exp(K) - exp(y0)) * exp(-mumax * B))
     log_y <- log(y0) + log(K) - log(y0 + (K - y0) * exp(-mumax * B))
-              
     return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
   })
 }

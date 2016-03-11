@@ -4,12 +4,13 @@
 #' plot diagnostics
 #'
 #' @param x an object returned by a model fitting function of package
-#'   \pkg{growthrates}, that can contain one or multiple fits
-#' @param y (ignored) for compatibility with the default plot method
+#'   \pkg{growthrates}, that can contain one or multiple fits.
+#' @param y (ignored) for compatibility with the default plot method.
 #' @param log a character string which contains \code{"y"} if the y axis is to
-#'   be logarithmic
-#' @param which either \code{"fit"} (default) or \code{"diagnostics"}
-#' @param \dots other arguments pased to the methods
+#'   be logarithmic.
+#' @param which either \code{"fit"} (default) or \code{"diagnostics"}.
+#' @param \dots other arguments pased to the plotting methods,
+#' see \code{\link{plot.default}} and \code{\link{par}}.
 #'
 #' @details The plot methods detect automatically which type of plot is
 #'   appropriate, depending on the class of \code{x} and can plot either one
@@ -18,6 +19,8 @@
 #'   and / or to use tomething like \code{par(mfrow=c(3,3))}.
 #'
 #'   The \code{lines}-method is currently only available for single fits.
+#'
+#'   If you need more control, you can of course also write own plotting functions.
 #'
 #' @examples
 #'

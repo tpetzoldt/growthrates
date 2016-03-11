@@ -10,29 +10,29 @@ lm_window(x, y, i0, h = 5)
 lm_parms(m)
 }
 \arguments{
-\item{x}{vector of independend variable (e.g. time)}
+\item{x}{vector of independent variable (e.g. time).}
 
-\item{y}{vector of dependend variable (concentration of organisms)}
+\item{y}{vector of dependent variable (concentration of organisms).}
 
-\item{i0}{index of first value used for a window}
+\item{i0}{index of first value used for a window.}
 
-\item{h}{with of the window (number of data)}
+\item{h}{with of the window (number of data).}
 
 \item{m}{linear model (\code{lm}) object}
 }
 \value{
-linear model object (\code{lm_window} 
-  resp. vector with parameters of the fit (lm_parms)
+linear model object (\code{lm_window}
+  resp. vector with parameters of the fit (lm_parms).
 }
 \description{
-Helper Functions for Handling Linear Fits
+Helper functions for handling linear fits.
 }
 \details{
-The functions are used by a heuristic linear approach, similar to the 
+The functions are used by a heuristic linear approach, similar to the
 ``growth rates made easy''-method of Hall et al. (2013).
 }
 \references{
-Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy. 
+Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
 }
 \keyword{internal}

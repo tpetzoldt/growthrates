@@ -10,18 +10,18 @@ ode_twostep(time, y, parms, ...)
 grow_twostep(time, parms, ...)
 }
 \arguments{
-\item{time}{actual time (for the ode) resp. vector of simulation time steps}
+\item{time}{actual time (for the ode) resp. vector of simulation time steps.}
 
 \item{y}{named vector with state of the system
 (yi, ya: abundance of inactive and active organisms, e.g.
-concentration of inactive resp. active cells)}
+concentration of inactive resp. active cells).}
 
-\item{parms}{parameters of the two-step growth model
+\item{parms}{parameters of the two-step growth model:
 \itemize{
-   \item \code{yi, ya} initial abundance of active and inactive organisms
-   \item \code{kw} activation (``wakeup'') constant (1/time)
-   \item \code{mumax} maximum growth rate (1/time)
-   \item \code{K}  carrying capacity (max. abundance)
+   \item \code{yi, ya} initial abundance of active and inactive organisms,
+   \item \code{kw} activation (``wakeup'') constant (1/time),
+   \item \code{mumax} maximum growth rate (1/time),
+   \item \code{K} carrying capacity (max. abundance).
 }}
 
 \item{\dots}{placeholder for additional parameters (for user-extended versions of this function)}
@@ -30,9 +30,8 @@ concentration of inactive resp. active cells)}
 For \code{ode_twostep}: matrix containing the simulation outputs.
 The return value of has also class \code{deSolve}.
 
-For \code{grow_twostep}: vector of dependend variable (\code{y}) and
-  its log-transformed values (\code{log_y}).
-
+For \code{grow_twostep}: vector of dependent variable (\code{y}) and
+  its log-transformed values (\code{log_y}):
 
 \itemize{
 \item \code{time} time of the simulation
@@ -47,6 +46,17 @@ System of two differential equations describing bacterial growth as two-step
 process of activation (or adaptation) and growth.
 }
 \details{
+The model is given as a system of two differential equations:
+
+\deqn{dy_i/dt = -kw * yi}
+\deqn{dy_a/dt =  kw * yi + mumax * (1 - (yi + ya)/K) * ya}
+
+that are then numerically integrated ('simulated') according to time (t). The
+model assumes that the population consists of active (\eqn{y_a}) and inactive
+(\eqn{y_i}) cells so that the observed abundance is (\eqn{y = y_i + y_a}).
+Adapting inactive cells change to the active state with a first order 'wakeup'
+rate (\eqn{kw}).
+
 Function \code{ode_twostep} is the system of differential equations,
 whereas \code{grow_twostep} runs a numerical simulation over time.
 
@@ -67,7 +77,7 @@ plot(o)
 }
 \references{
 Baranyi, J. (1998). Comparison of stochastic and deterministic concepts of bacterial lag.
-J. theor. Biol. 192, 403--408.
+J. heor. Biol. 192, 403--408.
 }
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},

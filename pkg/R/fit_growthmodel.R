@@ -1,30 +1,30 @@
 #' Fit Nonlinear Parametric Growth Model
 #'
-#' Determine maximum growth rates by fitting nonlinear models
+#' Determine maximum growth rates by fitting nonlinear models.
 #'
 #'
-#' @param FUN function of growth model to be fitted
-#' @param p named vector of start parameters and initial values of the growth model
-#' @param time vector of independend variable
-#' @param y vector of dependend variable (concentration of organisms)
-#' @param lower lower bound of the parameter vector (optional)
-#' @param upper upper bound of the parameter vector (optional)
-#' @param which vector of parameter names that are to be fitted
-#' @param method character vector specifying the optimization algorithm
-#' @param transform fit model to non-transformed or log-transformed data
+#' @param FUN function of growth model to be fitted.
+#' @param p named vector of start parameters and initial values of the growth model.
+#' @param time vector of independent variable.
+#' @param y vector of dependent variable (concentration of organisms).
+#' @param lower lower bound of the parameter vector (optional).
+#' @param upper upper bound of the parameter vector (optional).
+#' @param which vector of parameter names that are to be fitted.
+#' @param method character vector specifying the optimization algorithm.
+#' @param transform fit model to non-transformed or log-transformed data.
 #' @param control A list of control parameters for the optimizers. See Details.
-#' @param \dots additional parameters passed to the optimizer
+#' @param \dots additional parameters passed to the optimizer.
 #'
-#' @return list with parameters of the fit
+#' @return object  with parameters of the fit.
 #'
 #' @details This function calls \code{modFit} from package \pkg{FME}.
 #' Syntax of control parameters and available options may differ, depending
 #' on the optimizer used, except \code{control=list(trace=...)} that switches
-#'   tracing on and off in all methods and is either \code{TRUE}, or \code{FALSE},
+#'   tracing on and off for all methods and is either \code{TRUE}, or \code{FALSE},
 #'   or an integer value like 0, 1, 2, 3, depending on the optimizer.
 #'
 #' @family fitting functions
-#' @seealso \code{link{modFit}} about constrained fitting of models to data
+#' @seealso \code{\link{modFit}} about constrained fitting of models to data
 #'
 #' @examples
 #'

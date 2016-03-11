@@ -3,17 +3,27 @@
 #' System of two differential equations describing bacterial growth as two-step
 #' process of activation (or adaptation) and growth.
 #'
+#' The model is given as a system of two differential equations:
 #'
-#' @param time actual time (for the ode) resp. vector of simulation time steps
+#' \deqn{dy_i/dt = -kw * yi}
+#' \deqn{dy_a/dt =  kw * yi + mumax * (1 - (yi + ya)/K) * ya}
+#'
+#' that are then numerically integrated ('simulated') according to time (t). The
+#' model assumes that the population consists of active (\eqn{y_a}) and inactive
+#' (\eqn{y_i}) cells so that the observed abundance is (\eqn{y = y_i + y_a}).
+#' Adapting inactive cells change to the active state with a first order 'wakeup'
+#' rate (\eqn{kw}).
+#'
+#' @param time actual time (for the ode) resp. vector of simulation time steps.
 #' @param y named vector with state of the system
 #'   (yi, ya: abundance of inactive and active organisms, e.g.
-#'   concentration of inactive resp. active cells)
-#' @param parms parameters of the two-step growth model
+#'   concentration of inactive resp. active cells).
+#' @param parms parameters of the two-step growth model:
 #'   \itemize{
-#'      \item \code{yi, ya} initial abundance of active and inactive organisms
-#'      \item \code{kw} activation (``wakeup'') constant (1/time)
-#'      \item \code{mumax} maximum growth rate (1/time)
-#'      \item \code{K}  carrying capacity (max. abundance)
+#'      \item \code{yi, ya} initial abundance of active and inactive organisms,
+#'      \item \code{kw} activation (``wakeup'') constant (1/time),
+#'      \item \code{mumax} maximum growth rate (1/time),
+#'      \item \code{K} carrying capacity (max. abundance).
 #'   }
 #' @param \dots placeholder for additional parameters (for user-extended versions of this function)
 #'
@@ -22,9 +32,8 @@
 #' For \code{ode_twostep}: matrix containing the simulation outputs.
 #' The return value of has also class \code{deSolve}.
 #'
-#' For \code{grow_twostep}: vector of dependend variable (\code{y}) and
-#'   its log-transformed values (\code{log_y}).
-#'
+#' For \code{grow_twostep}: vector of dependent variable (\code{y}) and
+#'   its log-transformed values (\code{log_y}):
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
@@ -43,7 +52,7 @@
 #' @references
 #'
 #' Baranyi, J. (1998). Comparison of stochastic and deterministic concepts of bacterial lag.
-#' J. theor. Biol. 192, 403--408.
+#' J. heor. Biol. 192, 403--408.
 #'
 #' @examples
 #'

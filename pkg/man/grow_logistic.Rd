@@ -7,7 +7,7 @@
 grow_logistic(time, parms)
 }
 \arguments{
-\item{time}{vector of time steps (independend variable)}
+\item{time}{vector of time steps (independent variable)}
 
 \item{parms}{named parameter vector of the logistic growth model with:
 \itemize{
@@ -17,7 +17,7 @@ grow_logistic(time, parms)
 }}
 }
 \value{
-vector of dependend variable (\code{y}) and its log-transformed
+vector of dependent variable (\code{y}) and its log-transformed
   values (\code{log_y}).
 }
 \description{

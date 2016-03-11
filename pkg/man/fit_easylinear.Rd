@@ -7,21 +7,37 @@
 fit_easylinear(x, y, h = 5, quota = 0.95)
 }
 \arguments{
-\item{x}{vector of independend variable (e.g. time)}
+\item{x}{vector of independent variable (e.g. time).}
 
-\item{y}{vector of dependend variable (concentration of organisms)}
+\item{y}{vector of dependent variable (concentration of organisms).}
 
-\item{h}{with of the window (number of data)}
+\item{h}{width of the window (number of data).}
 
-\item{quota}{part of window fits considered for the overall linear fit 
+\item{quota}{part of window fits considered for the overall linear fit
 (relative to max. growth rate)}
 }
 \value{
-list with parameters of the fit
+object with parameters of the fit.
 }
 \description{
-Determine maximum growth rates from log-linear part of the growth curve using
-a heuristic similar to the ``growth rates made easy''-method of Hall et al. (2013).
+Determine maximum growth rates from the log-linear part of a growth curve using
+a heuristic approach similar to the ``growth rates made easy''-method of
+Hall et al. (2013).
+}
+\details{
+The algorithm works as follows:
+\enumerate{
+  \item Fit linear regressions to all subsets of \code{h} consecutive data
+    points. If for example \eqn{h=5}, fit a linear regression to points
+    1 \dots 5, 2 \dots 6, 3\dots 7 and so on. The method seeks the highest
+    rate of exponential growth, so the dependent variable is of course
+    log-transformed.
+  \item Find the subset with the highest slope \eqn{$b_max$}{b_max} and
+    include also the data points of adjacent subsets that have a slope of
+    at least \eqn{$quota \cdot b_max$}{quota * b_max},
+    e.g. all data sets that have at least 95\% of the maximum slope.
+  \item Fit a new linear model to the extended data window identified in step 2.
+}
 }
 \examples{
 data(bactgrowth)
@@ -47,13 +63,13 @@ lines(fitx, pch="+", col="blue")
 
 }
 \references{
-Hall, B. G., H. Acar and M. Barlow (2013). Growth Rates Made Easy. 
+Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
 }
 \seealso{
-Other fitting functions: \code{\link{all_easylinear.formula}},
-  \code{\link{all_growthmodels.formula}},
-  \code{\link{all_splines.formula}},
-  \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
+Other fitting functions: \code{\link{all_easylinear}},
+  \code{\link{all_growthmodels}},
+  \code{\link{all_splines}}, \code{\link{fit_growthmodel}},
+  \code{\link{fit_spline}}
 }
 

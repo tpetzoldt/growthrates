@@ -2,32 +2,31 @@
 % Please edit documentation in R/grow_gompertz.R
 \name{grow_gompertz}
 \alias{grow_gompertz}
-\title{Growth Models According to Gompertz}
+\title{Growth Model According to Gompertz}
 \usage{
 grow_gompertz(time, parms)
 }
 \arguments{
-\item{time}{vector of time steps (independend variable)}
+\item{time}{vector of time steps (independent variable).}
 
 \item{parms}{named parameter vector of the Gompertz growth model with:
 \itemize{
-  \item \code{y0} initial value of population measure (e.g. cell concentration)
-  \item \code{mumax} maximum growth rate (1/time)
-  \item \code{K} maximum abundance (carrying capacity)
-  
+  \item \code{y0} initial value of abundance,
+  \item \code{mumax} maximum growth rate (1/time),
+  \item \code{K} maximum abundance (carrying capacity).
+
 }}
 }
 \value{
-vector of dependend variable (\code{y})
+vector of dependent variable (\code{y})
 }
 \description{
-Gompertz growth model written as analytical solution of the differential 
+Gompertz growth model written as analytical solution of the differential
   equation system.
 }
 \details{
-This version of the Gompertz model is a placeholder. It will be
-  replaced with at least one other selected other Gompertz formula with
-  more parameters.
+The equation used here is:
+\deqn{y = K * exp(log(y0 / K) * exp(-mumax * time))}
 }
 \examples{
 
@@ -38,7 +37,7 @@ plot(time, y, type="l", ylim=c(0, 20))
 
 }
 \references{
-Tsoularis, A. (2001) Analysis of Logistic Growth Models. 
+Tsoularis, A. (2001) Analysis of Logistic Growth Models.
   Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 }
 \seealso{

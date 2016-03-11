@@ -22,7 +22,7 @@
 \alias{summary,multiple_fits-method}
 \alias{summary,nonlinear_fit-method}
 \alias{summary,smooth.spline_fit-method}
-\title{Accessor Methods of Package \pkg{growthrates}}
+\title{Accessor Methods of Package \pkg{growthrates}.}
 \usage{
 \S4method{rsquared}{growthrates_fit}(object, ...)
 
@@ -65,14 +65,16 @@
 \S4method{residuals}{multiple_fits}(object, ...)
 }
 \arguments{
-\item{object}{name of a 'growthrate' object}
+\item{object}{name of a 'growthrate' object.}
 
-\item{cov}{boolean if the covariance matrix should be printed}
+\item{cov}{boolean if the covariance matrix should be printed.}
 
-\item{\dots}{other arguments passed to the methods}
+\item{\dots}{other arguments passed to the methods.}
 }
 \description{
-Functions to access the results of fitted growthrate objects.
+Functions to access the results of fitted growthrate objects:  \code{summary},
+ \code{coeff}, \code{rsquared}, \code{deviance}, \code{residuals},
+ \code{df.residual}, \code{obs}, \code{results}.
 }
 \examples{
 

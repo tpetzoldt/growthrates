@@ -1,5 +1,8 @@
 #' Estimate Growth Rates from Experimental Data
 #'
+#' A collection of methods to determine growth rates from experimental data,
+#' in particular from batch experiments and plate reader trials.
+#'
 #' \tabular{ll}{
 #' Package:  \tab growthrates\cr
 #' Type:     \tab Package\cr
@@ -7,21 +10,31 @@
 #' Date:     \tab 2016-03-10\cr
 #' License:  \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
+#' }\cr
+#' The package contains basically three methods:
+#' \itemize{
+#'   \item fit a linear regression to a subset of data with the steepest
+#'     log-linear increase (a method, similar to Hall et al., 2013),
+#'   \item fit parametric nonlinear models to the complete data set, where the
+#'      model functions can be given either in closed form or as numerically
+#'      solved (system of) differential equation(s),
+#'   \item use maximum of the 1st derivative of a smoothing spline with
+#'     log-transformed y-values (similar to Kahm et al., 2010).
 #' }
-#'
-#' A collection of methods to determine growth rates from experimental data,
-#' in particular from batch experiments and plate reader trials.
+#' The package can fit data sets of single experiments or complete series
+#' containing multiple data sets. Included are functions for extracting
+#' estimates and for plotting. The package supports growth models given as
+#' numerically solved differential equations. Multi-core computation is used to
+#' speed up fitting of parametric models.
 #'
 #' @name growthrates-package
 #' @aliases growthrates growthrates-package
 #' @docType package
-#' @author Thomas Petzoldt (package)\cr
+#' @author Thomas Petzoldt
 #'
-#'
-#' Maintainer: Thomas Petzoldt <thomas.petzoldt@@tu-dresden.de>\cr
 #' @seealso package \code{\link[grofit:grofit-package]{grofit}}
-#' for a related package from other authors that implements a different
-#' approach.
+#' for a related package from Kahm et al. (2010) that implements a
+#' different approach.
 #'
 #' @references
 #'

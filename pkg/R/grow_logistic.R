@@ -2,7 +2,7 @@
 #'
 #' Classical logistic growth model written as analytical solution of the differential equation.
 #'
-#' @param time vector of time steps (independend variable)
+#' @param time vector of time steps (independent variable)
 #' @param parms named parameter vector of the logistic growth model with:
 #' \itemize{
 #'   \item \code{y0} initial value of population measure
@@ -10,7 +10,7 @@
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #' }
 #'
-#' @return vector of dependend variable (\code{y}) and its log-transformed
+#' @return vector of dependent variable (\code{y}) and its log-transformed
 #'   values (\code{log_y}).
 #'
 #' @examples

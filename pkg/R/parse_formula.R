@@ -1,7 +1,7 @@
 #' Simple Formula Interface
 #'
 #' This simple formula interface handles formulae of the form
-#'   \code{dependend ~ independend | group1 + group2 + ...}.
+#'   \code{dependent ~ independent | group1 + group2 + ...}.
 #'
 #' This function is used by \code{\link{multisplit}} and normally not called
 #'   by the user.
