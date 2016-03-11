@@ -13,6 +13,7 @@
 #'   package \pkg{FME}
 #'
 #' @export cost
+#' @keywords internal
 #'
 #' @details
 #'
