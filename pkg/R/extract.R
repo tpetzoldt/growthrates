@@ -28,14 +28,14 @@ setMethod("[", c(x="multiple_fits", i="ANY", j="missing"),
           function(x, i, j=NULL, ...) {
             ## if (!is.null(j))
             ##   stop("incorrect number of subscripts")
-            if (length(i) == 1) {
-              x@fits[i=i]
-            } else {
+            #if (length(i) == 1) {
+            #  x@fits[i=i]
+            #} else {
               new("multiple_fits",
                   fits = x@fits[i=i],
                   grouping = x@grouping
                   )
-            }
+            #}
           })
 
 #' @rdname extract
