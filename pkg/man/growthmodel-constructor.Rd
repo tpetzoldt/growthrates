@@ -37,12 +37,12 @@ Package \pkg{growthrates} has a plug-in architecture allowing
 
 test <- function(time, parms) {
   with(as.list(parms), {
-    y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time))
+    y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
  })
 }
 
-mygrowthmodel <- growthmodel(test, c("y0", "mumax", "K"))
+mygrowthmodel <- growthmodel(test, c("y0", "mumax", "K", "y_shift"))
 
 
 }
