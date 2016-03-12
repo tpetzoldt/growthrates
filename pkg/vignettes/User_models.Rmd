@@ -31,7 +31,7 @@ LANG=en_US.UTF-8
 1. Introduction
 ===============
 
-Package growthrates comes with a set of pararametric growth models built-in, 
+Package **growthrates** comes with a set of pararametric growth models built-in, 
 that should be sufficient for many application scenarios, but of 
 course not for all circumstances. This document describes how the set of 
 available functions can be extended with own user-defined models. Section (3) 
@@ -117,7 +117,7 @@ example:
 ```{r,fig.width=4, fig.height=3}
 time <- 1:10
 out <- grow_logistic_yshift(time, parms=list(y0=1, mumax=0.5, K=10, y_shift=2))
-plot(time, out[, "y"])
+plot(time, out[, "y"], type="b")
 ```
 
 Future versions of the growthrates package may introduce additional checks, so it 
@@ -133,13 +133,12 @@ Now the new model is ready to be fitted to test data:
 
 
 ```{r,fig.width=4, fig.height=3}
-
 x <- seq(5, 100, 5)
 y <- c(2.1, 2.3, 5, 4.7, 4.3, 6.9, 8.2, 11.5, 8.8, 10.2, 14.5, 12.5,
        13.6, 12.7, 14.2, 12.5, 13.8, 15.1, 12.7, 14.9)
 
 fit <- fit_growthmodel(grow_logistic_yshift,
-                       p=c(y0=1, mumax=0.1, K=10, K = 10, y_shift=1),
+                       p=c(y0=1, mumax=0.1, K=10, K = 10, y_shift=1), 
                        time=x, y=y)
 plot(fit)
 summary(fit)
@@ -199,7 +198,8 @@ grow_K_linear <- function(time, parms, ...) {
 Again, it's a good idea to test this first:
 
 ```{r}
-grow_K_linear <- growthmodel(grow_K_linear, pnames=c("y0", "K", "mumax", "deltaK"))
+grow_K_linear <- growthmodel(grow_K_linear, 
+                             pnames=c("y0", "K", "mumax", "deltaK"))
 head(grow_K_linear(time=1:10, c(y0=.1, K=1, mumax=0.1, dK = 0.5)))
 ```
 
@@ -210,7 +210,7 @@ x <- seq(5, 100, 5)
 y <- c(0.1, 2.2, 3.1, 1.5, 8.9, 8, 8.4, 9.8, 9.3, 10.6, 12, 13.6,
   13.1, 13.3, 11.6, 14.7, 12.6, 13.9, 16.9, 14.4)
 fit <- fit_growthmodel(grow_K_linear,
-         p=c(y0=0.1, mumax=0.2, K=10, dK = .1), time=x, y=y)
+                       p=c(y0=0.1, mumax=0.2, K=10, dK = .1), time=x, y=y)
 plot(fit)
 summary(fit)
 ```
@@ -222,32 +222,29 @@ summary(fit)
 ==================================
 
 A numerical simulation of ODE models can sometimes be slow, so we may be tempted 
-to speed it up. This is indeed possible with `compiled code', i.e. the model
+to speed it up. This is indeed possible with *compiled code*, i.e. the model
 is written in another programming language (Fortran or C) that are faster 
 compared to R. Several methods exist how this can be done, see for example @Soetaert2010c
-or @Kneis2015. In the following, we use a method that allows ``inline code', i.e. 
-direkt integration of C code in the R script using package **cOde** @Kaschek2016.
+or @Kneis2015. In the following, we use a method that allows *inline code*, i.e. 
+direkt integration of C code in the R script using package **cOde** [@Kaschek2016].
 
-Note, however, that compiled code needs some additional developer tools on your computer.
-These are often already available on Linux systems, but need additional installation on Windows
-and Mac OS.
+Note, however, that compiled code needs the necessary C (and/or Fortran) compilers 
+and some additional developer tools.
+These are often installed on Linux systems by default, whereas the Windows tooset
+can be downloaded from https://cran.r-project.org/bin/windows/Rtools/.
 
 
 ```{r, eval=FALSE}
-## =============================================================================
 ## The following example shows how to use compiled growth models
 ## from inline code, by using the 'cOde' package of Daniel Kaschek
 ## Note: This example needs the R development tools.
 ##  - suitable compilers on Linux and Mac
-##  - Rtools on Windows from https://cran.r-project.org/bin/windows/Rtools/
-## =============================================================================
+##  - Rtools on Windows from 
 
 library("growthrates")
 library("cOde")
 
-## =============================================================================
-## define a system of ODEs and compile it
-## =============================================================================
+## define a system of ODEs and compile it --------------------------------------
 ode_K_linear <- funC(c(
   y = "mumax * y * (1-y/K)",
   K = "dK"
@@ -263,12 +260,9 @@ out1 <- odeC(yini, times=0:100, ode_K_linear, parms = parms)
 x <- seq(5, 100, 5)
 y <- odeC(yini, x, ode_K_linear, parms)[, "y"] + rnorm(x)
 
-## =============================================================================
+
 ## create a "growthmodel" with interfaces compatible to package growthrates
-## see ?growthmodel for details
-## Note:
-##   It is essential to use consistent names for parameters and initial values!
-## =============================================================================
+## It is essential to use consistent names for parameters and initial values!
 
 grow_K_linear <- function(time, parms, ...) {
   init    <- parms[c("y0", "K")]  # initial values
@@ -278,23 +272,21 @@ grow_K_linear <- function(time, parms, ...) {
 }
 
 ## convert this to an object, (maybe needed by future extensions)
-# grow_K_linear <- growthmodel(grow_K_linear, pnames=c("y0", "mumax", "K", "dK"))
+grow_K_linear <- growthmodel(grow_K_linear, pnames=c("y0", "mumax", "K", "dK"))
 
-## Test the growthmodel.
+## Test the growthmodel
 ## Columns with names 'time', 'y' and 'log_y' are mandatory.
 head(grow_K_linear(time=x, c(y0=1, mumax=0.1, K=10, dK = 0.1)))
 
-## =============================================================================
-## Fit the model
-## =============================================================================
-fit <- fit_growthmodel(grow_K_linear, p=c(y0=1, mumax=0.1, K=10, dK = 0.1), time=x, y=y)
+
+## Fit the model ---------------------------------------------------------------
+fit <- fit_growthmodel(grow_K_linear, 
+                       p=c(y0=1, mumax=0.1, K=10, dK = 0.1), time=x, y=y)
 plot(fit)
 summary(fit)
 
-## =============================================================================
-## Unload DLL and cleanup:
+## Unload DLL and cleanup ------------------------------------------------------
 ## DLL creation should ideally be directed to a temporary directory.
-## =============================================================================
 dll <- paste(ode_K_linear, .Platform$dynlib.ext, sep="")
 dyn.unload(dll)
 unlink(dll)
@@ -307,8 +299,8 @@ unlink(paste(ode_K_linear, ".o", sep=""))
 Acknowledgments
 ===============
 
-Many thanks to Claudia Seiler for the data set and to David Kaschek for his 
-**cOde** package. Many thanks to the R Core Team [@RCore2015] for developing 
+Many thanks to Claudia Seiler for the data set, to David Kneis for fruitful discussions,
+to Daniel Kaschek for his **cOde** package, and to the R Core Team [@RCore2015] for developing 
 and maintaining **R**. This documentation was written using **knitr** 
 [@knitr2014] and **rmarkdown** [@rmarkdown].
 
