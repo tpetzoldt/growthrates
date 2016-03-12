@@ -73,7 +73,7 @@
 #'
 fit_spline <- function(time, y, optgrid = length(time), ...) {
 
-  if (any(duplicated(time))) stop("x variable must not contain duplicated values")
+  #if (any(duplicated(time))) stop("x variable must not contain duplicated values")
 
   obs <- data.frame(time = time, y = y)
   ylog <- log(obs$y)

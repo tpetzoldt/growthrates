@@ -45,13 +45,24 @@
 #' @examples
 #'
 #' data(bactgrowth)
-#'
 #' L <- all_splines(value ~ time | strain + conc + replicate,
 #'                  data = bactgrowth, spar = 0.5)
-#' par(mfrow=c(3, 3))
+#'
+#' par(mfrow=c(4, 3))
 #' plot(L)
 #' results <- results(L)
 #' xyplot(mumax ~ log(conc + 1)|strain, data=results)
+#'
+#' ## fit splines at lower grouping levels
+#' L2 <- all_splines(value ~ time | conc + strain,
+#'                     data = bactgrowth, spar = 0.5)
+#' plot(L2)
+#'
+#' ## total data set without any grouping
+#' L3 <- all_splines(value ~ time,
+#'                     data = bactgrowth, spar = 0.5)
+#' par(mfrow=c(1, 1))
+#' plot(L3)
 #'
 #' @rdname all_splines
 #' @export
@@ -62,7 +73,11 @@ all_splines <- function(...) UseMethod("all_splines")
 #' @export
 #'
 all_splines.formula <- function(formula, data=NULL, optgrid = 50, subset=NULL,  ...) {
+
+  dataset_name <- deparse(substitute(data))  # name of the dataset in the call
   X <- get_all_vars(formula, data)
+  attr(X, "dataset_name") <- dataset_name
+
   if (!is.null(subset)) X <- X[subset, ]
   all_splines.data.frame(data = X, grouping = formula, optgrid = optgrid, ...)
 }
@@ -71,21 +86,43 @@ all_splines.formula <- function(formula, data=NULL, optgrid = 50, subset=NULL,  
 #' @export
 #'
 all_splines.data.frame <-
-  function(data, grouping, time = "time", y = "value",  optgrid = 50, ...) {
-    splitted.data <- multisplit(data, grouping)
+  function(data, grouping=NULL, time = "time", y = "value",  optgrid = 50, ...) {
 
-    ## todo: consider to attach parsed formula as attr to splitted.data
-    if (inherits(grouping, "formula")) {
-      p <- parse_formula(grouping)
-      time     <- p$timevar
-      y        <- p$valuevar
-      grouping <- p$groups
+    ## remember name of data set
+    if (is.null(attr(data, "dataset_name"))) {   # inherited from former method ?
+      dataset_name <- deparse(substitute(data))  # get new one
+    } else {
+      dataset_name <- attr(data, "dataset_name") # take old one
     }
+
+    ## check and parse grouping if formula
+    if (inherits(grouping, "formula")) {
+      parsed   <- parse_formula(grouping)
+      time     <- parsed$timevar
+      y        <- parsed$valuevar
+      grouping <- parsed$groups
+    }
+
+    ## missing groups => complete data handled as one group
+    if (is.null(grouping)) {
+      splitted.data <- list(data)
+      names(splitted.data) <- dataset_name
+      ndata <- 1
+    } else {
+      splitted.data <- multisplit(data, grouping)
+      ndata <- length(splitted.data)
+    }
+
+    #splitted.data <- multisplit(data, grouping)
 
     ## supress warnings, esp. in case of "perfect fit"
     fits <- lapply(splitted.data,
                    function(tmp)
                      suppressWarnings(fit_spline(tmp[,time], tmp[,y],
                                                  optgrid = optgrid, ...)))
+
+    ## one fit without grouping
+    if (is.null(grouping)) grouping <- dataset_name
+
     new("multiple_smooth.spline_fits", fits = fits, grouping = grouping)
   }

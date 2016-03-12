@@ -63,7 +63,6 @@ a series of experiments.
 }
 \examples{
 
-\dontrun{
 data(bactgrowth)
 splitted.data <- multisplit(value ~ time | strain + conc + replicate,
                  data = bactgrowth)
@@ -79,6 +78,9 @@ fit0 <- fit_spline(dat$time, dat$value)
 fit1 <- all_splines(value ~ time | strain + conc + replicate,
                  data = bactgrowth, spar = 0.5)
 
+\donttest{
+## these examples require some CPU power and may take a bit longer
+
 ## initial parameters
 p <- c(coef(fit0), K = max(dat$value))
 
@@ -90,15 +92,26 @@ fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
           data = bactgrowth, FUN=grow_logistic,
           p = p, lower = lower, ncores = 2)
 
+results1 <- results(fit1)
+results2 <- results(fit2)
+plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
+
 ## experimental: nonlinear model as part of the formula
+
 fit3 <- all_growthmodels(
           value ~ grow_logistic(time, parms) | strain + conc + replicate,
           data = bactgrowth, p = p, lower = lower, ncores = 2)
 
-results1 <- results(fit1)
-results2 <- results(fit2)
+## this allows also to fit to the 'global' data set or any subsets
+fit4 <- all_growthmodels(
+          value ~ grow_logistic(time, parms),
+          data = bactgrowth, p = p, lower = lower, ncores = 1)
+plot(fit4)
 
-plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
+fit5 <- all_growthmodels(
+          value ~ grow_logistic(time, parms) | strain + conc,
+          data = bactgrowth, p = p, lower = lower, ncores = 2)
+plot(fit5)
 }
 
 }

@@ -11,8 +11,8 @@ all_splines(...)
 \method{all_splines}{formula}(formula, data = NULL, optgrid = 50,
   subset = NULL, ...)
 
-\method{all_splines}{data.frame}(data, grouping, time = "time", y = "value",
-  optgrid = 50, ...)
+\method{all_splines}{data.frame}(data, grouping = NULL, time = "time",
+  y = "value", optgrid = 50, ...)
 }
 \arguments{
 \item{formula}{model formula specifying dependent, independent and grouping
@@ -61,13 +61,24 @@ The method was inspired by an algorithm of Kahm et al. (2010),
 \examples{
 
 data(bactgrowth)
-
 L <- all_splines(value ~ time | strain + conc + replicate,
                  data = bactgrowth, spar = 0.5)
-par(mfrow=c(3, 3))
+
+par(mfrow=c(4, 3))
 plot(L)
 results <- results(L)
 xyplot(mumax ~ log(conc + 1)|strain, data=results)
+
+## fit splines at lower grouping levels
+L2 <- all_splines(value ~ time | conc + strain,
+                    data = bactgrowth, spar = 0.5)
+plot(L2)
+
+## total data set without any grouping
+L3 <- all_splines(value ~ time,
+                    data = bactgrowth, spar = 0.5)
+par(mfrow=c(1, 1))
+plot(L3)
 
 }
 \references{
