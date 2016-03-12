@@ -60,7 +60,8 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
 
   transform <- match.arg(transform)
 
-  if (any(duplicated(time))) stop("x variable must not contain duplicated values")
+  #if (any(duplicated(time)))
+  #  stop("x variable must not contain duplicated values")
 
   ## split parameter vector in fitted and non-fitted
   parnames <- names(p)

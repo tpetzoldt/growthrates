@@ -13,9 +13,9 @@ all_growthmodels(...)
   transform = c("none", "log"), ..., subset = NULL,
   ncores = detectCores(logical = FALSE))
 
-\method{all_growthmodels}{function}(FUN, p, data, grouping, time = "time",
-  y = "value", lower = -Inf, upper = Inf, which = names(p),
-  method = "Marq", transform = c("none", "log"), ...,
+\method{all_growthmodels}{function}(FUN, p, data, grouping = NULL,
+  time = "time", y = "value", lower = -Inf, upper = Inf,
+  which = names(p), method = "Marq", transform = c("none", "log"), ...,
   ncores = detectCores(logical = FALSE))
 }
 \arguments{
@@ -92,7 +92,7 @@ fit2 <- all_growthmodels(value ~ time | strain + conc + replicate,
 
 ## experimental: nonlinear model as part of the formula
 fit3 <- all_growthmodels(
-          value ~ grow_logistic(time) | strain + conc + replicate,
+          value ~ grow_logistic(time, parms) | strain + conc + replicate,
           data = bactgrowth, p = p, lower = lower, ncores = 2)
 
 results1 <- results(fit1)

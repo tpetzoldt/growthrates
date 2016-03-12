@@ -31,7 +31,6 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #' data(bactgrowth)
 #' splitted.data <- multisplit(value ~ time | strain + conc + replicate,
 #'                  data = bactgrowth)
@@ -47,6 +46,9 @@
 #' fit1 <- all_splines(value ~ time | strain + conc + replicate,
 #'                  data = bactgrowth, spar = 0.5)
 #'
+#' \donttest{
+#' ## these examples require some CPU power and may take a bit longer
+#'
 #' ## initial parameters
 #' p <- c(coef(fit0), K = max(dat$value))
 #'
@@ -58,15 +60,26 @@
 #'           data = bactgrowth, FUN=grow_logistic,
 #'           p = p, lower = lower, ncores = 2)
 #'
-#' ## experimental: nonlinear model as part of the formula
-#' fit3 <- all_growthmodels(
-#'           value ~ grow_logistic(time) | strain + conc + replicate,
-#'           data = bactgrowth, p = p, lower = lower, ncores = 2)
-#'
 #' results1 <- results(fit1)
 #' results2 <- results(fit2)
-#'
 #' plot(results1$mumax, results2$mumax, xlab="smooth splines", ylab="logistic")
+#'
+#' ## experimental: nonlinear model as part of the formula
+#'
+#' fit3 <- all_growthmodels(
+#'           value ~ grow_logistic(time, parms) | strain + conc + replicate,
+#'           data = bactgrowth, p = p, lower = lower, ncores = 2)
+#'
+#' ## this allows also to fit to the 'global' data set or any subsets
+#' fit4 <- all_growthmodels(
+#'           value ~ grow_logistic(time, parms),
+#'           data = bactgrowth, p = p, lower = lower, ncores = 1)
+#' plot(fit4)
+#'
+#' fit5 <- all_growthmodels(
+#'           value ~ grow_logistic(time, parms) | strain + conc,
+#'           data = bactgrowth, p = p, lower = lower, ncores = 2)
+#' plot(fit5)
 #' }
 #'
 #' @rdname all_growthmodels
@@ -87,21 +100,28 @@ all_growthmodels.formula <- function(formula, data, FUN = NULL, p,
                                      ) {
 
   ## experimental: FUN is part of the formula, y ~ f(x, parms) | groups
-  #if (is.null(FUN)) {
-  if (length(grep("^.*[(].*[)]$", as.formula(formula)[[3]]))) {   # RHS
+
+  if (length(grep("^.*[(].*[)]", as.character(formula)[[3]]))) {   # RHS
     if (!is.null(FUN))
       warning("Nonlinear model in formula overrules value of argument FUN")
+
     parsed_fun <- parse_formula_nonlin(formula)
 
-    ## simplify formula removing a nonlinear function
-    formula <- with(parsed_fun, as.formula(paste(valuevar, "~", timevar, "|",
-                                           paste(groups, collapse="+"))))
-
+    ## simplify formula by removing a nonlinear function
+    if (is.null(parsed_fun$groups)) {
+      formula <- with(parsed_fun, as.formula(paste(valuevar, "~", timevar)))
+    } else {
+      formula <- with(parsed_fun, as.formula(paste(valuevar, "~", timevar, "|",
+                                             paste(groups, collapse="+"))))
+    }
     ## FUN1 = full expression; FUN2 = function name only
     FUN <- eval(parse(text = parsed_fun$FUN2))
   }
 
+  dataset_name <- deparse(substitute(data))  # name of the dataset in the call
   X <- get_all_vars(formula, data)
+  attr(X, "dataset_name") <- dataset_name
+
   if (!is.null(subset)) X <- X[subset, ]
 
   ## pass all arguments except subset
@@ -117,7 +137,7 @@ all_growthmodels.formula <- function(formula, data, FUN = NULL, p,
 #' @export
 #'
 all_growthmodels.function <-
-  function(FUN, p, data, grouping, time = "time", y = "value",
+  function(FUN, p, data, grouping = NULL, time = "time", y = "value",
                              lower = -Inf, upper = Inf,
                              which = names(p),
                              method = "Marq",
@@ -135,8 +155,12 @@ all_growthmodels.function <-
   if (!is.numericOrNull(lower) & is.numericOrNull(upper))
     stop("lower and opper must be numeric vectors or empty; lists are not possible yet")
 
-  splitted.data <- multisplit(data, grouping)
-  ndata <- length(splitted.data)
+  ## remember name of data set
+  if (is.null(attr(data, "dataset_name"))) {   # inherited from former method ?
+    dataset_name <- deparse(substitute(data))  # get new one
+  } else {
+    dataset_name <- attr(data, "dataset_name") # take old one
+  }
 
   ## todo: consider to attach parsed formula as attr to splitted.data
   if (inherits(grouping, "formula")) {
@@ -145,6 +169,17 @@ all_growthmodels.function <-
     y        <- parsed$valuevar
     grouping <- parsed$groups
   }
+
+  ## missing groups => complete data handled as one group
+  if (is.null(grouping)) {
+    splitted.data <- list(data)
+    names(splitted.data) <- dataset_name
+    ndata <- 1
+  } else {
+    splitted.data <- multisplit(data, grouping)
+    ndata <- length(splitted.data)
+  }
+
 
   ## convert p to data frame if matrix
   if (is.matrix(p)) {
@@ -230,6 +265,9 @@ all_growthmodels.function <-
   }
   ## names got lost during computation, so re-assign names to fits
   names(fits) <- names(splitted.data)
+
+  ## one fit without grouping
+  if (is.null(grouping)) grouping <- dataset_name
 
   ## create S4 object
   new("multiple_nonlinear_fits", fits = fits, grouping = grouping)

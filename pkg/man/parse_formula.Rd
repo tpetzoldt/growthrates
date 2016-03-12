@@ -25,7 +25,7 @@ This function is used by \code{\link{multisplit}} and normally not called
 }
 \examples{
 
-parse_formula(y ~ x| a+b+c)
+parse_formula(y ~ x | a+b+c)
 
 }
 \seealso{
