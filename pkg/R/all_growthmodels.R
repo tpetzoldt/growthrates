@@ -90,9 +90,10 @@ all_growthmodels <- function(...) UseMethod("all_growthmodels")
 #' @rdname all_growthmodels
 #' @export
 #'
-all_growthmodels.formula <- function(formula, data, #FUN = NULL,
+all_growthmodels.formula <- function(formula, data,
                                      p, lower = -Inf, upper = Inf,
                                      which = names(p),
+                                     FUN = NULL,
                                      method = "Marq",
                                      transform = c("none", "log"), ...,
                                      subset = NULL,
@@ -102,8 +103,8 @@ all_growthmodels.formula <- function(formula, data, #FUN = NULL,
   ## FUN is now part of the formula, y ~ f(x, parms) | groups
 
   if (length(grep("^.*[(].*[)]", as.character(formula)[[3]]))) {   # RHS
-    #if (!is.null(FUN))
-    #  warning("Nonlinear model in formula overrules value of argument FUN")
+    if (!is.null(FUN))
+      warning("Nonlinear model in formula overrules value of argument FUN")
 
     parsed_fun <- parse_formula_nonlin(formula)
 
