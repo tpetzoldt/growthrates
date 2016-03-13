@@ -13,7 +13,7 @@ vignette: >
 ```{r opts, echo = FALSE, message = FALSE}
 library("knitr")
 #knitr::opts_chunk$set(eval = FALSE)
-``` 
+```
 
 <!--
 possible output options are:
@@ -31,47 +31,52 @@ LANG=en_US.UTF-8
 1. Introduction
 ===============
 
-Package **growthrates** comes with a set of pararametric growth models built-in, 
-that should be sufficient for many application scenarios, but of 
-course not for all circumstances. This document describes how the set of 
-available functions can be extended with own user-defined models. Section (3) 
-describes how simple regression functions existing in a `closed form' can be implemented. 
-In Section (4) we will see how growth models defined by systems of ordinary 
-differential equations (ODE) can be implemented directy in R and finally Section 
-(5) describes how ODE models can be implemented as C inline functions.
+Package **growthrates** comes with a set of pararametric growth models
+built-in, that should be sufficient for many application scenarios,
+but of course not for all circumstances. This document describes how
+the set of available functions can be extended with own user-defined
+models. Section (3) describes how simple regression functions existing
+in a *closed form* can be implemented.  In Section (4) we will see how
+growth models defined by systems of ordinary differential equations
+(ODE) can be implemented directy in R and finally Section (5)
+describes how ODE models can be implemented as C inline functions.
 
 2. Differential equations or closed form?
 =========================================
 
-Growth models can be available either `ordinary functions' of time $f(t)$ 
-in `closed form', that a allow to get values for the dependend variable $y$ 
-immediately from any given value of an independent variable $t$ (or $time$)
-without the need of iteration. Or, they can be a differential equation model $dy/dt$
-that needs numerical integration. 
+Growth models can be available either ``ordinary functions'' of time
+$f(t)$ in *closed form*, that a allow to get values for the dependend
+variable $y$ immediately from any given value of an independent
+variable $t$ (or $time$) without the need of iteration. Or, they can
+be a differential equation model $dy/dt$ that needs numerical
+integration.
 
-Sometimes, a model can be given in either of these forms. As an example, the 
-logistic growth model can be written as a differential equation:
+Sometimes, a model can be given in either of these forms. As an
+example, the logistic growth model can be written as a differential
+equation:
 
-$$\frac{dy}{dt} = \mu_{max} \cdot y + \left(1 - \frac{y}{K}\right)$$
+$$\frac{dy}{dt} = \mu_{max} \cdot y \left(1 - \frac{y}{K}\right)$$
 
 or as its analytical solution in closed form:
 
-$$y(t) = \frac{K \cdot y_0)}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}}$$
+$$y(t) = \frac{K \cdot y_0}{y_0 + (K - y_0) \cdot e^{-\mu_{max} \cdot t}}$$
 
-We see, that it is much easier to use the second form, because $y$ can immediately 
-be calculated from $t$, while for the first version, we would need either calculus 
-(and get the second form as its solution), or we could use numerical a method to
-simulate the evolution of $y$ stepwise over time.
+We see, that it is much easier to use the second form, because $y$ can
+immediately be calculated from $t$, while for the first version, we
+would need either calculus (and get the second form as its solution),
+or we could use a numerical method to simulate the evolution of $y$
+stepwise over time.
 
 
 3. Growth models in closed form
 ===============================
 
-Let's assume we want to extend the logistic growth model with an additional shift 
-parameter in $y$ direction, for example, because a part of the population does not
-participate growing. This leads to an equation like:
+Let's assume we want to extend the logistic growth model with an
+additional shift parameter in $y$ direction, for example, because a
+part of the population does not participate growing. This leads to an
+equation like:
 
-$$y(t) = \frac{K \cdot y_0)}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}} + y_{shift}$$
+$$y(t) = \frac{K \cdot y_0}{y_0 + (K - y_0) \cdot e^{-\mu_{max} t}} + y_{shift}$$
 
 After loading package growthrates:
 
@@ -85,19 +90,21 @@ suppressMessages(require("growthrates"))
 library("growthrates")
 ```
 
-we can immediately define our own function in the user workspace, without 
-modifying the package itself. In order to make it compatible with package 
-growthrates, it is sufficient to streamline the input and output interfaces in
-the style described in help page *?growthmodel*. 
+we can immediately define our own function in the user workspace,
+without modifying the package itself. In order to make it compatible
+with package growthrates, it is sufficient to streamline the input and
+output interfaces in the style described in help page `?growthmodel`.
 
 The function can have any valid name, but:
 
-1. it must have exactly two arguments **time** and **parms** as input and
-2. its return value (output) must be a matrix with at least 3 columns with the 
-column names `time`, `y` and `log_y`.
+1. it must have exactly two arguments **time** and **parms** as input
+   and
+2. its return value (output) must be a matrix with at least 3 columns
+with the column names `time`, `y` and `log_y`.
 
-The inner part of the function can be adapted as necessary, as long as the 
-connection between input and output makes sense from a scientific viewpoint.
+The inner part of the function can be adapted as necessary, as long as
+the connection between input and output makes sense from a scientific
+viewpoint.
 
 ```{r}
 grow_logistic_yshift <- function(time, parms) {
@@ -108,21 +115,21 @@ grow_logistic_yshift <- function(time, parms) {
 }
 ```
 
-The, at a first look circumstantial `as.matrix(data.frame(()))` construction is
-a simple way to create the required output format.
+The, at a first look circumstantial `as.matrix(data.frame(()))`
+construction is a simple way to create the required output format.
+Then, it is of course a good idea to test the function beforehand,
+for example:
 
-Then, it is of course a good idea, to thest the function beforehand, for 
-example:
-
-```{r, fig.width=4, fig.height=3}
+```{r, fig.width=5, fig.height=4}
 time <- 1:10
 out <- grow_logistic_yshift(time, parms = list(y0 = 1, mumax = 0.5, K = 10, y_shift = 2))
 plot(time, out[, "y"], type = "b")
 ```
 
-Future versions of the growthrates package may introduce additional checks, so it 
-is already a good idea to convert the function into an appropriate object of 
-class `growthmodel' with the so-called constructor function:
+Future versions of the growthrates package may introduce additional
+checks, so it is already a good idea to convert the function into an
+appropriate object of class `growthmodel` with a so-called
+constructor function of the same name:
 
 ```
 grow_logistic_yshift <- growthmodel(grow_logistic_yshift,
@@ -132,13 +139,13 @@ grow_logistic_yshift <- growthmodel(grow_logistic_yshift,
 Now the new model is ready to be fitted to test data:
 
 
-```{r, fig.width=4, fig.height=3}
+```{r, fig.width=5, fig.height=4}
 x <- seq(5, 100, 5)
 y <- c(2.1, 2.3, 5, 4.7, 4.3, 6.9, 8.2, 11.5, 8.8, 10.2, 14.5, 12.5,
        13.6, 12.7, 14.2, 12.5, 13.8, 15.1, 12.7, 14.9)
 
 fit <- fit_growthmodel(grow_logistic_yshift,
-                       p = c(y0 = 1, mumax = 0.1, K = 10, K = 10, y_shift = 1), 
+                       p = c(y0 = 1, mumax = 0.1, K = 10, K = 10, y_shift = 1),
                        time = x, y = y)
 plot(fit)
 summary(fit)
@@ -148,34 +155,38 @@ summary(fit)
 4. Differential equation models in R
 ====================================
 
-Differential equation models can be used quite similar to this. It is a little 
-bit more complex because:
+Differential equation models can be used quite similar to this. It is
+a little bit more complex because:
 
-1. we need two functions. One for the ODE model (the derivatives) and one for the numerical integration.
-2. the ODE model distinguishes between time dependent *state variables* and constant *parameters*, that can both
-be considered as *parameters* in a statistical sense. This distinction between
-**statistical parameters** (from the viewpoint of model fitting) and **ODE model parameters** should not be confused.
-3. the numerical integration is itself a broad field that needs experience and care.
-A short overview on this topic can be found in @Soetaert2010c.
+1. we need two functions. One for the ODE model (the derivatives) and
+   one for the numerical integration.
+2. the ODE model distinguishes between time dependent *state
+   variables* and constant *parameters*, that can both be considered
+   as *parameters* in a statistical sense. This distinction between
+   **statistical parameters** (from the viewpoint of model fitting)
+   and **ODE model parameters** should not be confused.
+3. the numerical integration is itself is a broad field that needs
+   experience and care.  A short overview on this topic can be found
+   in @Soetaert2010c.
 
-In the following, let's assume a model where the carrying capacity is a function of time.
-This can be modelled with a system of two differential equations, one for the 
-carrying capacity ($K$) and another for the population abundance ($y$).
-For sake of simplicity we assume a linear increase for $K$,
-but more complex models are of course also possible, e.g. 
-biochemical conversion of a mixed substrate, density dependence or a semi-continuos 
-addition of nutrients.
+In the following, let's assume a model where the carrying capacity is
+a function of time.  This can be modelled with a system of two
+differential equations, one for the carrying capacity ($K$) and
+another for the population abundance ($y$).  For sake of simplicity we
+assume a linear increase of $K$, but more complex models are of
+course also possible, e.g.  biochemical conversion of a mixed
+substrate, Monod-dependency from a limited resource, 
+density dependence or a semi-continuos addition of nutrients.
 
 The growth model is built from two parts:
 
-1. the function `ode_...' with the differential equations, and 
-2. the growth model `grow_...' calculating the numerical solution. 
+1. the function `ode_...` with the differential equations, and
+2. the growth model `grow_...` calculating the numerical solution.
 
-In the latter, the statistical parameters are splitted into the initial values for 
-the states (`init') and the ODE model parameters.
-And, we need to distinguish between the initial (start) values, e.g. $y_0$ and
-the state variables $y$ that change during simulation.
-
+In the latter, the statistical parameters are splitted into the
+initial values for the states (`init`) and the ODE model parameters.
+And, we need to distinguish between the initial (start) values,
+e.g. $y_0$ and the state variables $y$ that change during simulation.
 
 ```{r}
 ode_K_linear <- function (time, init, parms, ...) {
@@ -198,7 +209,7 @@ grow_K_linear <- function(time, parms, ...) {
 Again, it's a good idea to test this first:
 
 ```{r}
-grow_K_linear <- growthmodel(grow_K_linear, 
+grow_K_linear <- growthmodel(grow_K_linear,
                              pnames = c("y0", "K", "mumax", "deltaK"))
 head(grow_K_linear(time = 1:10, c(y0 = .1, K = 1, mumax = 0.1, dK = 0.5)))
 ```
@@ -216,22 +227,23 @@ summary(fit)
 ```
 
 
-
-
 5. Inline C code with package cOde
 ==================================
 
-A numerical simulation of ODE models can sometimes be slow, so we may be tempted 
-to speed it up. This is indeed possible with *compiled code*, i.e. the model
-is written in another programming language (Fortran or C) that are faster 
-compared to R. Several methods exist how this can be done, see for example @Soetaert2010c
-or @Kneis2015. In the following, we use a method that allows *inline code*, i.e. 
-direkt integration of C code in the R script using package **cOde** [@Kaschek2016].
+A numerical simulation of ODE models can sometimes be slow, so we may
+be tempted to speed it up. This is indeed possible with *compiled
+code*, i.e. the model is written in another programming language
+(Fortran or C) that are faster compared to R. Several methods exist
+how this can be done, see for example @Soetaert2010c or @Kneis2015. In
+the following, we use a method that allows *inline code*, i.e.  direkt
+integration of C code in the R script using package **cOde**
+[@Kaschek2016].
 
-Note, however, that compiled code needs the necessary C (and/or Fortran) compilers 
-and some additional developer tools.
-These are often installed on Linux systems by default, whereas the Windows tooset
-can be downloaded from https://cran.r-project.org/bin/windows/Rtools/.
+Note, however, that compiled code needs the necessary C (and/or
+Fortran) compilers and some additional developer tools.  These are
+often installed on Linux systems by default, whereas the Windows
+toolset available from
+https://cran.r-project.org/bin/windows/Rtools/ needs an additional installation.
 
 
 ```{r, eval=FALSE}
@@ -239,7 +251,7 @@ can be downloaded from https://cran.r-project.org/bin/windows/Rtools/.
 ## from inline code, by using the 'cOde' package of Daniel Kaschek
 ## Note: This example needs the R development tools.
 ##  - suitable compilers on Linux and Mac
-##  - Rtools on Windows from 
+##  - Rtools on Windows from
 
 library("growthrates")
 library("cOde")
@@ -280,7 +292,7 @@ head(grow_K_linear(time = x, c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1)))
 
 
 ## Fit the model ---------------------------------------------------------------
-fit <- fit_growthmodel(grow_K_linear, 
+fit <- fit_growthmodel(grow_K_linear,
                        p = c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1), time = x, y = y)
 plot(fit)
 summary(fit)
@@ -295,14 +307,14 @@ unlink(paste(ode_K_linear, ".o", sep = ""))
 ```
 
 
-
 Acknowledgments
 ===============
 
-Many thanks to Claudia Seiler for the data set, to David Kneis for fruitful discussions,
-to Daniel Kaschek for his **cOde** package, and to the R Core Team [@RCore2015] for developing 
-and maintaining **R**. This documentation was written using **knitr** 
-[@knitr2014] and **rmarkdown** [@rmarkdown].
+Many thanks to Claudia Seiler for the data set, to David Kneis for
+fruitful discussions, to Daniel Kaschek for his **cOde** package, and
+to the R Core Team [@RCore2015] for developing and maintaining
+**R**. This documentation was written using **knitr** [@knitr2014] and
+**rmarkdown** [@rmarkdown].
 
 
 References

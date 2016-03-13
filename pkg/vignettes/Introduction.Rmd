@@ -13,7 +13,7 @@ vignette: >
 ```{r opts, echo = FALSE, message = FALSE}
 library("knitr")
 #knitr::opts_chunk$set(eval = FALSE)
-``` 
+```
 
 <!--
 possible output options are:
@@ -31,19 +31,21 @@ LANG=en_US.UTF-8
 Introduction
 ============
 
-The growth rate of a population is a direct measure of fitness. Therefore, 
-determination of growth rates is common in many disciplines of theoretical and 
-applied biology, e.g. physiology, ecology, eco-toxicology or pharmacology.
-
-This package aims to streamline estimation of growth rates from direct or indirect 
-measures of population density (e.g. cell counts, optical density or fluorescence) 
-determined in batch experiments or field observations. It should be applicable to
-different species of bacteria, archaea, protists, and metazoa, e.g. *E. coli*, 
+The growth rate of a population is a direct measure of
+fitness. Therefore, determination of growth rates is common in many
+disciplines of theoretical and applied biology, e.g. physiology,
+ecology, eco-toxicology or pharmacology.
+This package aims to streamline estimation of growth rates from direct
+or indirect measures of population density (e.g. cell counts, optical
+density or fluorescence) determined in batch experiments or field
+observations. It should be applicable to different species of
+bacteria, archaea, protists, and metazoa, e.g. *E. coli*,
 *Cyanobacteria*, *Paramecium*, green algae or *Daphnia*.
 
-The determination of growth rates from chemostat and semi-continuous cultures is 
-currently not covered by the package, but we are open to include it, depending on 
-your interest and the availability of data.
+The determination of growth rates from chemostat and semi-continuous
+cultures is currently not covered by the package, but we are open to
+include it, depending on your interest and the availability of data.
+The package is still under development and feedback is highly welcome.
 
 
 Methods
@@ -51,35 +53,38 @@ Methods
 
 The package includes three types of methods:
 
-* Nonlinear fitting of parametric growth models like the logistic or the Gompertz 
-  growth model. Parametric model fitting is done by using package `FME` (Flexible 
-  Modelling Environment) of @Soetaert2010 . In addition to growth models given
-  in closed form (i.e. empirical regression equations or analytical solution
-  of differential equations) it is also possible to use numerically solved 
-  differential equation models. Such models are then solved with package `deSolve'
-  [@deSolve_jss].
-* Fitting of linear models to the period of exponential growth using the 
-  ``growth rates made easy method'' of @Hall2013 ,
-* Nonparametric growthrate estimation by using smoothers. R contains several very 
-  powerful methods for this, that can leveraged for this purpose. The currently
-  implemented method uses function `smooth.spline`, similar to the package `grofit` 
-  [@Kahm2010].
-  
-The package contains methods to fit single data sets or complete series of data 
-sets organized in a data frame. It contains also functions for extracting results
-(e.g. `coef`, `summary`, `deviance`, `obs`, `residuals`, `rsquared` and `results`)
-and methods for plotting (`plot`, `lines`). The implementation follows an object 
-oriented style, so that the functions above determine automatically which method
-is used for a given class of objects.
-  
-Data Set
---------
+1. Nonlinear fitting of parametric growth models like the logistic or
+  the Gompertz growth model. Parametric model fitting is done by using
+  package `FME` (Flexible Modelling Environment) of @Soetaert2010. In
+  addition to growth models given in closed form (i.e. empirical
+  regression equations or analytical solutions of differential
+  equations) it is also possible to use numerically integrated
+  systems of differential equation. Such models are then solved with
+  package `deSolve' [@deSolve_jss].
+2. Fitting of linear models to the period of exponential growth using
+  the ``growth rates made easy method'' of @Hall2013 ,
+3. Nonparametric growthrate estimation by using smoothers. R contains
+  several powerful smoothing methods, that can leveraged for this
+  purpose. The currently implemented method uses function
+  `smooth.spline`, similar to the package `grofit` [@Kahm2010].
 
-The data set for demonstrating main features of the package was provided by
-Claudia Seiler from one of a series of plate reader experiments carried out at 
-the Institute of Hydrobiology of TU Dresden. It describes growth of
-three different strains of bacteria (D = Donor, R = Recipient, T = transconjugant)
-in dependence of a gradient of the antibiotics Tetracycline.
+The package contains methods to fit single data sets or complete
+series of data sets organized in a data frame. It contains also
+functions for extracting results (e.g. `coef`, `summary`, `deviance`,
+`obs`, `residuals`, `rsquared` and `results`) and methods for plotting
+(`plot`, `lines`). The implementation follows an object oriented
+style, so that the functions above determine automatically which
+method is used for a given class of objects.
+
+Data set
+========
+
+The data set for demonstrating main features of the package was
+provided by Claudia Seiler from one of a series of plate reader
+experiments carried out at the Institute of Hydrobiology of TU
+Dresden. It describes growth of three different strains of bacteria (D
+= Donor, R = Recipient, T = transconjugant) in dependence of a
+gradient of the antibiotics tetracycline.
 
 
 ```{r eval=TRUE, echo=FALSE, results="hide"}
@@ -87,50 +92,55 @@ suppressMessages(require("growthrates"))
 #require("growthrates")
 ```
 
+After loading the package:
+
 ```{r eval=FALSE}
 library("growthrates")
 ```
 
-Firstly, we load the data and inspect its structure with `str`:
+we load the data and inspect its structure with `str`:
 
 ```{r eval=TRUE}
 data(bactgrowth)
 str(bactgrowth)
 ```
 
-And we can also inspect the full data set with `View(growthrates)` or look at 
-the first few lines with `head`:
+And we can also inspect the full data set with `View(growthrates)` or
+look at the first few lines with `head`:
 
 ```{r eval=TRUE}
 head(bactgrowth)
 ```
 
-
-
-Examples
-========
-
-Inspect the Data
-----------------
-
-Plot raw data:
+or we can plot raw data:
 
 ```{r, fig.width=10, fig.height=14}
 library(lattice)
 data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth, groups = replicate)
+xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth, 
+       groups = replicate, pch = 16, cex = 0.5)
 ```
 
-Fitting Models to Single Data Sets
+Estimation of growth rates
+==========================
+
+Package **growthrates** can determine growth parameters from single experiments, 
+from a complete series of experiments, or from subsets in one step. Here we start 
+with  an overview over the  ``single subset''-methods and show then examples for
+fitting growth models to the full data set. More examples can be found on the
+help pages of the package.
+
+Fitting models to single data sets
 ----------------------------------
 
 
-Single data sets can be analysed with functions `fit_easylinear`, `fit_growthmodels` 
-or `fit_splines`. As a prerequisite, single data sets containing only one treatment
-have to be extracted from a complete experiment, which can be done with function 
-`multsiplit'. In the following example, the full data table is first split into a list
-of experiments according to a vector of criteria and then the first experiment is
-extracted:
+Single data sets can be analysed with functions `fit_easylinear`,
+`fit_growthmodels` or `fit_splines`. As a prerequisite, single data
+sets containing only one treatment have to be extracted from a
+complete experiment, which can be done with function `multsiplit'. In
+the following example, the full data table is first split into a list
+of experiments according to a vector of criteria and then the first
+experiment is extracted:
 
 ### Easy Linear Method
 
@@ -139,18 +149,19 @@ splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 dat <- splitted.data[[1]]
 ```
 
-In the next step, model fitting is done, e.g. with the "easylinear" method:
+In the next step, model fitting is done, e.g. with the "easylinear"
+method:
 
 ```{r}
 fit <- fit_easylinear(dat$time, dat$value)
 ```
 
-This method fits segments of linear models to the log-transformed data and tries 
-to find the maximum growth rate. Several functions exist to inspect the outcome of 
-the model fit, e.g.
+This method fits segments of linear models to the log-transformed data
+and tries to find the maximum growth rate. Several functions exist to
+inspect the outcome of the model fit, e.g.:
 
 ```{r}
-summary(fit) 
+summary(fit)
 ```
 
 ```{r}
@@ -159,15 +170,16 @@ rsquared(fit)  # coefficient of determination (of log-transformed data)
 deviance(fit)  # residual sum of squares of log-transformed data
 ```
 
-Plotting can then be done either in log-scale or after re-transformation
+Plotting can then be done either in log-scale or after re-transformation:
+
 ```{r, fig.width=7}
 par(mfrow = c(1, 2))
-plot(fit)
 plot(fit, log = "y")
+plot(fit)
 ```
 
-and in addition to @Hall2013 it is also possible to modify the default settings 
-of the algorithm:
+and in addition to the original method of @Hall2013 it is also possible to 
+modify the default settings of the algorithm:
 
 ```{r}
 fitx <- fit_easylinear(dat$time, dat$value, h = 8, quota = 0.95)
@@ -176,8 +188,25 @@ lines(fitx, pch = "+", col = "blue")
 ```
 
 
-Parametric Nonlinear Growth Models
+Parametric nonlinear growth models
 ----------------------------------
+
+A **parametric growth model** consists of a mathematical formula that describes 
+the growth of a population (e.g. `grow_logistic`) and its parameters 
+(e.g. `y0`, `mumax`, and `K`,). **Fitting a parametric model** is 
+the process of estimating an optimal parameter set that minimizes a given quality 
+criterion. Here we use the *method of least squares*, also known as 
+*ordinary least squares regression* (OLS). As most of the growth models are 
+non-linear, we need always a goof set of start parameters `p`. It is wise
+to choose values for start parameters carefully by considering the main 
+properties of the selected growth model (e.g. that the carrying capacity `K` 
+should be around the observed maximum of the data), or by experimentation, i.e. 
+plotting the model together with the data. In order to prevent unrealistic 
+(e.g. negative) parameter values, it is optionally possible to specify 
+box-constraints (`upper` and `lower`). For difficult problems one may consider
+to change the involved model fitting algorithm from Marquardt (`"Marq"`) to 
+something else, e.g. to `"L-BFGS-B"`. Details can be found on the `?modFit` help 
+page.
 
 ```{r, fig.width=7}
 p     <- c(y0 = 0.01, mumax = 0.2, K = 0.1)
@@ -191,7 +220,7 @@ p     <- c(yi = 0.02, ya = 0.001, kw = 0.1,	mumax = 0.2, K = 0.1)
 lower <- c(yi = 1e-6, ya = 1e-6, kw = 0,    mumax = 0,   K = 0)
 upper <- c(yi = 0.05, ya = 0.05, kw = 10,   mumax = 5,   K = 0.5)
 
-fit2 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value, 
+fit2 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value,
                         lower = lower, upper = upper)
 
 coef(fit1)
@@ -205,39 +234,43 @@ plot(fit1, log = "y")
 lines(fit2, col = "red")
 ```
 
+
 ### Differential equation models
 
-
-In the two-step model above, growth is described as a two-step process of
-adaption of inactive cells $y_i$ and logistic growth of active cells $y_a$:
+In the two-step model abode, growth is described as a two-step process
+of adaption of inactive cells $y_i$ and logistic growth of active
+cells $y_a$:
 
 $$\frac{dy_i}{dt} = - k_w \cdot y_i $$
 
-$$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu_{max} \cdot 
+$$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu_{max} \cdot
   y_a \cdot \left(1 - \frac{K}{y_a + y_i} \right)$$
 
-with amount of total organisms $y = y_i + y_a$, the parameters adaption rate $k_w$, 
-intrinsic growth rate $\mu_{max}$, carrying capacity $K$. The initial abundance (normally $y_0$) 
-is splitted in two separate values, $y_{i,0}$ and $y_{a,0}$ that are by default 
-also fitted.
+with amount of total organisms $y = y_i + y_a$, and an
+adaption rate $k_w$, intrinsic growth rate $\mu_{max}$, and carrying
+capacity $K$. The initial abundance (normally $y_0$) is splitted in
+two separate values, $y_{i,0}$ and $y_{a,0}$ that are by default also
+fitted.
 
-The underlying ordinary differential equation (ODE) model has no simple 
-analytical solution and is therefore solved numerically 
-using a differential solver from package **deSolve**. Here both, the model and 
-the solver are running in compiled code (C resp. Fortran), but it is of course 
-also possible to define user-specified models in R code.
+The underlying ordinary differential equation (ODE) model has no
+simple analytical solution and is therefore solved numerically using a
+differential solver from package **deSolve**. Here both, the model and
+the solver are running in compiled code (C resp. Fortran), but it is
+of course also possible to define user-specified models in R code. Details
+can be found in *Part 2* of the package documentation.
+
 
 ### Selective parameter fitting
 
-
-Despite the fact that the above model is solved as a differential equation, 
-the relatively high number of parameters may need special care, too. In such cases,
-package growthrates allows to fit subsets of parameters while setting 
-the others to fixed values. In the following, this is done by specifying a subset
-without initial abundances $y_a$ and $y_i$ in `which`:
+Despite the fact that the above model is solved as a differential
+equation, the relatively high number of parameters may need special
+care, too. In such cases, package growthrates allows to fit subsets of
+parameters while setting the others to fixed values. In the following,
+this is done by specifying a subset without initial abundances $y_a$
+and $y_i$ in `which`:
 
 ```{r}
-fit3 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value, 
+fit3 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value,
                         lower = lower, upper = upper, which = c("kw", "mumax", "K"))
 
 summary(fit3)
@@ -246,16 +279,20 @@ coef(fit3)
 plot(fit3)
 ```
 
-We see that `summary` shows only the fitted parameters whereas `coef` contains 
-the full set.
+We see that `summary` shows only the fitted parameters whereas `coef`
+contains the full set.
 
-Both, start values for the fitted parameters and fixed values of the other 
-parameters need to be available in the start parameter vector `p`, while
-`upper` and `lower` bounds for the fixed parameters can be omitted.
+Note however, that start values need to be given in `p` for all model 
+parameters, i.e. for both the fitted and the fixed ones, while `upper` and 
+`lower` bounds for the fixed parameters can be omitted.
 
 
-Nonparametric Smoothing Splines
+Nonparametric smoothing splines
 -------------------------------
+
+Smoothing splines are a quick method to estimate maximum growth. The method is 
+called *nonparametric*, because the growth rate is directly estimated from the 
+smoothed data without being restricted to a specific model formula.
 
 ```{r, fig.width=7}
 
@@ -274,33 +311,44 @@ coef(res)
 ```
 
 
-Fiting Multiple Data Sets
+Fiting multiple data sets
 =========================
 
-Fiting multiple data sets at once is possible with functions `all_easyliner`,
-`all_growthmodels` and `alls_splines`. Usage is similar for all methods, whereas
-the parameters are analogous to the single-fit methods. Both, the easy growth 
-rates and the smooting splines method are quite robust. In contrast to this,
-parametric fits with function `all_growthmodels` need more care and a little bit 
-more computational power. 
+Fiting multiple data sets at once is possible with functions
+`all_easyliner`, `all_growthmodels` and `all_splines`. Usage is
+similar for all methods, and the parameters are analogous to the
+single-fit methods. Both, the easy growth rates and the smooting
+splines method are quite robust. In contrast to this, parametric fits
+with function `all_growthmodels` need more care and a little bit more
+computational power.
 
-Special emphasis should be given to the selection of good starting points. In 
-addition, it is possible to select an alternative optimization algorithm, to enable
-additional output (`trace`) or to fine-tune their optimization control parameters.
-Nevertheless, it should be noted that parametric models have more explanatory 
-power and may therefore be advantageous for basic research.
+Again, special emphasis should be given to the selection of good starting
+points. In addition, it is possible to select an alternative
+optimization algorithm, to enable additional output (`trace`) or to
+fine-tune their optimization control parameters.  Nevertheless, it
+should be noted that parametric models have more explanatory power and
+may therefore be advantageous for basic research.
 
-Nonlinear optimization is done with parallelized code, so multi-core computers 
-can speed up computation.
+Nonlinear optimization is done with parallelized code, so multi-core
+computers can speed up computation.
+
 
 Fitting smoothing splines to multiple data
 ------------------------------------------
 
-It can be a good idea, to start with a nonparametric approach like the smoothing spline 
-method to get a first impression and, potentially, to derive start parameters for 
-a parametric model.
+It can be a good idea, to start with a nonparametric approach like the
+smoothing spline method to get a first impression and, potentially, to
+derive start parameters for a parametric model.
+In the following, we show an example with the smoothing spline method. The 
+function uses a formula interface with the syntax:
+`dependent_variable ~ independent_variable | group1 + group 2 + ...`:
 
-In the following, we show an example with the smoothing spline method:
+In this example, smoothness is set to a moderate value (`spar = 0.5`).
+Other values between zero and one will result in different degrees of
+smoothing.  If `spar` is omitted, leave-one-out cross-validation is
+used to determine smoothness automatically. This works best if the samples
+over time are true replicates from independent experimental units, 
+instead of pseudo-replicates with potential autocorrelation.
 
 
 ```{r fig.width=14, fig.height=20}
@@ -312,32 +360,30 @@ par(mar = c(2.5, 4, 2, 1))
 plot(many_spline_fits)
 ```
 
-In this example, smoothness is set to an average value (`spar = 0.5`). 
-Other values between zero and one will result in different degrees of smoothing. 
-If `spar` is omitted, leave-one-out cross-validation is used to determine 
-smoothness automatically.
+
 
 Fitting parametric models to multiple data
 ------------------------------------------
 
-Package **growthrates** allows to fit parametric models to a series of grouped 
-data. For this purpose, function `all_growthmodels` can be used either with
-classical arguments or with a formula interface, where the formula interface 
-contains the name of the nonlinear model (the `grow_....`-function) and the name 
-of the independent variable (e.g. `time`) as its first argument, for example as 
-`grow_logistic(time, parms)`. The second argument `parms` is a dummy argument; 
-its name does currently not (yet) matter. The function can make use of multiple 
-CPU cores to speed up computation. If the `ncores` argument is omitted, the 
-number of cores is automatically detected while setting `ncores = 1` can be useful 
-for debugging.
+Package **growthrates** allows to fit parametric models to a series of
+grouped data. The formula interface of function `all_growthmodels` 
+allows to include the name of the nonlinear model
+(the `grow_....`-function) and the name of the independent variable
+(e.g. `time`) as its first argument, for example as
+`grow_logistic(time, parms)`. The second argument `parms` is a dummy
+argument; its name does currently not (yet) matter. Model fitting can
+make use of multiple CPU cores to speed up computation. If the
+`ncores` argument is omitted, the number of cores is automatically
+detected while setting `ncores = 1` can be useful for debugging.
 
-In the following, let's fit a Baranyi growth model [@Baranyi1995] to the data, a
-model that considers the lag phase as as a period to build up ``critical substances''
-needed for growth. The model is based on a system of two differential equations
-for which under some simplifying assumptions an analytical solution was presented.
+In the following, let's fit a Baranyi growth model [@Baranyi1995] to
+the data, a model that considers the lag phase as as a period to build
+up ``critical substances'' needed for growth. The model is based on a
+system of two differential equations for which under some simplifying
+assumptions an analytical solution was presented.
 
 
-In a first attempt, we fit all parameters of the model: 
+In a first attempt, we fit all parameters of the model:
 
 ```{r}
 ## initial parameters and box constraints
@@ -350,12 +396,13 @@ upper   <- c(y0 = 0.1,   mumax = 1,    K = 0.5,   h0 = 10)
 many_baranyi1 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
-                   p = p, lower = lower, upper = upper, 
+                   p = p, lower = lower, upper = upper,
                    log = "y", ncores = 2)
 ```
 
-whereas in a second trial, `h0`is fixed to a common value to avoid that `h0` 
-``consumes'' parts of the effect because of interdependency between `h0`and `mumax`:
+whereas in a second trial, `h0` is fixed to a common value to avoid
+that `h0` consumes parts of the effect because of interdependency
+between `h0` and `mumax`:
 
 ```{r}
 ## use coefficients of first fit as new initial parameters
@@ -366,14 +413,15 @@ pp[, "h0"] <- 0.65
 many_baranyi2 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
-                   p = pp, lower = lower, upper = upper, 
+                   p = pp, lower = lower, upper = upper,
                    which = c("y0", "mumax", "K"), log = "y", ncores = 2)
 ```
 
-The result of the second fit is shown in the following figure. It may be noted 
-that even better fits are possible with models with more parameters, 
-e.g. @Huang2011, again at the cost that the effect of antibiotics is distributed
-over several correlated parameters instead of an effect of the maximum growth rate.
+The result of the second fit is shown in the following figure. It may
+be noted that even better fits are possible with models with more
+parameters, e.g. @Huang2011, again at the cost that the effect of
+antibiotics is distributed over several correlated parameters instead
+of an effect of the maximum growth rate.
 
 ```{r fig.width=14, fig.height=20}
 par(mfrow = c(12, 6))
@@ -381,13 +429,11 @@ par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
 ```
 
-
-
 Finally
 =======
 
-Dependency of growth rate on antibiotic concentration for the three strains 
-with the spline fit and the Baranyi model:
+Dependency of growth rate on antibiotic concentration for the three
+strains with the spline fit and the Baranyi model:
 
 ```{r, fig.width=7, fig.height=3}
 many_spline_res   <- results(many_spline_fits)
@@ -396,18 +442,19 @@ xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
 xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
 ```
 
-Describing the observed dependency can again be approached with nonparametric 
-methods or parametric functional response curves, which may be done by using a specialized
-package for dose-response curves, for example package **drc** [@Ritz2005].
-
+Describing the observed dependency can again be approached with
+nonparametric methods or parametric functional response curves, which
+may be done by using a specialized package for dose-response curves,
+for example package **drc** [@Ritz2005].
 
 
 Acknowledgments
 ===============
 
-Many thanks to Claudia Seiler for the data set, and to the R Core Team 
-[@RCore2015] for developing and maintaining **R**. This documentation was written 
-using **knitr** [@knitr2014] and **rmarkdown** [@rmarkdown].
+Many thanks to Claudia Seiler for the data set, and to the R Core Team
+[@RCore2015] for developing and maintaining **R**. This documentation
+was written using **knitr** [@knitr2014] and **rmarkdown**
+[@rmarkdown].
 
 
 References
