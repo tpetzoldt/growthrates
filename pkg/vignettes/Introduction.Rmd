@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
 bibliography: growthrates.bib
 vignette: >
-  %\VignetteIndexEntry{Estimation of Growth Rates}
+  %\VignetteIndexEntry{Estimation of Growth Rates, Part 1: Introduction}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
@@ -78,7 +78,7 @@ Data Set
 The data set for demonstrating main features of the package was provided by
 Claudia Seiler from one of a series of plate reader experiments carried out at 
 the Institute of Hydrobiology of TU Dresden. It describes growth of
-three different strains of bacteria (D=donor, R=recipient, T=transconjugant)
+three different strains of bacteria (D = Donor, R = Recipient, T = transconjugant)
 in dependence of a gradient of the antibiotics Tetracycline.
 
 
@@ -118,7 +118,7 @@ Plot raw data:
 ```{r, fig.width=10, fig.height=14}
 library(lattice)
 data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data=bactgrowth, groups = replicate)
+xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth, groups = replicate)
 ```
 
 Fitting Models to Single Data Sets
@@ -161,18 +161,18 @@ deviance(fit)  # residual sum of squares of log-transformed data
 
 Plotting can then be done either in log-scale or after re-transformation
 ```{r, fig.width=7}
-par(mfrow=c(1,2))
+par(mfrow = c(1, 2))
 plot(fit)
-plot(fit, log="y")
+plot(fit, log = "y")
 ```
 
 and in addition to @Hall2013 it is also possible to modify the default settings 
 of the algorithm:
 
 ```{r}
-fitx <- fit_easylinear(dat$time, dat$value, h=8, quota=0.95)
+fitx <- fit_easylinear(dat$time, dat$value, h = 8, quota = 0.95)
 plot(fit)
-lines(fitx, pch="+", col="blue")
+lines(fitx, pch = "+", col = "blue")
 ```
 
 
@@ -180,34 +180,29 @@ Parametric Nonlinear Growth Models
 ----------------------------------
 
 ```{r, fig.width=7}
+p     <- c(y0 = 0.01, mumax = 0.2, K = 0.1)
+lower <- c(y0 = 1e-6, mumax = 0,   K = 0)
+upper <- c(y0 = 0.05, mumax = 5,   K = 0.5)
 
-p     <- c(y0=0.01, mumax=0.2, K=0.1)
-lower <- c(y0=1e-6, mumax=0,   K=0)
-upper <- c(y0=0.05, mumax=5,   K=0.5)
+fit1 <- fit_growthmodel(FUN = grow_logistic, p = p, dat$time, dat$value,
+                        lower = lower, upper = upper)
 
-fit1 <- fit_growthmodel(FUN=grow_logistic, p=p, dat$time, dat$value,
-                        lower=lower, upper=upper)
+p     <- c(yi = 0.02, ya = 0.001, kw = 0.1,	mumax = 0.2, K = 0.1)
+lower <- c(yi = 1e-6, ya = 1e-6, kw = 0,    mumax = 0,   K = 0)
+upper <- c(yi = 0.05, ya = 0.05, kw = 10,   mumax = 5,   K = 0.5)
 
-
-p     <- c(yi=0.02, ya=0.001, kw=0.1,	mumax=0.2, K=0.1)
-lower <- c(yi=1e-6, ya=1e-6, kw=0,    mumax=0,   K=0)
-upper <- c(yi=0.05, ya=0.05, kw=10,   mumax=5,   K=0.5)
-
-fit2 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
-                        lower=lower, upper=upper)
-
+fit2 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value, 
+                        lower = lower, upper = upper)
 
 coef(fit1)
 coef(fit2)
 
-par(mfrow=c(1,2))
+par(mfrow = c(1, 2))
 plot(fit1)
-lines(fit2, col="red")
+lines(fit2, col = "red")
 
-
-plot(fit1, log="y")
-lines(fit2, col="red")
-
+plot(fit1, log = "y")
+lines(fit2, col = "red")
 ```
 
 ### Differential equation models
@@ -242,8 +237,8 @@ the others to fixed values. In the following, this is done by specifying a subse
 without initial abundances $y_a$ and $y_i$ in `which`:
 
 ```{r}
-fit3 <- fit_growthmodel(FUN=grow_twostep, p=p, time=dat$time, y=dat$value, 
-                        lower=lower, upper=upper, which=c("kw", "mumax", "K"))
+fit3 <- fit_growthmodel(FUN = grow_twostep, p = p, time = dat$time, y = dat$value, 
+                        lower = lower, upper = upper, which = c("kw", "mumax", "K"))
 
 summary(fit3)
 
@@ -271,24 +266,22 @@ y    <- dat$value
 ## automatic smoothing with cv
 res <- fit_spline(time, y)
 
-par(mfrow=c(1,2))
-plot(res, log="y")
+par(mfrow = c(1, 2))
+plot(res, log = "y")
 plot(res)
 coef(res)
 
 ```
 
 
-
-
 Fiting Multiple Data Sets
 =========================
 
 Fiting multiple data sets at once is possible with functions `all_easyliner`,
-`all_growthrates` and `alls_splines`. Usage is similar for all methods, whereas
+`all_growthmodels` and `alls_splines`. Usage is similar for all methods, whereas
 the parameters are analogous to the single-fit methods. Both, the easy growth 
 rates and the smooting splines method are quite robust. In contrast to this,
-parametric fits with function `all_growthrates` need more care and a little bit 
+parametric fits with function `all_growthmodels` need more care and a little bit 
 more computational power. 
 
 Special emphasis should be given to the selection of good starting points. In 
@@ -312,10 +305,10 @@ In the following, we show an example with the smoothing spline method:
 
 ```{r fig.width=14, fig.height=20}
 many_spline_fits <- all_splines(value ~ time | strain + conc + replicate,
-                                data = bactgrowth, spar=0.5)
+                                data = bactgrowth, spar = 0.5)
 
-par(mfrow=c(12,6))
-par(mar=c(2.5,4,2,1))
+par(mfrow = c(12, 6))
+par(mar = c(2.5, 4, 2, 1))
 plot(many_spline_fits)
 ```
 
@@ -327,7 +320,18 @@ smoothness automatically.
 Fitting parametric models to multiple data
 ------------------------------------------
 
-In the following, let's fit a Baranyi growth model to the data [@Baranyi1995], a
+Package **growthrates** allows to fit parametric models to a series of grouped 
+data. For this purpose, function `all_growthmodels` can be used either with
+classical arguments or with a formula interface, where the formula interface 
+contains the name of the nonlinear model (the `grow_....`-function) and the name 
+of the independent variable (e.g. `time`) as its first argument, for example as 
+`grow_logistic(time, parms)`. The second argument `parms` is a dummy argument; 
+its name does currently not (yet) matter. The function can make use of multiple 
+CPU cores to speed up computation. If the `ncores` argument is omitted, the 
+number of cores is automatically detected while setting `ncores = 1` can be useful 
+for debugging.
+
+In the following, let's fit a Baranyi growth model [@Baranyi1995] to the data, a
 model that considers the lag phase as as a period to build up ``critical substances''
 needed for growth. The model is based on a system of two differential equations
 for which under some simplifying assumptions an analytical solution was presented.
@@ -337,16 +341,17 @@ In a first attempt, we fit all parameters of the model:
 
 ```{r}
 ## initial parameters and box constraints
-p   <- c(y0=0.03, mumax=.1, K=0.1, h0=1)
+p   <- c(y0 = 0.03, mumax = .1, K = 0.1, h0 = 1)
 
-lower   <- c(y0=0.001, mumax=1e-2, K=0.005, h0=0)
-upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
+lower   <- c(y0 = 0.001, mumax = 1e-2, K = 0.005, h0 = 0)
+upper   <- c(y0 = 0.1,   mumax = 1,    K = 0.5,   h0 = 10)
 
 ## fit growth models to all data using log transformed residuals
-many_baranyi1 <- all_growthmodels(value ~ time | strain + conc + replicate,
-                      data = bactgrowth,
-                      FUN = grow_baranyi, p = p, lower = lower, upper=upper, 
-                      log="y", ncores = 2)
+many_baranyi1 <- all_growthmodels(
+                   value ~ grow_baranyi(time, parms) | strain + conc + replicate,
+                   data = bactgrowth,
+                   p = p, lower = lower, upper = upper, 
+                   log = "y", ncores = 2)
 ```
 
 whereas in a second trial, `h0`is fixed to a common value to avoid that `h0` 
@@ -356,12 +361,13 @@ whereas in a second trial, `h0`is fixed to a common value to avoid that `h0`
 ## use coefficients of first fit as new initial parameters
 pp   <- coef(many_baranyi1)
 ## but set h0 to a fixed value
-pp[,"h0"] <- 0.65
+pp[, "h0"] <- 0.65
 ## re-fit models
-many_baranyi2 <- all_growthmodels(value ~ time | strain + conc + replicate,
-                      data = bactgrowth,
-                      grow_baranyi, p=pp, which=c("y0", "mumax", "K"),
-                      lower = lower, upper=upper, log="y", ncores = 2)
+many_baranyi2 <- all_growthmodels(
+                   value ~ grow_baranyi(time, parms) | strain + conc + replicate,
+                   data = bactgrowth,
+                   p = pp, lower = lower, upper = upper, 
+                   which = c("y0", "mumax", "K"), log = "y", ncores = 2)
 ```
 
 The result of the second fit is shown in the following figure. It may be noted 
@@ -370,8 +376,8 @@ e.g. @Huang2011, again at the cost that the effect of antibiotics is distributed
 over several correlated parameters instead of an effect of the maximum growth rate.
 
 ```{r fig.width=14, fig.height=20}
-par(mfrow=c(12,6))
-par(mar=c(2.5,4,2,1))
+par(mfrow = c(12, 6))
+par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
 ```
 
@@ -384,10 +390,10 @@ Dependency of growth rate on antibiotic concentration for the three strains
 with the spline fit and the Baranyi model:
 
 ```{r, fig.width=7, fig.height=3}
-many_spline_res <- results(many_spline_fits)
+many_spline_res   <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
-xyplot(mumax ~ log(conc+1)|strain, data=many_spline_res, layout=c(3, 1))
-xyplot(mumax ~ log(conc+1)|strain, data=many_baranyi2_res, layout=c(3, 1))
+xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
+xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
 ```
 
 Describing the observed dependency can again be approached with nonparametric 
@@ -399,7 +405,7 @@ package for dose-response curves, for example package **drc** [@Ritz2005].
 Acknowledgments
 ===============
 
-Many thanks to Claudia Seiler for the data set. Many thanks to the R Core Team 
+Many thanks to Claudia Seiler for the data set, and to the R Core Team 
 [@RCore2015] for developing and maintaining **R**. This documentation was written 
 using **knitr** [@knitr2014] and **rmarkdown** [@rmarkdown].
 
