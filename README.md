@@ -7,6 +7,13 @@ fitness.  This **R** package provides a collection of methods to
 determine growth rates from experimental data, in particular from
 batch experiments and plate reader trials.
 
+News
+----
+
+* Changed user interface, you may need small updates of your R-scripts.
+* New manual about writing user-defined growth models.
+* Many small changes and improvments.
+
 Overview
 --------
 
