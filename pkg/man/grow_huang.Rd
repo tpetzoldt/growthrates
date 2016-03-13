@@ -63,7 +63,6 @@ Food Microbiology 28, 770 -- 776. doi:10.1016/j.fm.2010.05.019
 Huang, Lihan (2013) Introduction to USDA Integrated Pathogen Modeling
 Program (IPMP). Residue Chemistry and Predictive Microbiology Research
 Unit. USDA Agricultural Research Service.
-\url{http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial 1-9-14.pdf}
 }
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},
