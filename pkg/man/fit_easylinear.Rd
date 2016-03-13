@@ -4,10 +4,10 @@
 \alias{fit_easylinear}
 \title{Fit Exponential Growth Model with a Heuristic Linear Method}
 \usage{
-fit_easylinear(x, y, h = 5, quota = 0.95)
+fit_easylinear(time, y, h = 5, quota = 0.95)
 }
 \arguments{
-\item{x}{vector of independent variable (e.g. time).}
+\item{time}{vector of independent variable.}
 
 \item{y}{vector of dependent variable (concentration of organisms).}
 
