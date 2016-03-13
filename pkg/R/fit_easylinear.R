@@ -18,7 +18,7 @@
 #'   \item Fit a new linear model to the extended data window identified in step 2.
 #' }
 #'
-#' @param x vector of independent variable (e.g. time).
+#' @param time vector of independent variable.
 #' @param y vector of dependent variable (concentration of organisms).
 #' @param h width of the window (number of data).
 #' @param quota part of window fits considered for the overall linear fit
@@ -56,11 +56,11 @@
 #' @rdname fit_easylinear
 #' @export fit_easylinear
 #'
-fit_easylinear <- function(x, y, h=5, quota=0.95) {
+fit_easylinear <- function(time, y, h=5, quota=0.95) {
 
-  if (any(duplicated(x))) stop("x variable must not contain duplicated values")
+  if (any(duplicated(time))) stop("time variable must not contain duplicated values")
 
-  obs <- data.frame(x, y)
+  obs <- data.frame(time, y)
   obs$ylog <- log(obs$y)
 
   ## number of values
@@ -69,7 +69,7 @@ fit_easylinear <- function(x, y, h=5, quota=0.95) {
   ## repeat for all windows and save results in 'ret'
   ret <- matrix(0, nrow = N - h, ncol = 6)
   for(i in 1:(N - h)) {
-    ret[i, ] <- c(i, with(obs, lm_parms(lm_window(x, ylog, i0 = i, h = h))))
+    ret[i, ] <- c(i, with(obs, lm_parms(lm_window(time, ylog, i0 = i, h = h))))
   }
 
   ## indices of windows with high growth rate
@@ -78,7 +78,7 @@ fit_easylinear <- function(x, y, h=5, quota=0.95) {
 
   if(length(candidates) > 0) {
     tp <- seq(min(candidates), max(candidates) + h-1)
-    m <- lm_window(obs$x, obs$ylog, min(tp), length(tp))
+    m <- lm_window(obs$time, obs$ylog, min(tp), length(tp))
     p  <- c(lm_parms(m), n=length(tp))
   } else {
     p <- c(a=0, b=0, se=0, r2=0, cv=0, n=0)
@@ -87,6 +87,6 @@ fit_easylinear <- function(x, y, h=5, quota=0.95) {
   #return(list(p=p, ndx=tp))
   obj <- new("easylinear_fit", FUN=grow_exponential, fit=m,
              par = c(y0 = unname(exp(coef(m)[1])), mumax = unname(coef(m)[2])), ndx = tp,
-             obs = data.frame(time = obs$x, y = obs$y), rsquared = p["r2"])
+             obs = data.frame(time = obs$time, y = obs$y), rsquared = p["r2"])
   invisible(obj)
 }
