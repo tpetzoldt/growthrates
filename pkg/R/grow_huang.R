@@ -46,7 +46,7 @@
 #' Huang, Lihan (2013) Introduction to USDA Integrated Pathogen Modeling
 #' Program (IPMP). Residue Chemistry and Predictive Microbiology Research
 #' Unit. USDA Agricultural Research Service.
-#' \url{http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial 1-9-14.pdf}
+#' http://www.ars.usda.gov/SP2UserFiles/Place/80720500/IPMP_tutorial%201-9-14.pdf
 #'
 #'
 #'
