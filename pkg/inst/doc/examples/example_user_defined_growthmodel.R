@@ -1,9 +1,13 @@
 ## =============================================================================
 ## The following example shows how to create user-defined growth models
+##
+## Author: Thomas Petzoldt, TU Dresden
+## License: GPL >= 2, https://www.gnu.org/licenses/
+## Please cite our work when using this package.
 ## =============================================================================
 
-library("growthrates")
 
+library("growthrates")
 
 
 ## =============================================================================

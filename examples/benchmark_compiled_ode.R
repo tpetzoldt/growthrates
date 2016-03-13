@@ -1,7 +1,31 @@
-## This script demonstrates the performance gain 
+## =============================================================================
+## This script demonstrates the performance gain
 ## from using compiled versions of the ODE models
+##
+## Author: Thomas Petzoldt, TU Dresden
+## License: GPL >= 2, https://www.gnu.org/licenses/
+## Please cite our work when using this package:
+##     citation(package="deSolve"       #  doi:10.18637/jss.v033.i09
+##     citation(package="FME")          #  doi:10.18637/jss.v033.i03
+##     citation(package="growthrates")
+## Repository:   https://github.com/tpetzoldt/growthrates
+## Mailing list: https://stat.ethz.ch/mailman/listinfo/r-sig-dynamic-models
+## =============================================================================
 
-library(growthrates)
+library("growthrates")
+
+## R versions of the models (the C versions are in the package)
+grow_twostep.R <- function(time, parms, ...) {
+ y0    <- parms[c("yi", "ya")]
+ parms <- parms[c("kw", "mumax", "K")]
+ out  <-  ode(y0, time, ode_twostep, parms, ...)
+}
+
+grow_genlogistic.R <- function(time, parms, ...) {
+  y0    <- c(y = unname(parms[c("y0")]))
+  parms <- parms[c("mumax", "K", "alpha", "beta", "gamma")]
+  out  <-  as.matrix(ode(y0, time, ode_genlogistic, parms, ...))
+}
 
 
 ### Two-Step growth model (2 ODE equations)

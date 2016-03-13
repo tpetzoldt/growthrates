@@ -4,7 +4,12 @@
 ## Note: This example needs the R development tools.
 ##  - suitable compilers on Linux and Mac
 ##  - Rtools on Windows from https://cran.r-project.org/bin/windows/Rtools/
+##
+## Author: Thomas Petzoldt, TU Dresden
+## License: GPL >= 2, https://www.gnu.org/licenses/
+## Please cite our work when using this package.
 ## =============================================================================
+
 
 library("growthrates")
 library("cOde")
@@ -51,7 +56,9 @@ head(grow_K_linear(time=x, c(y0=1, mumax=0.1, K=10, dK = 0.1)))
 ## =============================================================================
 ## Fit the model
 ## =============================================================================
-fit <- fit_growthmodel(grow_K_linear, p=c(y0=1, mumax=0.1, K=10, dK = 0.1), time=x, y=y)
+fit <- fit_growthmodel(
+  grow_K_linear, p=c(y0=1, mumax=0.1, K=10, dK = 0.1), time=x, y=y)
+
 plot(fit)
 summary(fit)
 

@@ -1,4 +1,6 @@
-## Test of the Baranyi Growth model, cf. Baranyi, L (1995), Food Microbiology
+## =============================================================================
+## Test of the Baranyi Growth model, cf. Baranyi, L (1995),
+## Int. J. Food Microbiology, doi:10.1016/0168-1605(94)00121-L
 ##
 ## Note: the original model formulation works in log space, so that
 ##       y(t), y_0 and y_max are all given as natural log.
@@ -7,17 +9,20 @@
 ##  most other models. The downside is, that we need box constraints in most
 ##  cases and possibly more iterations.
 ##
-##  A version with log-transformed parameters may follow ...
+## Author: Thomas Petzoldt, TU Dresden
+## License: GPL >= 2, https://www.gnu.org/licenses/
+## Please cite our work when using this package.
+## =============================================================================
+
 
 
 library("growthrates")
 library("lattice")
 
-## load data
 data(bactgrowth)
-#splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 splitted.data <- multisplit(value ~ time|strain + conc + replicate, data = bactgrowth)
 
+## use a single data set
 dat <- splitted.data[[23]]
 
 ## initial parameters and bocx constraints
@@ -29,7 +34,8 @@ upper   <- c(y0=0.1,   mumax=1,    K=0.5,   h0=10)
 ## fit model
 fit <- fit_growthmodel(FUN=grow_baranyi, p=p, time=dat$time, y=dat$value,
                        lower = lower, upper = upper,
-                       control=list(trace=TRUE))
+                       control=list(trace=TRUE)
+)
 
 ## coefficients and plot
 coef(fit)
@@ -46,35 +52,12 @@ system.time(
 
 ## same with formula interface
 system.time(
-  L <- all_growthmodels(value ~ time|strain + conc + replicate,
+  L <- all_growthmodels(value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                         data = bactgrowth,
-                        FUN = grow_baranyi, p=p,
-                        lower = lower, upper=upper,
-                        log="y"
+                        p=p, lower = lower, upper=upper,
+                        log = "y"
                         )
 )
-
-
-
-system.time({
-  px   <- c(y0=log(0.03), mumax=.1, K=log(0.1), h0=1)
-  Lx <- all_growthmodels(grow_baranyi_test, p=px, data=bactgrowth,
-                        grouping = c("strain", "conc", "replicate"),
-                        lower   = c(y0=log(0.001), mumax=1e-2, K=log(0.005), h0=0),
-                        upper   = c(y0=log(0.1),   mumax=1,    K=log(0.5),   h0=10),
-                        log="y")
-})
-
-
-
-
-## fit growth models to all data using (log transformed residuals)
-p   <- c(y0=0.01, mumax=.1, K=0.1, h0=0.65) # 0.65 was mean
-L <- all_growthmodels(grow_baranyi, p=p, data=bactgrowth,
-                      grouping = c("strain", "conc", "replicate"),
-                      which=c("y0", "mumax", "K"),
-                      lower = lower, upper=upper)
-
 
 par(mfrow=c(4,3))
 par(mar=c(2.5,4,2,1))

@@ -8,8 +8,8 @@
 \usage{
 all_growthmodels(...)
 
-\method{all_growthmodels}{formula}(formula, data, FUN = NULL, p,
-  lower = -Inf, upper = Inf, which = names(p), method = "Marq",
+\method{all_growthmodels}{formula}(formula, data, p, lower = -Inf,
+  upper = Inf, which = names(p), FUN = NULL, method = "Marq",
   transform = c("none", "log"), ..., subset = NULL,
   ncores = detectCores(logical = FALSE))
 
@@ -25,8 +25,6 @@ variables in the form:
 
 \item{data}{data frame of observational data.}
 
-\item{FUN}{function of growth model to be fitted.}
-
 \item{p}{named vector of start parameters and initial values of the growth model.}
 
 \item{lower}{lower bound of the parameter vector.}
@@ -34,6 +32,8 @@ variables in the form:
 \item{upper}{upper bound of the parameter vector.}
 
 \item{which}{vector of parameter names that are to be fitted.}
+
+\item{FUN}{function of growth model to be fitted.}
 
 \item{method}{character vector specifying the optimization algorithm.}
 

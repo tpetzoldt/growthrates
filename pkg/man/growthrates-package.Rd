@@ -13,8 +13,8 @@ in particular from batch experiments and plate reader trials.
 \tabular{ll}{
 Package:  \tab growthrates\cr
 Type:     \tab Package\cr
-Version:  \tab 0.6.1\cr
-Date:     \tab 2016-03-10\cr
+Version:  \tab 0.6.5\cr
+Date:     \tab 2016-03-12\cr
 License:  \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }

@@ -1,9 +1,18 @@
+## =============================================================================
+## Determine growth rates with a nonparametric smoothing spline.
+##   system of differential equations.
+##
+## Author: Thomas Petzoldt, TU Dresden
+## License: GPL >= 2, https://www.gnu.org/licenses/
+## Please cite our work when using this package.
+## =============================================================================
 
 library("growthrates")
 
 data(bactgrowth)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 
+## select a single data set
 dat <- splitted.data[[2]]
 time <- dat$time
 y    <- dat$value
