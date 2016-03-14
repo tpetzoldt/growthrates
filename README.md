@@ -54,8 +54,8 @@ Install with package devtools:
 
 
     install.packages("devtools")
-	  library(devtools)
-	  install_github("tpetzoldt/growthrates/pkg")
+    library(devtools)
+    install_github("tpetzoldt/growthrates/pkg")
 
 
 Introduction to the main functions
