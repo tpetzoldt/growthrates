@@ -13,6 +13,7 @@ News
 * Changed user interface, you may need small updates of your R-scripts.
 * New manual about writing user-defined growth models.
 * Many small changes and improvments.
+* Release of version 0.6.5 to [**CRAN**](https://cran.r-project.org/web/packages/growthrates/). 
 
 Overview
 --------
@@ -35,19 +36,26 @@ estimates and for plotting. The package supports growth models given
 as numerically solved differential equations. Multi-core computation
 is used to speed up fitting of parametric models.
 
-Download and Installation
------------------------------------------------------------------------------
+Download and Installation of the release version (recommended)
+--------------------------------------------------------------
 
-Install and load **R** package devtools:
 
-	install.packages("devtools")
+Install package from within **R** or **Sstudio** like any other package, 
+or with:
 
-	
-Install package growthrates:
 
-	library(devtools)
-	install_github("tpetzoldt/growthrates/pkg")
+    install.packages("growthrates")
 
+
+
+### Development version
+
+Install with package devtools:
+
+
+    install.packages("devtools")
+	  library(devtools)
+	  install_github("tpetzoldt/growthrates/pkg")
 
 
 Introduction to the main functions
