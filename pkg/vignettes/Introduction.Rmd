@@ -117,15 +117,15 @@ or we can plot raw data:
 ```{r, fig.width=10, fig.height=14}
 library(lattice)
 data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth, 
+xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth,
        groups = replicate, pch = 16, cex = 0.5)
 ```
 
 Estimation of growth rates
 ==========================
 
-Package **growthrates** can determine growth parameters from single experiments, 
-from a complete series of experiments, or from subsets in one step. Here we start 
+Package **growthrates** can determine growth parameters from single experiments,
+from a complete series of experiments, or from subsets in one step. Here we start
 with  an overview over the  ``single subset''-methods and show then examples for
 fitting growth models to the full data set. More examples can be found on the
 help pages of the package.
@@ -178,7 +178,7 @@ plot(fit, log = "y")
 plot(fit)
 ```
 
-and in addition to the original method of @Hall2013 it is also possible to 
+and in addition to the original method of @Hall2013 it is also possible to
 modify the default settings of the algorithm:
 
 ```{r}
@@ -191,21 +191,21 @@ lines(fitx, pch = "+", col = "blue")
 Parametric nonlinear growth models
 ----------------------------------
 
-A **parametric growth model** consists of a mathematical formula that describes 
-the growth of a population (e.g. `grow_logistic`) and its parameters 
-(e.g. `y0`, `mumax`, and `K`,). **Fitting a parametric model** is 
-the process of estimating an optimal parameter set that minimizes a given quality 
-criterion. Here we use the *method of least squares*, also known as 
-*ordinary least squares regression* (OLS). As most of the growth models are 
+A **parametric growth model** consists of a mathematical formula that describes
+the growth of a population (e.g. `grow_logistic`) and its parameters
+(e.g. `y0`, `mumax`, and `K`,). **Fitting a parametric model** is
+the process of estimating an optimal parameter set that minimizes a given quality
+criterion. Here we use the *method of least squares*, also known as
+*ordinary least squares regression* (OLS). As most of the growth models are
 non-linear, we need always a goof set of start parameters `p`. It is wise
-to choose values for start parameters carefully by considering the main 
-properties of the selected growth model (e.g. that the carrying capacity `K` 
-should be around the observed maximum of the data), or by experimentation, i.e. 
-plotting the model together with the data. In order to prevent unrealistic 
-(e.g. negative) parameter values, it is optionally possible to specify 
+to choose values for start parameters carefully by considering the main
+properties of the selected growth model (e.g. that the carrying capacity `K`
+should be around the observed maximum of the data), or by experimentation, i.e.
+plotting the model together with the data. In order to prevent unrealistic
+(e.g. negative) parameter values, it is optionally possible to specify
 box-constraints (`upper` and `lower`). For difficult problems one may consider
-to change the involved model fitting algorithm from Marquardt (`"Marq"`) to 
-something else, e.g. to `"L-BFGS-B"`. Details can be found on the `?modFit` help 
+to change the involved model fitting algorithm from Marquardt (`"Marq"`) to
+something else, e.g. to `"L-BFGS-B"`. Details can be found on the `?modFit` help
 page.
 
 ```{r, fig.width=7}
@@ -244,7 +244,7 @@ cells $y_a$:
 $$\frac{dy_i}{dt} = - k_w \cdot y_i $$
 
 $$\frac{dy_a}{dt} =   k_w \cdot y_i + \mu_{max} \cdot
-  y_a \cdot \left(1 - \frac{K}{y_a + y_i} \right)$$
+  y_a \cdot \left(1 - \frac{y_a + y_i}{K} \right)$$
 
 with amount of total organisms $y = y_i + y_a$, and an
 adaption rate $k_w$, intrinsic growth rate $\mu_{max}$, and carrying
@@ -282,16 +282,16 @@ plot(fit3)
 We see that `summary` shows only the fitted parameters whereas `coef`
 contains the full set.
 
-Note however, that start values need to be given in `p` for all model 
-parameters, i.e. for both the fitted and the fixed ones, while `upper` and 
+Note however, that start values need to be given in `p` for all model
+parameters, i.e. for both the fitted and the fixed ones, while `upper` and
 `lower` bounds for the fixed parameters can be omitted.
 
 
 Nonparametric smoothing splines
 -------------------------------
 
-Smoothing splines are a quick method to estimate maximum growth. The method is 
-called *nonparametric*, because the growth rate is directly estimated from the 
+Smoothing splines are a quick method to estimate maximum growth. The method is
+called *nonparametric*, because the growth rate is directly estimated from the
 smoothed data without being restricted to a specific model formula.
 
 ```{r, fig.width=7}
@@ -339,7 +339,7 @@ Fitting smoothing splines to multiple data
 It can be a good idea, to start with a nonparametric approach like the
 smoothing spline method to get a first impression and, potentially, to
 derive start parameters for a parametric model.
-In the following, we show an example with the smoothing spline method. The 
+In the following, we show an example with the smoothing spline method. The
 function uses a formula interface with the syntax:
 `dependent_variable ~ independent_variable | group1 + group 2 + ...`:
 
@@ -347,7 +347,7 @@ In this example, smoothness is set to a moderate value (`spar = 0.5`).
 Other values between zero and one will result in different degrees of
 smoothing.  If `spar` is omitted, leave-one-out cross-validation is
 used to determine smoothness automatically. This works best if the samples
-over time are true replicates from independent experimental units, 
+over time are true replicates from independent experimental units,
 instead of pseudo-replicates with potential autocorrelation.
 
 
@@ -366,7 +366,7 @@ Fitting parametric models to multiple data
 ------------------------------------------
 
 Package **growthrates** allows to fit parametric models to a series of
-grouped data. The formula interface of function `all_growthmodels` 
+grouped data. The formula interface of function `all_growthmodels`
 allows to include the name of the nonlinear model
 (the `grow_....`-function) and the name of the independent variable
 (e.g. `time`) as its first argument, for example as

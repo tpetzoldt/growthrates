@@ -2,7 +2,7 @@
 title: "Estimation of Growth Rates with Package `growthrates`, Part 2: User-defined Growth Models"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
-output: rmarkdown::pdf_document
+output: rmarkdown:::pdf_document
 bibliography: growthrates.bib
 vignette: >
   %\VignetteIndexEntry{Estimation of Growth Rates, Part 2: User-defined Growth Models}
@@ -44,7 +44,7 @@ describes how ODE models can be implemented as C inline functions.
 2. Differential equations or closed form?
 =========================================
 
-Growth models can be available either ``ordinary functions'' of time
+Growth models can be either ``ordinary functions'' of time
 $f(t)$ in *closed form*, that a allow to get values for the dependend
 variable $y$ immediately from any given value of an independent
 variable $t$ (or $time$) without the need of iteration. Or, they can
@@ -67,6 +67,8 @@ would need either calculus (and get the second form as its solution),
 or we could use a numerical method to simulate the evolution of $y$
 stepwise over time.
 
+But on the other hand, models given as differential equations are often more 
+directly related to a mechanistic process description and easier to extended. 
 
 3. Growth models in closed form
 ===============================
