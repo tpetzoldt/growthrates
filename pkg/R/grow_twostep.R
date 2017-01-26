@@ -90,6 +90,8 @@ ode_twostep <- function (time, y, parms, ...) {
 #  out  <-  ode(y0, time, ode_twostep, parms, ...)
 #}
 
+#' @family growth models
+#'
 #' @rdname grow_twostep
 #' @export
 #'
