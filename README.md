@@ -61,10 +61,16 @@ Install with package devtools:
 Introduction to the main functions
 ----------------------------------
 
-* html: https://rawgit.com/tpetzoldt/growthrates/master/doc/Introduction.html
 * pdf: https://github.com/tpetzoldt/growthrates/blob/master/doc/Introduction.pdf
+* html: https://rawgit.com/tpetzoldt/growthrates/master/doc/Introduction.html
+* html without figures: https://rawgit.com/tpetzoldt/growthrates/master/doc/Introduction_plain.html
 
-* R markdown (without figures): https://github.com/tpetzoldt/growthrates/blob/master/pkg/vignettes/Introduction.Rmd
+Writing user defined functions
+------------------------------
+
+* pdf: https://github.com/tpetzoldt/growthrates/blob/master/doc/User_models.pdf
+* html: https://rawgit.com/tpetzoldt/growthrates/master/doc/User_models.html
+* html without figures: https://rawgit.com/tpetzoldt/growthrates/master/doc/User_models_plain.html
 
 
 References
