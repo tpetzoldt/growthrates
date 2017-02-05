@@ -33,7 +33,7 @@ LANG=en_US.UTF-8
 
 Package **growthrates** comes with a set of pararametric growth models
 built-in, that should be sufficient for many application scenarios,
-but of course not for all circumstances. This document describes how
+but of course not under all circumstances. This document describes how
 the set of available functions can be extended with own user-defined
 models. Section (3) describes how simple regression functions existing
 in a *closed form* can be implemented.  In Section (4) we will see how
