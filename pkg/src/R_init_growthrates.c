@@ -25,13 +25,9 @@ static const R_CMethodDef CEntries[] = {
     {NULL, NULL, 0}
 }; 
 
-static const R_CallMethodDef CallEntries[] = {
-    {NULL,        NULL,               0}
-};
-
 void R_init_growthrates(DllInfo *dll) {
   // register entry points
-  R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL);
+  R_registerRoutines(dll, CEntries, NULL, NULL, NULL);
   
   // the following two lines protect against accidentially finding entry points
   R_useDynamicSymbols(dll, FALSE);  // disable dynamic searching
