@@ -5,7 +5,7 @@
 The population growth rate is the main indicator of population
 fitness.  This **R** package provides a collection of methods to
 determine growth rates from experimental data, in particular from
-batch experiments and plate reader trials.
+batch experiments and microwell plate reader trials.
 
 News
 ----
@@ -77,12 +77,12 @@ References
 ----------
 
 Hall, Acar, B. G., and M. Barlow. 2013. Growth Rates Made
-Easy. Mol. Biol. Evol. 31: 232-38. doi:10.1093/molbev/mst197
+Easy. Mol. Biol. Evol. 31: 232-38. http://dx.doi.org/10.1093/molbev/mst187
 
 Kahm, Matthias, Guido Hasenbrink, Hella Lichtenberg-Frate, Jost
 Ludwig, and Maik Kschischo. 2010. grofit: Fitting Biological Growth
 Curves with R. Journal of Statistical Software 33 (7):
-1-21. http://www.jstatsoft.org/v33/i07
+1-21. http://dx.doi.org/10.18637/jss.v033.i07
 
 R Core Team. 2015. R: A Language and Environment for Statistical
 Computing. Vienna, Austria: R Foundation for Statistical
@@ -91,9 +91,9 @@ Computing. http://www.R-project.org/
 Soetaert, Karline, and Thomas Petzoldt. 2010. Inverse Modelling,
 Sensitivity and Monte Carlo Analysis in R Using Package FME. Journal
 of Statistical Software 33 (3):
-1-28. http://www.jstatsoft.org/v33/i03/
+1-28. http://dx.doi.org/10.18637/jss.v033.i03
 
 Soetaert, Karline, Thomas Petzoldt, and R. Woodrow
 Setzer. 2010. Solving Differential Equations in R: Package
 deSolve. Journal of Statistical Software 33 (9):
-1-25. http://www.jstatsoft.org/v33/i09
+1-25. http://dx.doi.org/10.18637/jss.v033.i09
