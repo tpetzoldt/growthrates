@@ -6,8 +6,8 @@
 #' \tabular{ll}{
 #' Package:  \tab growthrates\cr
 #' Type:     \tab Package\cr
-#' Version:  \tab 0.6.5\cr
-#' Date:     \tab 2016-03-12\cr
+#' Version:  \tab 0.7.0\cr
+#' Date:     \tab 2017-06-12\cr
 #' License:  \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
 #' }
@@ -44,16 +44,16 @@
 #' Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
 #'   2010. grofit: Fitting Biological Growth Curves with R.
 #'   Journal of Statistical Software, 33(7), 1-21.
-#'   URL \url{http://www.jstatsoft.org/v33/i07/}
+#'   URL \url{http://dx.doi.org/10.18637/jss.v033.i07}
 #'
 #' Soetaert, K. and Petzoldt, T. 2010. Inverse Modelling, Sensitivity and
 #'   Monte Carlo Analysis in R Using Package FME.
 #'   Journal of Statistical Software, 33(3), 1-28.
-#'   URL \url{http://www.jstatsoft.org/v33/i03/}
+#'   URL \url{http://dx.doi.org/10.18637/jss.v033.i03}
 #'
 #' Soetaert, K., Petzoldt, T. Setzer, R. W. 2010. Solving Differential Equations
 #'   in R: Package deSolve. Journal of Statistical Software, 33(9), 1-25.
-#'   URL \url{http://www.jstatsoft.org/v33/i09/}
+#'   URL \url{http://dx.doi.org/10.18637/jss.v033.i09}
 #'
 #'
 #'
