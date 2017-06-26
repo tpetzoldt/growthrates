@@ -28,8 +28,13 @@
 #'
 grow_exponential <- function(time, parms) {
   ## lm object coefficients have no names
-  y0 <- parms[1]
-  mumax <- parms[2]
+  if (is.null(names(parms))) {
+    y0 <- parms[1]
+    mumax <- parms[2]
+  } else {
+    y0 <- parms["y0"]
+    mumax <- parms["mumax"]
+  }
   y  <- y0 * exp(mumax * time)
   return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
 }
