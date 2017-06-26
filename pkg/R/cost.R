@@ -27,5 +27,15 @@
 
 cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
   out <- FUN(obs$time, c(p, fixed.p))
-  modCost(out, obs, weight = "none", ...)
+  ## check NA and NaN, out has the columns: time, y, y_log
+  if (any(is.infinite(out[,2]), is.nan(out[,2]), is.na(out[,2]))) {
+    warning("Invalid return values of FUN.\n",
+       "Use constraints (lower, upper), change optimizer or try another model.\n",
+       "The set of optimization parameters was:\n",
+       paste(names(p), p, sep="=", collapse=", "))
+    ret <- Inf
+  } else {
+    ret <-modCost(out, obs, weight = "none", ...)
+  }
+  ret
 }
