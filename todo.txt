@@ -14,7 +14,7 @@ o enable "trace" for all optimizers
   --> done
 
 o formula interface
-  - simple innterface: done
+  - simple interface: done
   - parse nonlinear formula: experimental
   - for single fits: to do
 
