@@ -2,15 +2,15 @@
 % Please edit documentation in R/aac_classes.R
 \docType{class}
 \name{growthrates_fit-class}
-\alias{easylinear_fit-class}
 \alias{growthrates_fit-class}
-\alias{multiple_easylinear_fits-class}
-\alias{multiple_fits}
+\alias{nonlinear_fit-class}
+\alias{easylinear_fit-class}
+\alias{smooth.spline_fit-class}
 \alias{multiple_fits-class}
+\alias{multiple_fits}
+\alias{multiple_easylinear_fits-class}
 \alias{multiple_nonlinear_fits-class}
 \alias{multiple_smooth.spline_fits-class}
-\alias{nonlinear_fit-class}
-\alias{smooth.spline_fit-class}
 \title{S4 Classes of Package \pkg{growthrates}}
 \description{
 \code{growthrates_fit}: top-level class representing a growthrates fit with

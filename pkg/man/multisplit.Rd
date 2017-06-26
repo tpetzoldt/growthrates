@@ -3,11 +3,11 @@
 \docType{methods}
 \name{multisplit}
 \alias{multisplit}
-\alias{multisplit,ANY,ANY-method}
+\alias{multisplit,data.frame,formula-method}
 \alias{multisplit,data.frame,character-method}
 \alias{multisplit,data.frame,factor-method}
-\alias{multisplit,data.frame,formula-method}
 \alias{multisplit,data.frame,list-method}
+\alias{multisplit,ANY,ANY-method}
 \title{Split Data Frame into Multiple Groups}
 \usage{
 multisplit(data, grouping, drop = TRUE, sep = ":", ...)
@@ -85,4 +85,3 @@ lapply(spl, FUN=function(x)
 \code{\link{split}}
 }
 \keyword{internal}
-

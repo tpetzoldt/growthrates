@@ -2,13 +2,13 @@
 % Please edit documentation in R/plot.R
 \docType{methods}
 \name{plot}
-\alias{lines,easylinear_fit-method}
-\alias{lines,nonlinear_fit-method}
 \alias{plot}
-\alias{plot,easylinear_fit,missing-method}
-\alias{plot,multiple_fits,missing-method}
 \alias{plot,nonlinear_fit,missing-method}
+\alias{lines,nonlinear_fit-method}
+\alias{plot,easylinear_fit,missing-method}
 \alias{plot,smooth.spline_fit,missing-method}
+\alias{lines,easylinear_fit-method}
+\alias{plot,multiple_fits,missing-method}
 \title{Plot Model Fits}
 \usage{
 \S4method{plot}{nonlinear_fit,missing}(x, y, log = "", which = c("fit",
@@ -101,4 +101,3 @@ plot(all.fits[grep("R:", names(all.fits))])
   \code{\link{fit_growthmodel}}, \code{\link{fit_easylinear}},
   \code{\link{all_growthmodels}}, \code{\link{all_easylinear}}
 }
-

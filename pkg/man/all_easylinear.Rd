@@ -2,8 +2,8 @@
 % Please edit documentation in R/all_easylinear.R
 \name{all_easylinear}
 \alias{all_easylinear}
-\alias{all_easylinear.data.frame}
 \alias{all_easylinear.formula}
+\alias{all_easylinear.data.frame}
 \title{Easy Growth Rates Fit to data Frame}
 \usage{
 all_easylinear(...)
@@ -15,6 +15,8 @@ all_easylinear(...)
   y = "value", h = 5, quota = 0.95, ...)
 }
 \arguments{
+\item{\dots}{generic parameters, reserved for future extensions.}
+
 \item{formula}{model formula specifying dependent, independent and grouping
 variables in the form:
 \code{dependent ~ independent | group1 + group2 + \dots}.}
@@ -34,8 +36,6 @@ subsets in the data frame.}
 \item{time}{character vectors with name independent variabl.e.}
 
 \item{y}{character vector with name of dependent variable}
-
-\item{\dots}{reserved for future extensions.}
 }
 \value{
 object with parameters of all fits.
@@ -67,4 +67,3 @@ Other fitting functions: \code{\link{all_growthmodels}},
   \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/names.R
 \docType{methods}
 \name{names.growthmodel}
-\alias{names,multiple_fits-method}
 \alias{names.growthmodel}
+\alias{names,multiple_fits-method}
 \alias{names<-,multiple_fits-method}
 \title{Get Names Attributes of Growth Models}
 \usage{
@@ -38,6 +38,7 @@ Methods to get the parameter names of a growth model or to get or set
   subsets, e.g. for plotting, see example below.}
 }
 }
+
 \examples{
 
 ## growthmodel-method
@@ -59,4 +60,3 @@ plot(L[grep("R:", names(L))])
 \code{\link{multiple_fits}}, \code{\link{all_growthmodels}},
   \code{\link{all_splines}}, \code{\link{all_easylinear}}
 }
-

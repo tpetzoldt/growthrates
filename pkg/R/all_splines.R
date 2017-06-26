@@ -16,7 +16,7 @@
 #'  A smaller number may lead to non-detectable speed-up, but has the risk that
 #'  the search is trapped in a local minimum.
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots other parameters passed to \code{\link{smooth.spline}}, see details.
+#' @param \dots generic parameters, including parameters passed to \code{\link{smooth.spline}}, see details.
 #'
 #' @return object with parameters of the fit.
 #'

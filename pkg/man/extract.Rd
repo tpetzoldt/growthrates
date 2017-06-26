@@ -17,10 +17,10 @@
 
 \item{j}{NULL (for compatibility with other uses of  \code{[} or \code{[[})}
 
+\item{\dots}{optional arguments passed to \code{[}}
+
 \item{drop}{If \code{TRUE} the result is coerced to the lowest possible
 dimension}
-
-\item{\dots}{optional arguments passed to \code{[}}
 }
 \description{
 Operators to access parts of 'multiple_fits' objects
@@ -38,4 +38,3 @@ par(mfrow=c(2, 2))
 plot(L[1:4])
 
 }
-

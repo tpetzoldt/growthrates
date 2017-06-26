@@ -33,4 +33,3 @@ xyplot(value ~ time | strain + as.factor(conc),
       data = bactgrowth, groups = replicate)
 }
 \keyword{data}
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/growthrates-package.R
 \docType{package}
 \name{growthrates-package}
-\alias{growthrates}
 \alias{growthrates-package}
+\alias{growthrates}
 \title{Estimate Growth Rates from Experimental Data}
 \description{
 A collection of methods to determine growth rates from experimental data,
@@ -13,8 +13,8 @@ in particular from batch experiments and plate reader trials.
 \tabular{ll}{
 Package:  \tab growthrates\cr
 Type:     \tab Package\cr
-Version:  \tab 0.6.5\cr
-Date:     \tab 2016-03-12\cr
+Version:  \tab 0.7.0\cr
+Date:     \tab 2017-06-12\cr
 License:  \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -62,9 +62,6 @@ lines(fit2, col="green")
 lines(fit3, col="red")
 
 }
-\author{
-Thomas Petzoldt
-}
 \references{
 Hall, B. G., Acar, H. and Barlow, M. 2013. Growth Rates Made Easy.
   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
@@ -72,21 +69,23 @@ Hall, B. G., Acar, H. and Barlow, M. 2013. Growth Rates Made Easy.
 Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
   2010. grofit: Fitting Biological Growth Curves with R.
   Journal of Statistical Software, 33(7), 1-21.
-  URL \url{http://www.jstatsoft.org/v33/i07/}
+  URL \url{http://dx.doi.org/10.18637/jss.v033.i07}
 
 Soetaert, K. and Petzoldt, T. 2010. Inverse Modelling, Sensitivity and
   Monte Carlo Analysis in R Using Package FME.
   Journal of Statistical Software, 33(3), 1-28.
-  URL \url{http://www.jstatsoft.org/v33/i03/}
+  URL \url{http://dx.doi.org/10.18637/jss.v033.i03}
 
 Soetaert, K., Petzoldt, T. Setzer, R. W. 2010. Solving Differential Equations
   in R: Package deSolve. Journal of Statistical Software, 33(9), 1-25.
-  URL \url{http://www.jstatsoft.org/v33/i09/}
+  URL \url{http://dx.doi.org/10.18637/jss.v033.i09}
 }
 \seealso{
 package \code{\link[grofit:grofit-package]{grofit}}
 for a related package from Kahm et al. (2010) that implements a
 different approach.
 }
+\author{
+Thomas Petzoldt
+}
 \keyword{package}
-

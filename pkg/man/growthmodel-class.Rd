@@ -12,4 +12,3 @@ time-dependent growth of organisms.
 the constructor function \code{\link{growthmodel}} how to create
   instances of this class.
 }
-

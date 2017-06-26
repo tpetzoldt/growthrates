@@ -2,8 +2,8 @@
 % Please edit documentation in R/all_splines.R
 \name{all_splines}
 \alias{all_splines}
-\alias{all_splines.data.frame}
 \alias{all_splines.formula}
+\alias{all_splines.data.frame}
 \title{Fit Exponential Growth Model with Smoothing Spline}
 \usage{
 all_splines(...)
@@ -15,6 +15,8 @@ all_splines(...)
   y = "value", optgrid = 50, ...)
 }
 \arguments{
+\item{\dots}{generic parameters, including parameters passed to \code{\link{smooth.spline}}, see details.}
+
 \item{formula}{model formula specifying dependent, independent and grouping
 variables in the form:
 \code{dependent ~ independent | group1 + group2 + \dots}.}
@@ -34,8 +36,6 @@ the search is trapped in a local minimum.}
 \item{time}{character vectors with name independent variable.}
 
 \item{y}{character vector with name of dependent variable.}
-
-\item{\dots}{other parameters passed to \code{\link{smooth.spline}}, see details.}
 }
 \value{
 object with parameters of the fit.
@@ -93,4 +93,3 @@ Other fitting functions: \code{\link{all_easylinear}},
   \code{\link{fit_easylinear}},
   \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
 }
-

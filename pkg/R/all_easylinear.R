@@ -15,7 +15,7 @@
 #' @param quota part of window fits considered for the overall linear fit
 #'   (relative to max. growth rate).
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots reserved for future extensions.
+#' @param \dots generic parameters, reserved for future extensions.
 #'
 #' @return object with parameters of all fits.
 #'

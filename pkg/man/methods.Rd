@@ -2,26 +2,26 @@
 % Please edit documentation in R/methods.R
 \docType{methods}
 \name{rsquared,growthrates_fit-method}
-\alias{coef,easylinear_fit-method}
+\alias{rsquared,growthrates_fit-method}
+\alias{obs,growthrates_fit-method}
 \alias{coef,growthrates_fit-method}
-\alias{coef,multiple_fits-method}
+\alias{coef,easylinear_fit-method}
 \alias{coef,smooth.spline_fit-method}
 \alias{deviance,growthrates_fit-method}
-\alias{deviance,multiple_fits-method}
-\alias{deviance,smooth.spline_fit-method}
-\alias{df.residual,growthrates_fit-method}
-\alias{df.residual,smooth.spline_fit-method}
-\alias{obs,growthrates_fit-method}
-\alias{residuals,growthrates_fit-method}
-\alias{residuals,multiple_fits-method}
-\alias{results,multiple_easylinear_fits-method}
-\alias{results,multiple_fits-method}
-\alias{rsquared,growthrates_fit-method}
-\alias{rsquared,multiple_fits-method}
 \alias{summary,growthrates_fit-method}
-\alias{summary,multiple_fits-method}
 \alias{summary,nonlinear_fit-method}
+\alias{residuals,growthrates_fit-method}
+\alias{df.residual,growthrates_fit-method}
 \alias{summary,smooth.spline_fit-method}
+\alias{df.residual,smooth.spline_fit-method}
+\alias{deviance,smooth.spline_fit-method}
+\alias{coef,multiple_fits-method}
+\alias{rsquared,multiple_fits-method}
+\alias{deviance,multiple_fits-method}
+\alias{results,multiple_fits-method}
+\alias{results,multiple_easylinear_fits-method}
+\alias{summary,multiple_fits-method}
+\alias{residuals,multiple_fits-method}
 \title{Accessor Methods of Package \pkg{growthrates}.}
 \usage{
 \S4method{rsquared}{growthrates_fit}(object, ...)
@@ -67,9 +67,9 @@
 \arguments{
 \item{object}{name of a 'growthrate' object.}
 
-\item{cov}{boolean if the covariance matrix should be printed.}
-
 \item{\dots}{other arguments passed to the methods.}
+
+\item{cov}{boolean if the covariance matrix should be printed.}
 }
 \description{
 Functions to access the results of fitted growthrate objects:  \code{summary},
@@ -101,4 +101,3 @@ plot(residuals(fit2) ~ obs(fit2)[,2])
 
 
 }
-

@@ -56,4 +56,3 @@ Other growth models: \code{\link{grow_exponential}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
   \code{\link{ode_twostep}}
 }
-

@@ -32,4 +32,3 @@ parse_formula(y ~ x | a+b+c)
 \code{\link{multisplit}},  \code{\link{split}}
 }
 \keyword{internal}
-

@@ -18,7 +18,7 @@
 #' @param method character vector specifying the optimization algorithm.
 #' @param transform fit model to non-transformed or log-transformed data.
 #' @param subset a specification of the rows to be used: defaults to all rows.
-#' @param \dots additional parameters passed to the optimizer.
+#' @param \dots generic parameters, including parameters passed to the optimizer.
 #' @param ncores number of CPU cores used for parallel computation. The number
 #'   of real cores is detected automatically by default,
 #'   but fort debugging purposes it could be wise to set \code{ncores = 1}.

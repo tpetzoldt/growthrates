@@ -33,4 +33,3 @@ cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
 }
 }
 \keyword{internal}
-

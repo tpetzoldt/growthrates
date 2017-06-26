@@ -32,7 +32,7 @@ The equation used is:
 \deqn{y = K*(1-exp(-beta * mumax * time)*(1-(y0/K)^-beta))^(-1/beta)}
 
 The naming of parameters used here follows the convention of Tsoularis (2001),
-but uses \code{mumax} for growtrate and \code{y} for abundance to make them
+but uses \code{mumax} for growthrate and \code{y} for abundance to make them
 consistent to other growth functions.
 }
 \examples{
@@ -60,4 +60,3 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_logistic}}, \code{\link{growthmodel}},
   \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}}
 }
-

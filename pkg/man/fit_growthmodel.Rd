@@ -23,7 +23,7 @@ fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
 
 \item{which}{vector of parameter names that are to be fitted.}
 
-\item{method}{character vector specifying the optimization algorithm.}
+\item{method}{character vector specifying the optimization algorithm (see \code{\link{modFit}}).}
 
 \item{transform}{fit model to non-transformed or log-transformed data.}
 
@@ -78,4 +78,3 @@ Other fitting functions: \code{\link{all_easylinear}},
   \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_spline}}
 }
-

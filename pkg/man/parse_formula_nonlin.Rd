@@ -34,4 +34,3 @@ ret <- parse_formula_nonlin(y ~ f(x, parms) | a + b + c)
 \code{\link{multisplit}},  \code{\link{split}},  \code{\link{parse_formula}}
 }
 \keyword{internal}
-

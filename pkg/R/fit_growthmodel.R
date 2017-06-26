@@ -10,7 +10,7 @@
 #' @param lower lower bound of the parameter vector (optional).
 #' @param upper upper bound of the parameter vector (optional).
 #' @param which vector of parameter names that are to be fitted.
-#' @param method character vector specifying the optimization algorithm.
+#' @param method character vector specifying the optimization algorithm (see \code{\link{modFit}}).
 #' @param transform fit model to non-transformed or log-transformed data.
 #' @param control A list of control parameters for the optimizers. See Details.
 #' @param \dots additional parameters passed to the optimizer.
@@ -72,7 +72,7 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   fixed.p  <- p[setdiff(parnames, which)]
   parms    <- p[intersect(parnames, which)]
 
-  ## todo: check case lower, upper = 1
+  ## todo: check case of lower and upper = 1
   if (length(fixed.p) & (length(lower > 1))) {
     lower = lower[intersect(parnames, which)]
   }

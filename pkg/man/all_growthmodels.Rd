@@ -19,6 +19,8 @@ all_growthmodels(...)
   ncores = detectCores(logical = FALSE))
 }
 \arguments{
+\item{\dots}{generic parameters, including parameters passed to the optimizer.}
+
 \item{formula}{model formula specifying dependent, independent and grouping
 variables in the form:
 \code{dependent ~ independent | group1 + group2 + \dots}.}
@@ -51,8 +53,6 @@ Usage of logical (hyperthreading) cores does not speed up computation.}
 \item{time}{character vector with name of independent variable.}
 
 \item{y}{character vector with name of dependent variable.}
-
-\item{\dots}{additional parameters passed to the optimizer.}
 }
 \value{
 object containing the parameters of all fits.
@@ -120,4 +120,3 @@ Other fitting functions: \code{\link{all_easylinear}},
   \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
 }
-
