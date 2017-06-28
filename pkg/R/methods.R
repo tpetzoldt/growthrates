@@ -247,7 +247,7 @@ setMethod("results", "multiple_easylinear_fits",
             keys <- as.data.frame(lapply(keys, type.convert))
 
             ret <- cbind(keys, ret)
-            names(ret) <- c(object@grouping, "y0", "mumax", "r2")
+            names(ret) <- c(object@grouping, "y0", "y0_lm", "mumax","lag", "r2")
             ret
           })
 

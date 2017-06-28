@@ -24,7 +24,11 @@
 #' @param quota part of window fits considered for the overall linear fit
 #'   (relative to max. growth rate)
 #'
-#' @return object with parameters of the fit.
+#' @return object with parameters of the fit. The lag time is currently estimated
+#' as the intersection between the fit and the horizontal line with \eqn{y=y_0},
+#' where \code{y0} is the first value of the dependent variable. The intersection
+#' of the fit with the abscissa is indicated as \code{y0_lm} (lm for linear model).
+#' These identifieres and their assumptions may change in future versions.
 #'
 #' @references Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
 #'   Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
@@ -83,10 +87,19 @@ fit_easylinear <- function(time, y, h=5, quota=0.95) {
   } else {
     p <- c(a=0, b=0, se=0, r2=0, cv=0, n=0)
   }
-  # cat(strain, conc, replicate, p[2], "\n")
-  #return(list(p=p, ndx=tp))
-  obj <- new("easylinear_fit", FUN=grow_exponential, fit=m,
-             par = c(y0 = unname(exp(coef(m)[1])), mumax = unname(coef(m)[2])), ndx = tp,
-             obs = data.frame(time = obs$time, y = obs$y), rsquared = p["r2"])
+  ## estimate lag phase
+  ## todo: determine y0_data as average or median from multipe values
+  y0_lm    <- unname(exp(coef(m)[1]))
+  y0_data  <- y[1]
+  mumax <- unname(coef(m)[2])
+
+  lag <- (log(y0_data) - log(y0_lm)) / mumax
+
+  obj <- new("easylinear_fit",
+             FUN = grow_exponential, fit = m,
+             par = c(y0 = y0_data, y0_lm = y0_lm, mumax = mumax, lag = lag),
+             ndx = tp,
+             obs = data.frame(time = obs$time, y = obs$y),
+             rsquared = p["r2"])
   invisible(obj)
 }
