@@ -128,11 +128,20 @@ setMethod("plot", c("easylinear_fit", "missing"),
             switch(which,
                    fit = {
                      obs <- obs(x)
+
                      plot(obs[,"y"] ~ obs[,"time"], xlab="time", ylab="y",
                           log=log, ...)
                      points(obs[x@ndx,"y"] ~ obs[x@ndx,"time"], pch=16, col="red")
-                     time <- seq(min(obs[,"time"]), max(obs[,"time"]), length=200)
-                     lines(time, x@FUN(time, coef(x))[,"y"], ...)
+
+                     ## lag phase
+                     lag <- coef(x)["lag"]
+
+                     time <- seq(min(obs[,"time"] + lag), max(obs[,"time"]), length=200)
+                     coef_ <- coef(x)
+                     lines(time, x@FUN(time, c(y0=unname(coef_["y0_lm"]), mumax=unname(coef_["mumax"])))[,"y"], ...)
+
+                     ## todo: use estimated or averaged y0_data instead of y[1]
+                     lines(c(min(obs[1, "time"]), lag), rep(obs[1, "y"], 2), lty="dotted")
                    },
                    diagnostics = {
                      opar <- par(no.readonly = TRUE)
@@ -203,7 +212,10 @@ setMethod("lines", "easylinear_fit",
 
             ## draw predictions
             time <- seq(min(obs[,"time"]), max(obs[,"time"]), length=200)
-            lines(time, x@FUN(time, coef(x))[,"y"], ...)
+            ## distinction between y0=y0_data and y0_lm
+            coef_ <- coef(x)
+
+            lines(time, x@FUN(time, c(y0=unname(coef_["y0_lm"]), mumax=unname(coef_["mumax"])))[,"y"], ...)
           }
 )
 

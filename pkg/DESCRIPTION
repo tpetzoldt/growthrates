@@ -25,7 +25,7 @@ VignetteBuilder: knitr
 Suggests:
     knitr
 RoxygenNote: 6.0.1
-Collate:
+Collate: 
     'aaa_growthmodel-class.R'
     'aab_growthmodel-constructor.R'
     'aac_classes.R'
@@ -33,6 +33,7 @@ Collate:
     'all_easylinear.R'
     'all_growthmodels.R'
     'all_splines.R'
+    'antibiotic.R'
     'bactgrowth.R'
     'cost.R'
     'extract.R'
@@ -55,4 +56,5 @@ Collate:
     'parse_formula.R'
     'parse_formula_nonlin.R'
     'plot.R'
+    'predict.R'
     'utilities.R'

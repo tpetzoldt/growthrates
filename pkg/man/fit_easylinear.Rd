@@ -17,7 +17,11 @@ fit_easylinear(time, y, h = 5, quota = 0.95)
 (relative to max. growth rate)}
 }
 \value{
-object with parameters of the fit.
+object with parameters of the fit. The lag time is currently estimated
+as the intersection between the fit and the horizontal line with \eqn{y=y_0},
+where \code{y0} is the first value of the dependent variable. The intersection
+of the fit with the abscissa is indicated as \code{y0_lm} (lm for linear model).
+These identifieres and their assumptions may change in future versions.
 }
 \description{
 Determine maximum growth rates from the log-linear part of a growth curve using
