@@ -59,8 +59,8 @@ xyplot(mumax ~ conc|strain, data=results)
 
 }
 \references{
-Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
-  Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
+Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy. 
+Mol. Biol. Evol. 31: 232-38, doi:10.1093/molbev/mst187
 }
 \seealso{
 Other fitting functions: \code{\link{all_growthmodels}},

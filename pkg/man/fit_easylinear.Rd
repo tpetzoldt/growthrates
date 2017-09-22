@@ -36,9 +36,9 @@ The algorithm works as follows:
     1 \dots 5, 2 \dots 6, 3\dots 7 and so on. The method seeks the highest
     rate of exponential growth, so the dependent variable is of course
     log-transformed.
-  \item Find the subset with the highest slope \eqn{$b_max$}{b_max} and
+  \item Find the subset with the highest slope \eqn{$b_{max}$}{b_max} and
     include also the data points of adjacent subsets that have a slope of
-    at least \eqn{$quota \cdot b_max$}{quota * b_max},
+    at least \eqn{$quota \cdot b_{max}$}{quota * b_max},
     e.g. all data sets that have at least 95\% of the maximum slope.
   \item Fit a new linear model to the extended data window identified in step 2.
 }
@@ -67,8 +67,8 @@ lines(fitx, pch="+", col="blue")
 
 }
 \references{
-Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.
-  Mol. Biol. Evol. 31: 232-238 doi:10.1093/molbev/mst197
+Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy. 
+Mol. Biol. Evol. 31: 232-38, doi:10.1093/molbev/mst187
 }
 \seealso{
 Other fitting functions: \code{\link{all_easylinear}},
