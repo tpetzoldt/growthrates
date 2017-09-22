@@ -13,7 +13,8 @@ News
 * Changed user interface, you may need small updates of your R-scripts.
 * New manual about writing user-defined growth models.
 * Many small changes and improvments.
-* Release of version 0.6.5 to [**CRAN**](https://cran.r-project.org/web/packages/growthrates/). 
+* Release of version 0.6.5 to [**CRAN**](https://cran.r-project.org/web/packages/growthrates/).
+* Presentation at the [useR!2017 conference in Brussels](https://channel9.msdn.com/Events/Speakers/thomas-petzoldt) 
 
 Overview
 --------
@@ -21,7 +22,7 @@ Overview
 The package contains basically three methods:
 
 * fit a linear regression to a subset of data with the steepest
-  log-linear increase (a method, similar to Hall et al., 2013),
+  log-linear increase (a method, similar to Hall et al., 2014),
 
 * fit parametric nonlinear models to the complete data set, where the
   model functions can be given either in closed form or as numerically
@@ -63,20 +64,19 @@ Introduction to the main functions
 
 * pdf: https://github.com/tpetzoldt/growthrates/blob/master/doc/Introduction.pdf
 * html: https://rawgit.com/tpetzoldt/growthrates/master/doc/Introduction.html
-* html without figures: https://rawgit.com/tpetzoldt/growthrates/master/doc/Introduction_plain.html
 
 Writing user defined functions
 ------------------------------
 
 * pdf: https://github.com/tpetzoldt/growthrates/blob/master/doc/User_models.pdf
 * html: https://rawgit.com/tpetzoldt/growthrates/master/doc/User_models.html
-* html without figures: https://rawgit.com/tpetzoldt/growthrates/master/doc/User_models_plain.html
+
 
 
 References
 ----------
 
-Hall, Acar, B. G., and M. Barlow. 2013. Growth Rates Made
+Hall, B. G., H. Acar, A. Nandipati, and M. Barlow. 2014. Growth Rates Made
 Easy. Mol. Biol. Evol. 31: 232-38. http://dx.doi.org/10.1093/molbev/mst187
 
 Kahm, Matthias, Guido Hasenbrink, Hella Lichtenberg-Frate, Jost

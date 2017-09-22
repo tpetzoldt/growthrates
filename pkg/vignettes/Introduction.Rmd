@@ -63,7 +63,7 @@ The package includes three types of methods:
   systems of differential equation. Such models are then solved with
   package `deSolve' [@deSolve_jss].
 2. Fitting of linear models to the period of exponential growth using
-  the ``growth rates made easy method'' of @Hall2013 ,
+  the ``growth rates made easy method'' of @Hall2014 ,
 3. Nonparametric growthrate estimation by using smoothers. R contains
   several powerful smoothing methods, that can leveraged for this
   purpose. The currently implemented method uses function
@@ -179,7 +179,7 @@ plot(fit, log = "y")
 plot(fit)
 ```
 
-and in addition to the original method of @Hall2013 it is also possible to
+and in addition to the original method of @Hall2014 it is also possible to
 modify the default settings of the algorithm:
 
 ```{r}

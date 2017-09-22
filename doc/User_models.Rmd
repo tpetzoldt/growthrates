@@ -33,7 +33,7 @@ LANG=en_US.UTF-8
 
 Package **growthrates** comes with a set of pararametric growth models
 built-in, that should be sufficient for many application scenarios,
-but of course not for all circumstances. This document describes how
+but of course not under all circumstances. This document describes how
 the set of available functions can be extended with own user-defined
 models. Section (3) describes how simple regression functions existing
 in a *closed form* can be implemented.  In Section (4) we will see how
@@ -119,7 +119,7 @@ grow_logistic_yshift <- function(time, parms) {
 
 The, at a first look circumstantial `as.matrix(data.frame(()))`
 construction is a simple way to create the required output format.
-Then, it is of course a good idea to test the function beforehand,
+Then it is of course a good idea to test the function beforehand,
 for example:
 
 ```{r, fig.width=5, fig.height=4}
@@ -236,7 +236,7 @@ A numerical simulation of ODE models can sometimes be slow, so we may
 be tempted to speed it up. This is indeed possible with *compiled
 code*, i.e. the model is written in another programming language
 (Fortran or C) that are faster compared to R. Several methods exist
-how this can be done, see for example @Soetaert2010c or @Kneis2015. In
+how this can be done, see for example @Soetaert2010c or @Kneis2016. In
 the following, we use a method that allows *inline code*, i.e.  direkt
 integration of C code in the R script using package **cOde**
 [@Kaschek2016].
@@ -253,7 +253,7 @@ https://cran.r-project.org/bin/windows/Rtools/ needs an additional installation.
 ## from inline code, by using the 'cOde' package of Daniel Kaschek
 ## Note: This example needs the R development tools.
 ##  - suitable compilers on Linux and Mac
-##  - Rtools on Windows from
+##  - Rtools on Windows from https://cran.r-project.org/bin/windows/Rtools/
 
 library("growthrates")
 library("cOde")
