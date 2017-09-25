@@ -14,7 +14,7 @@ in particular from batch experiments and plate reader trials.
 Package:  \tab growthrates\cr
 Type:     \tab Package\cr
 Version:  \tab 0.7.0\cr
-Date:     \tab 2017-06-12\cr
+Date:     \tab 2017-09-25\cr
 License:  \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
