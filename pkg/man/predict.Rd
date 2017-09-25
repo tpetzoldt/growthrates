@@ -20,6 +20,9 @@
 \item{object}{name of a 'growthrates' object for which prediction is desired.}
 
 \item{\dots}{additional arguments affecting the predictions produced.}
+
+\item{newdata}{an optional data frame with column 'time' for new time steps with
+which to predict. This argument is currently only available for parametric fits.}
 }
 \description{
 Class-specific methods of package \pkg{growthrates} to make predictions.
