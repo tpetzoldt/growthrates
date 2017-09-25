@@ -8,6 +8,8 @@
 #' Class-specific methods of package \pkg{growthrates} to make predictions.
 #'
 #' @param object name of a 'growthrates' object for which prediction is desired.
+#' @param newdata an optional data frame with column 'time' for new time steps with
+#'   which to predict. This argument is currently only available for parametric fits.
 #' @param \dots additional arguments affecting the predictions produced.
 #'
 #' @rdname predict
