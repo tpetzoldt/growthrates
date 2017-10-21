@@ -73,10 +73,10 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   parms    <- p[intersect(parnames, which)]
 
   ## todo: check case of lower and upper = 1
-  if (length(fixed.p) & (length(lower > 1))) {
+  if (length(fixed.p) & (length(lower) > 1)) {
     lower = lower[intersect(parnames, which)]
   }
-  if (length(fixed.p) & (length(upper > 1))) {
+  if (length(fixed.p) & (length(upper) > 1)) {
     upper = upper[intersect(parnames, which)]
   }
 
