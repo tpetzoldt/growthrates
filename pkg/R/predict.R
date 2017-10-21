@@ -28,21 +28,23 @@
 #' splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 #'
 #' ## get table from single experiment
-#' dat <- splitted.data[[10]]
+#' dat <- splitted.data[["T:0:2"]]
 #'
 #' fit1 <- fit_spline(dat$time, dat$value, spar=0.5)
 #' coef(fit1)
 #' summary(fit1)
 #'
-#' ## derive start parameters from spline fit
-#' p <- c(coef(fit1), K = max(dat$value))
-#' fit2 <- fit_growthmodel(grow_logistic, p=p, time=dat$time, y=dat$value, transform="log")
-#' coef(fit2)
-#' rsquared(fit2)
+#' p   <- c(y0 = 0.02, mumax = .5, K = 0.05, h0 = 1)
+#' fit2 <- fit_growthmodel(grow_baranyi, p=p, time=dat$time, y=dat$value)
 #'
+#' ## prediction for given data
 #' predict(fit2)
 #'
+#' ## prediction for new data
+#' pr <- predict(fit2, newdata=data.frame(time=seq(0, 50, 0.1)))
 #'
+#' plot(fit2, xlim=c(0, 50))
+#' lines(pr[, c("time", "y")], lty="dashed", col="red")
 
 
 #' @rdname predict
