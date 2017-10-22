@@ -76,7 +76,7 @@ plot(res, ylim=c(0.005, 0.03))
 Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
 2010. grofit: Fitting Biological Growth Curves with R.
 Journal of Statistical Software, 33(7), 1-21. URL
-\url{http://www.jstatsoft.org/v33/i07/}
+\url{https://www.jstatsoft.org/v33/i07/}
 }
 \seealso{
 Other fitting functions: \code{\link{all_easylinear}},

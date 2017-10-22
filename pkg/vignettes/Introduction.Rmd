@@ -2,7 +2,7 @@
 title: "Estimation of Growth Rates with Package `growthrates`"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
-output: rmarkdown::pdf_document
+output: rmarkdown::html_vignette
 bibliography: growthrates.bib
 vignette: >
   %\VignetteIndexEntry{Estimation of Growth Rates, Part 1: Introduction}
