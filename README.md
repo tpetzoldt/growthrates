@@ -13,6 +13,10 @@ batch experiments and microwell plate reader trials.
 News
 ----
 
+* Added predict-methods
+* Several small changes and improvements.
+* Release of version 0.7.1 to [**CRAN**](https://cran.r-project.org/package=growthrates).
+
 * Changed user interface, you may need small updates of your R-scripts.
 * New manual about writing user-defined growth models.
 * Many small changes and improvements.
