@@ -1,3 +1,6 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](https://cran.r-project.org/package=growthrates)
+[![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](https://cran.r-project.org/package=growthrates)
+
 # R package growthrates
 
 ### Estimate Growth Rates from Experimental Data
@@ -12,8 +15,8 @@ News
 
 * Changed user interface, you may need small updates of your R-scripts.
 * New manual about writing user-defined growth models.
-* Many small changes and improvments.
-* Release of version 0.6.5 to [**CRAN**](https://cran.r-project.org/web/packages/growthrates/).
+* Many small changes and improvements.
+* Release of version 0.6.5 to [**CRAN**](https://cran.r-project.org/package=growthrates).
 * Presentation at the [useR!2017 conference in Brussels](https://channel9.msdn.com/Events/Speakers/thomas-petzoldt) 
 
 Overview
@@ -41,23 +44,24 @@ Download and Installation of the release version (recommended)
 --------------------------------------------------------------
 
 
-Install package from within **R** or **Sstudio** like any other package, 
+Install package from within **R** or **RStudio** like any other package, 
 or with:
 
 
-    install.packages("growthrates")
-
+```R
+install.packages("growthrates")
+```
 
 
 ### Development version
 
 Install with package devtools:
 
-
-    install.packages("devtools")
-    library(devtools)
-    install_github("tpetzoldt/growthrates/pkg")
-
+```R
+install.packages("devtools")
+library(devtools)
+install_github("tpetzoldt/growthrates/pkg")
+```
 
 Introduction to the main functions
 ----------------------------------
