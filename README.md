@@ -1,5 +1,5 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/biogram)](https://cran.r-project.org/package=growthrates)
-[![Downloads](http://cranlogs.r-pkg.org/badges/biogram)](https://cran.r-project.org/package=growthrates)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/growthrates)](https://cran.r-project.org/package=growthrates)
+[![Downloads](http://cranlogs.r-pkg.org/badges/growthrates)](https://cran.r-project.org/package=growthrates)
 
 # R package growthrates
 
