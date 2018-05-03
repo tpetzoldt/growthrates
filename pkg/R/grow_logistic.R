@@ -34,5 +34,6 @@ grow_logistic <- function(time, parms) {
   })
 }
 ## attach names of parameters as attributes
+attr(grow_logistic, "fname") <- c("grow_logistic")
 attr(grow_logistic, "pnames") <- c("y0", "mumax", "K")
 class(grow_logistic) <- c("growthmodel", "function")

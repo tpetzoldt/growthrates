@@ -6,11 +6,12 @@
 #' Accessor Methods of Package \pkg{growthrates}.
 #'
 #' Functions to access the results of fitted growthrate objects:  \code{summary},
-#'  \code{coeff}, \code{rsquared}, \code{deviance}, \code{residuals},
+#'  \code{coef}, \code{rsquared}, \code{deviance}, \code{residuals},
 #'  \code{df.residual}, \code{obs}, \code{results}.
 #'
 #' @param object name of a 'growthrate' object.
 #' @param cov boolean if the covariance matrix should be printed.
+#' @param extended boolean if extended set of parameters shoild be printed
 #' @param \dots other arguments passed to the methods.
 #'
 #' @rdname methods
@@ -66,9 +67,16 @@ setMethod("obs", "growthrates_fit",
 #' @exportMethod coef
 #'
 setMethod("coef", "growthrates_fit",
-          function(object, ...) {
-            #coef(object@fit, ...)
-            object@par
+          function(object, extended=FALSE, ...) {
+            if (extended) {
+              if (attributes(object@FUN)$fname == "grow_logistic") {
+                extcoef_logistic(object, ...)
+              } else {
+                stop("no extended coef available for this model")
+              }
+            } else {
+              object@par
+            }
           }
 )
 
@@ -87,8 +95,8 @@ setMethod("coef", "easylinear_fit",
 #' @exportMethod coef
 #'
 setMethod("coef", "smooth.spline_fit",
-          function(object, ...) {
-            object@par
+          function(object, extended=FALSE, ...) {
+             object@par
           }
 )
 

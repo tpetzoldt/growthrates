@@ -24,7 +24,8 @@ Defines a cost function from the residual sum of squares between model
 and observational data.
 }
 \details{
-Function 'cost' is implemented as follows, see package FME for details:
+Function 'cost' is implemented along the lines of the 
+following template, see package FME for details:
 \preformatted{
 cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
   out <- FUN(obs$time, c(p, fixed.p))

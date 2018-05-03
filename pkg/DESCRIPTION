@@ -36,6 +36,7 @@ Collate:
     'antibiotic.R'
     'bactgrowth.R'
     'cost.R'
+    'extcoef_logistic.R'
     'extract.R'
     'fit_easylinear.R'
     'fit_growthmodel.R'

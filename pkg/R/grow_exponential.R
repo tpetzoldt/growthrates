@@ -39,5 +39,6 @@ grow_exponential <- function(time, parms) {
   return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
 }
 ## attach names of parameters as attributes
+attr(grow_exponential, "fname") <- c("grow_exponential")
 attr(grow_exponential, "pnames") <- c("y0", "mumax")
 class(grow_exponential) <- c("growthmodel", "function")

@@ -40,5 +40,6 @@ grow_gompertz <- function(time, parms) {
   })
 }
 ## attach names of parameters as attributes
+attr(grow_gompertz, "fname") <- c("grow_gompertz")
 attr(grow_gompertz, "pnames") <- c("y0", "mumax", "K")
 class(grow_gompertz) <- c("growthmodel", "function")

@@ -55,5 +55,6 @@ grow_richards <- function(time, parms) {
   })
 }
 ## attach names of parameters as attributes
+attr(grow_richards, "fname") <- c("grow_richards")
 attr(grow_richards, "pnames") <- c("y0", "mumax", "K", "beta")
 class(grow_richards) <- c("growthmodel", "function")

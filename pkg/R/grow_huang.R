@@ -70,5 +70,6 @@ grow_huang <- function(time, parms) {
   })
 }
 ## attach names of parameters as attributes
+attr(grow_huang, "fname") <- c("grow_huang")
 attr(grow_huang, "pnames") <- c("y0", "mumax", "K", "alpha", "lambda")
 class(grow_huang) <- c("growthmodel", "function")

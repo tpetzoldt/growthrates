@@ -28,11 +28,11 @@
 
 \S4method{obs}{growthrates_fit}(object, ...)
 
-\S4method{coef}{growthrates_fit}(object, ...)
+\S4method{coef}{growthrates_fit}(object, extended = FALSE, ...)
 
 \S4method{coef}{easylinear_fit}(object, ...)
 
-\S4method{coef}{smooth.spline_fit}(object, ...)
+\S4method{coef}{smooth.spline_fit}(object, extended = FALSE, ...)
 
 \S4method{deviance}{growthrates_fit}(object, ...)
 
@@ -69,11 +69,13 @@
 
 \item{\dots}{other arguments passed to the methods.}
 
+\item{extended}{boolean if extended set of parameters shoild be printed}
+
 \item{cov}{boolean if the covariance matrix should be printed.}
 }
 \description{
 Functions to access the results of fitted growthrate objects:  \code{summary},
- \code{coeff}, \code{rsquared}, \code{deviance}, \code{residuals},
+ \code{coef}, \code{rsquared}, \code{deviance}, \code{residuals},
  \code{df.residual}, \code{obs}, \code{results}.
 }
 \examples{

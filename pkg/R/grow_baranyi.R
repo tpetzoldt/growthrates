@@ -56,6 +56,7 @@ grow_baranyi <- function(time, parms) {
   })
 }
 ## attach names of parameters as attributes
+attr(grow_baranyi, "fname") <- c("grow_baranyi")
 attr(grow_baranyi, "pnames") <- c("y0", "mumax", "K", "h0")
 class(grow_baranyi) <- c("growthmodel", "function")
 

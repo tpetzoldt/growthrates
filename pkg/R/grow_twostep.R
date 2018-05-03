@@ -108,6 +108,7 @@ grow_twostep <- function(time, parms, ...) {
 
 }
 ## attach names of parameters as attributes
+attr(grow_twostep, "fname") <- c("grow_twostep")
 attr(grow_twostep, "pnames") <- c("yi","ya", "kw", "mumax", "K")
 class(grow_twostep) <- c("growthmodel", "function")
 

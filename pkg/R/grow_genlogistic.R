@@ -108,6 +108,7 @@ grow_genlogistic <- function(time, parms, ...) {
   cbind(out, log_y = log(out[,"y"]))
 }
 ## attach names of parameters as attributes
+attr(grow_genlogistic, "fname") <- c("grow_genlogistic")
 attr(grow_genlogistic, "pnames") <- c("y0", "mumax", "K", "alpha", "beta", "gamma")
 class(grow_genlogistic) <- c("growthmodel", "function")
 
