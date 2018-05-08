@@ -1,14 +1,14 @@
-#' Extended Results of a Logistic Growth Curve
+#' Extended Set of Coefficients of a Logistic Growth Model
 #'
 #' Estimate model-specific derived parameters of the logistic growth
 #' model
 #'
-#' @param object model object fited by fit_growthmodel
-#' @param quantile value relative to $K$ fr the quantile method
+#' @param object model object fited by \code{fit_growthmodel}
+#' @param quantile value relative to \code{K$} for the quantile method
 #' @param time 2-valued vector of the search interval for the independent
-#'   variable (time).
-#'   Set this manually if saturation is not reached within the
-#'   observation time that is taken from the data.
+#'   variable (\code{time}).
+#'   Note: this needs to be set this manually if saturation is not
+#'   reached within the observation time period taken from the data.
 #' @param ... reserved for future extensions
 #'
 #' @return vector that contains the fitted parameters and some
@@ -16,21 +16,90 @@
 #'   function.
 #'
 #' @details This function returns the estimated parameters of a logistic growth model
-#'  (y0, mumax, K) and a series of estimates for the time of approximate saturation.
+#'  (\code{y0}, \code{mumax}, \code{K}) and a series of estimates for the time
+#'  of approximate saturation.
 #'  The estimates are defined as follows:
 #'  \itemize{
-#'    \item turnpoint: time of turnpoint (50\% saturation)
-#'    \item sat_deriv2: time of the minimum of the 2nd derivative
-#'    \item sat_mumax: time of the intercept between the tangent at mumax and the capacity limit K
-#'    \item sat_quantile: time when a quantile of K (default 0.95) is reached
+#'    \item \code{turnpoint}: time of turnpoint (50\% saturation)
+#'    \item \code{sat_deriv2}: time of the minimum of the 2nd derivative
+#'    \item \code{sat_mumax}: time of the intercept between the steepest increase
+#'      (the tangent at \code{mumax}) and the carrying capacity \code{K}
+#'    \item \code{sat_quantile}: time when a quantile of \code{K} (default 0.95)
+#'      is reached
 #'  }
 #'  The code and naming of the parameters is preliminary and experimental, and
 #'    may change in future versions.
 #'
-#' @export
-#'
 #' @examples
 #'
+#' ## derivatives of the logistic ---------------------------------------------
+#'
+#' # The derivatives are internal functions of the package.
+#' # They are used here for the visualisation of the algorithm.
+#'
+#' deriv1 <- function(time, y0, mumax, K) {
+#'   ret <- (K*mumax*y0*(K - y0)*exp(mumax * time))/
+#'     ((K + y0 * (exp(mumax * time) - 1))^2)
+#'   unname(ret)
+#' }
+#'
+#' deriv2 <- function(time, y0, mumax, K) {
+#'   ret <- -(K * mumax^2 * y0 * (K - y0) * exp(mumax * time) *
+#'              (-K + y0 * exp(mumax * time) + y0))/
+#'     (K + y0 * (exp(mumax * time) - 1))^3
+#'   unname(ret)
+#' }
+#' ## =========================================================================
+#'
+#' data(bactgrowth)
+#' ## extract one growth experiment by name
+#' dat <- multisplit(bactgrowth, c("strain", "conc", "replicate"))[["D:0:1"]]
+#'
+#'
+#' ## unconstraied fitting
+#' p <- c(y0 = 0.01, mumax = 0.2, K = 0.1) # start parameters
+#' fit1 <- fit_growthmodel(FUN = grow_logistic, p = p, dat$time, dat$value)
+#' summary(fit1)
+#' p <- coef(fit1, extended=TRUE)
+#'
+#' ## copy parameters to separate variables to improve readability ------------
+#' y0 <-    p["y0"]
+#' mumax <- p["mumax"]
+#' K  <-    p["K"]
+#' turnpoint <- p["turnpoint"]
+#' sat1 <-  p["sat_deriv2"]
+#' sat2 <-  p["sat_mumax"]
+#' sat3 <-  p["sat_quantile"]
+#'
+#' ## show saturation values in growth curve and 1st and 2nd derivatives ------
+#' opar <- par(no.readonly=TRUE)
+#' par(mfrow=c(3, 1), mar=c(4,4,0.2,0))
+#' plot(fit1)
+#'
+#' ## 95% saturation
+#' abline(h=0.95*K, col="magenta", lty="dashed")
+#'
+#' ## Intercept between steepest increase and 100% saturation
+#' b <- deriv1(turnpoint, y0, mumax, K)
+#' a <- K/2 - b*turnpoint
+#' abline(a=a, b=b, col="orange", lty="dashed")
+#' abline(h=K, col="orange", lty="dashed")
+#' points(sat2, K, pch=16, col="orange")
+#' points(turnpoint, K/2, pch=16, col="blue")
+#'
+#' ## sat2 is the minimum of the 2nd derivative
+#' abline(v=c(turnpoint, sat1, sat2, sat3),
+#'        col=c("blue", "grey", "orange", "magenta"), lty="dashed")
+#'
+#' ## plot the derivatives
+#' with(dat, plot(time, deriv1(time, y0, mumax, K), type="l", ylab="y'"))
+#' abline(v=c(turnpoint, sat1), col=c("blue", "grey"), lty="dashed")
+#'
+#' with(dat, plot(time, deriv2(time, y0, mumax, K), type="l",  ylab="y''"))
+#' abline(v=sat1, col="grey", lty="dashed")
+#' par(opar)
+#'
+#' @export
 #'
 extcoef_logistic <- function(object, quantile=0.95, time=NULL, ...) {
 
@@ -50,12 +119,12 @@ extcoef_logistic <- function(object, quantile=0.95, time=NULL, ...) {
   if (is.null(quantile)) quantile <- 0.95
   ## todo: check if fitted function was grow_logistic
 
-  p <- coef(object)
+  p  <- coef(object)
   r2 <- rsquared(object)
 
-  y0    <- p["y0"]
-  K     <- p["K"]
-  mumax <- p["mumax"]
+  y0     <- p["y0"]
+  K      <- p["K"]
+  mumax  <- p["mumax"]
   trange <- range(time)
 
   ## indentify max/min by numerical search
@@ -66,14 +135,16 @@ extcoef_logistic <- function(object, quantile=0.95, time=NULL, ...) {
 
   ## intercept between steepest increase and saturation
   y_turn1 <- deriv1(time_turn1, y0, mumax, K)
-  b <- deriv1(turnpoint, y0, mumax, K)
-  a <- K/2 - b*turnpoint
+  b <- y_turn1
+  a <- K/2 - b * time_turn1
 
   time_sat <- (K-a)/b
 
-  c(y0=unname(y0), mumax=unname(mumax), K=unname(K),
-    turnpoint=time_turn1,
-    sat_deriv2=unname(time_turn2),
-    sat_mumax=unname(time_sat),
-    sat_quantile=unname(time_quantile))
+  c(y0 = unname(y0),
+    mumax = unname(mumax),
+    K = unname(K),
+    turnpoint = time_turn1,
+    sat_deriv2 = unname(time_turn2),
+    sat_mumax = unname(time_sat),
+    sat_quantile = unname(time_quantile))
 }
