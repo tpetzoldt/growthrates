@@ -21,21 +21,67 @@
 #'  The estimates are defined as follows:
 #'  \itemize{
 #'    \item \code{turnpoint}: time of turnpoint (50\% saturation)
-#'    \item \code{sat_deriv2}: time of the minimum of the 2nd derivative
-#'    \item \code{sat_mumax}: time of the intercept between the steepest increase
+#'    \item \code{sat1}: time of the minimum of the 2nd derivative
+#'    \item \code{sat2}: time of the intercept between the steepest increase
 #'      (the tangent at \code{mumax}) and the carrying capacity \code{K}
-#'    \item \code{sat_quantile}: time when a quantile of \code{K} (default 0.95)
+#'    \item \code{sat3}: time when a quantile of \code{K} (default 0.95)
 #'      is reached
 #'  }
+#'
+#'  This function is normally not directly called by the user.
+#'  It is usually called indirectly from \code{coef} or \code{results} if
+#'    \code{extended=TRUE}.
+#'
+#' @note
+#'  The estimates for the turnpoint and the time of approximate saturation
+#'    (\code{sat1}, \code{sat2}, \code{sat3}) may be unreliable, if saturation
+#'    is not reached within the observation time period. See example below.
+#'  A set of extended parameters exists currently only for the standard logistic
+#'    growth model (\code{grow_logistic}).
 #'  The code and naming of the parameters is preliminary and experimental, and
 #'    may change in future versions.
 #'
+#'
 #' @examples
 #'
-#' ## derivatives of the logistic ---------------------------------------------
+#' ## =========================================================================
+#' ## The 'extended parameters' are usually derived
+#' ## =========================================================================
 #'
-#' # The derivatives are internal functions of the package.
-#' # They are used here for the visualisation of the algorithm.
+#' data(antibiotic)
+#'
+#' ## fit a logistic model to a single data set
+#' dat <- subset(antibiotic, conc==0.078 & repl=="R4")
+#'
+#' parms <- c(y0=0.01, mumax=0.2, K=0.5)
+#' fit <- fit_growthmodel(grow_logistic, parms, dat$time, dat$value)
+#' coef(fit, extended=TRUE)
+#'
+#' ## fit the logistic to all data sets
+#' myData <- subset(antibiotic, repl=="R3")
+#' parms <- c(y0=0.01, mumax=0.2, K=0.5)
+#' all <- all_growthmodels(value ~ time | conc,
+#'                          data = myData, FUN=grow_logistic,
+#'                          p = parms, ncores = 2)
+#'
+#'
+#' par(mfrow=c(3,4))
+#' plot(all)
+#' results(all, extended=TRUE)
+#' ## we see that the the last 3 series (10...12) do not go into saturation
+#' ## within the observation time period.
+#'
+#' ## We can try to extend the search range:
+#' results(all[10:12], extended=TRUE, time=c(0, 5000))
+#'
+#'
+#' ## =========================================================================
+#' ## visualisation how the 'extended parameters' are derived
+#' ## =========================================================================
+#'
+#' # Derivatives of the logistic:
+#' #   The 1st and 2nd derivatives are internal functions of the package.
+#' #   They are used here for the visualisation of the algorithm.
 #'
 #' deriv1 <- function(time, y0, mumax, K) {
 #'   ret <- (K*mumax*y0*(K - y0)*exp(mumax * time))/
@@ -67,9 +113,9 @@
 #' mumax <- p["mumax"]
 #' K  <-    p["K"]
 #' turnpoint <- p["turnpoint"]
-#' sat1 <-  p["sat_deriv2"]
-#' sat2 <-  p["sat_mumax"]
-#' sat3 <-  p["sat_quantile"]
+#' sat1 <-  p["sat1"]  # 2nd derivative
+#' sat2 <-  p["sat2"]  # intercept between steepest increase and K
+#' sat3 <-  p["sat3"]  # a given quantile of K, default 95\%
 #'
 #' ## show saturation values in growth curve and 1st and 2nd derivatives ------
 #' opar <- par(no.readonly=TRUE)
@@ -144,7 +190,7 @@ extcoef_logistic <- function(object, quantile=0.95, time=NULL, ...) {
     mumax = unname(mumax),
     K = unname(K),
     turnpoint = time_turn1,
-    sat_deriv2 = unname(time_turn2),
-    sat_mumax = unname(time_sat),
-    sat_quantile = unname(time_quantile))
+    sat1 = unname(time_turn2),
+    sat2 = unname(time_sat),
+    sat3 = unname(time_quantile))
 }
