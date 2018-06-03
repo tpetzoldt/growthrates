@@ -53,12 +53,12 @@ plot(time, y, type="l", log="y")
 Huang, Lihan (2008) Growth kinetics of Listeria monocytogenes in broth and
 beef frankfurters - determination of lag phase duration and exponential
 growth rate under isothermal conditions. Journal of Food Science 73(5),
-E235 -- E242. doi:10.1111/j.1750-3841.2008.00785.x
+E235 -- E242. \doi{10.1111/j.1750-3841.2008.00785.x}
 
 Huang, Lihan (2011) A new mechanistic growth model for simultaneous
 determination of lag phase duration and exponential growth rate and a new
 Belehdradek-type model for evaluating the effect of temperature on growth rate.
-Food Microbiology 28, 770 -- 776. doi:10.1016/j.fm.2010.05.019
+Food Microbiology 28, 770 -- 776. \doi{10.1016/j.fm.2010.05.019}
 
 Huang, Lihan (2013) Introduction to USDA Integrated Pathogen Modeling
 Program (IPMP). Residue Chemistry and Predictive Microbiology Research

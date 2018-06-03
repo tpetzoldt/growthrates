@@ -32,21 +32,21 @@
 #' @references
 #'
 #' Hall, B. G., Acar, H. and Barlow, M. 2013. Growth Rates Made Easy.
-#'   Mol. Biol. Evol. 31: 232-238 \doi{10.1093/molbev/mst197}
+#'   Mol. Biol. Evol. 31, 232-238, \doi{10.1093/molbev/mst197}
 #'
 #' Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
 #'   2010. grofit: Fitting Biological Growth Curves with R.
-#'   Journal of Statistical Software, 33(7), 1-21.
-#'   URL \doi{10.18637/jss.v033.i07}
+#'   Journal of Statistical Software, 33(7), 1-21,
+#'   \doi{10.18637/jss.v033.i07}
 #'
 #' Soetaert, K. and Petzoldt, T. 2010. Inverse Modelling, Sensitivity and
 #'   Monte Carlo Analysis in R Using Package FME.
-#'   Journal of Statistical Software, 33(3), 1-28.
-#'   URL \doi{10.18637/jss.v033.i03}
+#'   Journal of Statistical Software, 33(3), 1-28,
+#'   \doi{10.18637/jss.v033.i03}
 #'
 #' Soetaert, K., Petzoldt, T. Setzer, R. W. 2010. Solving Differential Equations
-#'   in R: Package deSolve. Journal of Statistical Software, 33(9), 1-25.
-#'   URL \doi{10.18637/jss.v033.i09}
+#'   in R: Package deSolve. Journal of Statistical Software, 33(9), 1-25,
+#'   \doi{10.18637/jss.v033.i09}
 #'
 #'
 #'
