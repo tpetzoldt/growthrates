@@ -44,7 +44,7 @@ describes how ODE models can be implemented as C inline functions.
 2. Differential equations or closed form?
 =========================================
 
-Growth models can be either ``ordinary functions'' of time
+Growth models can be either "ordinary functions" of time
 $f(t)$ in *closed form*, that a allow to get values for the dependend
 variable $y$ immediately from any given value of an independent
 variable $t$ (or $time$) without the need of iteration. Or, they can
@@ -117,9 +117,10 @@ grow_logistic_yshift <- function(time, parms) {
 }
 ```
 
-The, at a first look circumstantial `as.matrix(data.frame(()))`
-construction is a simple way to create the required output format.
-Then it is of course a good idea to test the function beforehand,
+The, at a first look, circumstantial `as.matrix(data.frame(()))`
+construction is just a simple way to create the required output format.
+
+Then it is of course wise to test the function beforehand,
 for example:
 
 ```{r, fig.width=5, fig.height=4}
@@ -167,7 +168,7 @@ a little bit more complex because:
    as *parameters* in a statistical sense. This distinction between
    **statistical parameters** (from the viewpoint of model fitting)
    and **ODE model parameters** should not be confused.
-3. the numerical integration is itself is a broad field that needs
+3. the numerical integration itself is a broad field that needs
    experience and care.  A short overview on this topic can be found
    in @Soetaert2010c.
 
