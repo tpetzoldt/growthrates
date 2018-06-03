@@ -30,8 +30,8 @@
 #' of the fit with the abscissa is indicated as \code{y0_lm} (lm for linear model).
 #' These identifieres and their assumptions may change in future versions.
 #'
-#' @references Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy. 
-#' Mol. Biol. Evol. 31: 232-38, doi:10.1093/molbev/mst187
+#' @references Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy.
+#' Mol. Biol. Evol. 31: 232-38, \doi{10.1093/molbev/mst187}
 #'
 #' @family fitting functions
 #'

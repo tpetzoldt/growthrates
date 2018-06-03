@@ -4,20 +4,10 @@
 \name{growthrates-package}
 \alias{growthrates-package}
 \alias{growthrates}
-\title{Estimate Growth Rates from Experimental Data}
+\title{\packageTitle{growthrates}}
 \description{
-A collection of methods to determine growth rates from experimental data,
-in particular from batch experiments and plate reader trials.
-}
-\details{
-\tabular{ll}{
-Package:  \tab growthrates\cr
-Type:     \tab Package\cr
-Version:  \tab 0.7.0\cr
-Date:     \tab 2017-09-25\cr
-License:  \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-}
+\packageDescription{growthrates}
+
 The package contains basically three methods:
 \itemize{
   \item fit a linear regression to a subset of data with the steepest
@@ -28,6 +18,7 @@ The package contains basically three methods:
   \item use maximum of the 1st derivative of a smoothing spline with
     log-transformed y-values (similar to Kahm et al., 2010).
 }
+
 The package can fit data sets of single experiments or complete series
 containing multiple data sets. Included are functions for extracting
 estimates and for plotting. The package supports growth models given as
