@@ -1,5 +1,5 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/growthrates)](https://cran.r-project.org/package=growthrates)
-[![Downloads](http://cranlogs.r-pkg.org/badges/growthrates)](https://cran.r-project.org/package=growthrates)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/growthrates)](https://cran.r-project.org/package=growthrates)
+[![Downloads](https://cranlogs.r-pkg.org/badges/growthrates)](https://cran.r-project.org/package=growthrates)
 
 # R package growthrates
 
@@ -81,23 +81,23 @@ References
 ----------
 
 Hall, B. G., H. Acar, A. Nandipati, and M. Barlow. 2014. Growth Rates Made
-Easy. Mol. Biol. Evol. 31: 232-38. http://dx.doi.org/10.1093/molbev/mst187
+Easy. Mol. Biol. Evol. 31: 232-38. https://dx.doi.org/10.1093/molbev/mst187
 
 Kahm, Matthias, Guido Hasenbrink, Hella Lichtenberg-Frate, Jost
 Ludwig, and Maik Kschischo. 2010. grofit: Fitting Biological Growth
 Curves with R. Journal of Statistical Software 33 (7):
-1-21. http://dx.doi.org/10.18637/jss.v033.i07
+1-21. https://dx.doi.org/10.18637/jss.v033.i07
 
 R Core Team. 2015. R: A Language and Environment for Statistical
 Computing. Vienna, Austria: R Foundation for Statistical
-Computing. http://www.R-project.org/
+Computing. https://www.R-project.org/
 
 Soetaert, Karline, and Thomas Petzoldt. 2010. Inverse Modelling,
 Sensitivity and Monte Carlo Analysis in R Using Package FME. Journal
 of Statistical Software 33 (3):
-1-28. http://dx.doi.org/10.18637/jss.v033.i03
+1-28. https://dx.doi.org/10.18637/jss.v033.i03
 
 Soetaert, Karline, Thomas Petzoldt, and R. Woodrow
 Setzer. 2010. Solving Differential Equations in R: Package
 deSolve. Journal of Statistical Software 33 (9):
-1-25. http://dx.doi.org/10.18637/jss.v033.i09
+1-25. https://dx.doi.org/10.18637/jss.v033.i09
