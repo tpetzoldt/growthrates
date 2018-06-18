@@ -72,9 +72,8 @@ Soetaert, K., Petzoldt, T. Setzer, R. W. 2010. Solving Differential Equations
   \doi{10.18637/jss.v033.i09}
 }
 \seealso{
-package \code{\link[grofit:grofit-package]{grofit}}
-for a related package from Kahm et al. (2010) that implements a
-different approach.
+\code{\link{fit_easylinear}}, \code{\link{fit_spline}}, \code{\link{fit_growthmodel}},
+\code{\link{all_easylinear}}, \code{\link{all_splines}}, \code{\link{all_growthmodels}}
 }
 \author{
 Thomas Petzoldt

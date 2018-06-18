@@ -28,8 +28,8 @@
 #'
 #' Kahm, M., Hasenbrink, G., Lichtenberg-Frate, H., Ludwig, J., Kschischo, M.
 #' 2010. grofit: Fitting Biological Growth Curves with R.
-#' Journal of Statistical Software, 33(7), 1-21. URL
-#' \url{https://www.jstatsoft.org/v33/i07/}
+#' Journal of Statistical Software, 33(7), 1-21,
+#' \doi{10.18637/jss.v033.i07}
 #'
 #' @family fitting functions
 #'
