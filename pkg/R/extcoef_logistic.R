@@ -4,7 +4,7 @@
 #' model
 #'
 #' @param object model object fited by \code{fit_growthmodel}
-#' @param quantile value relative to \code{K$} for the quantile method
+#' @param quantile fraction of the capacity parameter (\code{K}) for the quantile method
 #' @param time 2-valued vector of the search interval for the independent
 #'   variable (\code{time}).
 #'   Note: this needs to be set this manually if saturation is not
@@ -38,8 +38,8 @@
 #'    is not reached within the observation time period. See example below.
 #'  A set of extended parameters exists currently only for the standard logistic
 #'    growth model (\code{grow_logistic}).
-#'  The code and naming of the parameters is preliminary and experimental, and
-#'    may change in future versions.
+#'  The code and naming of the parameters is preliminary and may change in
+#'    future versions.
 #'
 #'
 #' @examples
