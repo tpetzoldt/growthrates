@@ -4,13 +4,18 @@
 \name{predict,growthrates_fit-method}
 \alias{predict,growthrates_fit-method}
 \alias{predict,smooth.spline_fit-method}
+\alias{predict,easylinear_fit-method}
 \alias{predict,nonlinear_fit-method}
 \alias{predict,multiple_fits-method}
 \title{Model Predictions for \pkg{growthrates} Fits}
 \usage{
 \S4method{predict}{growthrates_fit}(object, ...)
 
-\S4method{predict}{smooth.spline_fit}(object, ...)
+\S4method{predict}{smooth.spline_fit}(object, newdata = NULL, ...,
+  type = c("exponential", "spline"))
+
+\S4method{predict}{easylinear_fit}(object, newdata = NULL, ...,
+  type = c("exponential", "no_lag"))
 
 \S4method{predict}{nonlinear_fit}(object, newdata, ...)
 
@@ -22,13 +27,16 @@
 \item{\dots}{additional arguments affecting the predictions produced.}
 
 \item{newdata}{an optional data frame with column 'time' for new time steps with
-which to predict. This argument is currently only available for parametric fits.}
+which to predict.}
+
+\item{type}{type of predict. Can be \code{'exponential'} or \code{'spline'} for \code{fit_spline},
+resp. code{'exponential'} or \code{'no_lag'} for \code{fit_easylinear}.}
 }
 \description{
 Class-specific methods of package \pkg{growthrates} to make predictions.
 }
 \details{
-The implementation of the predict methods is still experimental and not yet complete.
+The implementation of the predict methods is still experimental and under discussion.
 }
 \examples{
 
@@ -36,11 +44,33 @@ data(bactgrowth)
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
 
 ## get table from single experiment
-dat <- splitted.data[["T:0:2"]]
+dat <- splitted.data[[1]]
 
+## --- linear fit -----------------------------------------------------------
+fit <- fit_easylinear(dat$time, dat$value)
+
+plot(fit, ylim=)
+pr <- predict(fit)
+lines(pr[,1:2], col="blue", lwd=2, lty="dashed")
+
+pr <- predict(fit, newdata=list(time=seq(2, 6, .1)), type="no_lag")
+lines(pr[,1:2], col="magenta")
+
+
+## --- spline fit -----------------------------------------------------------
 fit1 <- fit_spline(dat$time, dat$value, spar=0.5)
 coef(fit1)
 summary(fit1)
+
+plot(fit1)
+pr <- predict(fit1)
+lines(pr[,1:2], lwd=2, col="blue", lty="dashed")
+pr <- predict(fit1, newdata=list(time=2:10), type="spline")
+lines(pr[,1:2], lwd=2, col="cyan")
+
+
+## --- nonlinear fit --------------------------------------------------------
+dat <- splitted.data[["T:0:2"]]
 
 p   <- c(y0 = 0.02, mumax = .5, K = 0.05, h0 = 1)
 fit2 <- fit_growthmodel(grow_baranyi, p=p, time=dat$time, y=dat$value)
