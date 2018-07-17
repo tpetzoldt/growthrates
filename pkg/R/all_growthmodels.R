@@ -218,7 +218,7 @@ all_growthmodels.function <-
                fit_growthmodel(FUN, p=p[[i]],
                                time = splitted.data[[i]][,time],
                                y = splitted.data[[i]][,y],
-                               lower = lower, upper = upper, #which = which,
+                               lower = lower, upper = upper, which = which,
                                method = method, transform = transform, ...
                )}
       )
@@ -248,7 +248,7 @@ all_growthmodels.function <-
 
       fit_growthmodel(FUNx,
                       p = p1, time = time, y = y,
-                      lower = lower, upper = upper, #which = which,
+                      lower = lower, upper = upper, which = which,
                       method = method, transform = transform, ...)
     }
 
