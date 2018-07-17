@@ -35,7 +35,7 @@
 #' ## --- linear fit -----------------------------------------------------------
 #' fit <- fit_easylinear(dat$time, dat$value)
 #'
-#' plot(fit, ylim=)
+#' plot(fit)
 #' pr <- predict(fit)
 #' lines(pr[,1:2], col="blue", lwd=2, lty="dashed")
 #'
@@ -105,7 +105,7 @@ setMethod("predict", "smooth.spline_fit",
                 log_y = xy$y
               )
             } else { # exponential
-              xy <- fit@FUN(newdata$time, coef(object))[,1:2]
+              xy <- object@FUN(newdata$time, coef(object))[,1:2]
 
             }
             xy

@@ -49,7 +49,7 @@ dat <- splitted.data[[1]]
 ## --- linear fit -----------------------------------------------------------
 fit <- fit_easylinear(dat$time, dat$value)
 
-plot(fit, ylim=)
+plot(fit)
 pr <- predict(fit)
 lines(pr[,1:2], col="blue", lwd=2, lty="dashed")
 
