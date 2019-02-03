@@ -13,12 +13,16 @@ o multiple start parameters, as lists (or data frames)
 o enable "trace" for all optimizers
   --> done
 
+o estimate lag phase
+  --> done
+  
 o formula interface
   - simple interface: done
   - parse nonlinear formula: experimental
   - for single fits: to do
 
 o predict method
+  --> done (at least partly)
 
 o more argument checking
   - can always be improved
@@ -37,8 +41,6 @@ o direct use of log-transformed parameters y0 and ymax = K
 
 Ideas
 =====
-
-o estimate lag phase
 
 o estimate and plot confidence intervals
 
