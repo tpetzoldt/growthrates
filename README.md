@@ -67,11 +67,7 @@ Introduction to the main functions
 ----------------------------------
 
 * pdf: https://tpetzoldt.github.io/growthrates/doc/Introduction.pdf
-<<<<<<< HEAD
 * html: https://tpetzoldt.github.io/growthrates/doc/Introduction.html
-=======
-* html: https://tpetzoldt.github.io/growthrates/doc^/Introduction.html
->>>>>>> 48f27bb2ce25ed423134094f0b191cb87588aabd
 
 Writing user defined functions
 ------------------------------
