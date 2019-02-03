@@ -101,3 +101,8 @@ Soetaert, Karline, Thomas Petzoldt, and R. Woodrow
 Setzer. 2010. Solving Differential Equations in R: Package
 deSolve. Journal of Statistical Software 33 (9):
 1-25. https://dx.doi.org/10.18637/jss.v033.i09
+
+Original author
+---------------
+
+[tpetzoldt](https://github.com/tpetzoldt)
