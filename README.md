@@ -66,14 +66,14 @@ install_github("tpetzoldt/growthrates/pkg")
 Introduction to the main functions
 ----------------------------------
 
-* pdf: https://tpetzoldt.github.io/growthrates/Introduction.pdf
-* html: https://tpetzoldt.github.io/growthrates/Introduction.html
+* pdf: https://tpetzoldt.github.io/growthrates/doc/Introduction.pdf
+* html: https://tpetzoldt.github.io/growthrates/doc^/Introduction.html
 
 Writing user defined functions
 ------------------------------
 
-* pdf: https://tpetzoldt.github.io/growthrates/User_models.pdf
-* html: https://tpetzoldt.github.io/growthrates/User_models.html
+* pdf: https://tpetzoldt.github.io/growthrates/doc/User_models.pdf
+* html: https://tpetzoldt.github.io/growthrates/doc/User_models.html
 
 
 
