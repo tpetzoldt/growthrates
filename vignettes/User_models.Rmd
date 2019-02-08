@@ -323,3 +323,9 @@ to the R Core Team [@RCore2015] for developing and maintaining
 References
 ==========
 
+<div id="refs"></div>
+
+----
+
+**Copyright and original author:** [tpetzoldt](https://github.com/tpetzoldt), `r Sys.Date()`
+
