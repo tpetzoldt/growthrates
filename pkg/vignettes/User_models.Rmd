@@ -101,8 +101,8 @@ The function can have any valid name, but:
 
 1. it must have exactly two arguments **time** and **parms** as input
    and
-2. its return value (output) must be a matrix with at least 3 columns
-with the column names `time`, `y` and `log_y`.
+2. its return value (output) must be a matrix with at least 2 columns
+with the column names `time` and `y`.
 
 The inner part of the function can be adapted as necessary, as long as
 the connection between input and output makes sense from a scientific
@@ -112,7 +112,7 @@ viewpoint.
 grow_logistic_yshift <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    as.matrix(data.frame(time = time, y = y, log_y = log(y)))
+    as.matrix(data.frame(time = time, y = y))
   })
 }
 ```
@@ -196,7 +196,7 @@ ode_K_linear <- function (time, init, parms, ...) {
   with(as.list(c(parms, init)), {
     dy <- mumax * y * (1 - y/K)
     dK <- dK
-    list(c(dy, dK), log_y = unname(log(y)))
+    list(c(dy, dK))
   })
 }
 
@@ -283,14 +283,14 @@ grow_K_linear <- function(time, parms, ...) {
   init    <- parms[c("y0", "K")]  # initial values
   names(init) <- c("y", "K")      # force names
   out <- odeC(init, time, ode_K_linear, parms)
-  cbind(out, log_y = log(out[, "y"]))
+  out
 }
 
 ## convert this to an object, (maybe needed by future extensions)
 grow_K_linear <- growthmodel(grow_K_linear, pnames = c("y0", "mumax", "K", "dK"))
 
 ## Test the growthmodel
-## Columns with names 'time', 'y' and 'log_y' are mandatory.
+## Columns with names 'time' and 'y' are mandatory.
 head(grow_K_linear(time = x, c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1)))
 
 

@@ -44,7 +44,7 @@ describes how ODE models can be implemented as C inline functions.
 2. Differential equations or closed form?
 =========================================
 
-Growth models can be either ``ordinary functions'' of time
+Growth models can be either "ordinary functions" of time
 $f(t)$ in *closed form*, that a allow to get values for the dependend
 variable $y$ immediately from any given value of an independent
 variable $t$ (or $time$) without the need of iteration. Or, they can
@@ -101,8 +101,8 @@ The function can have any valid name, but:
 
 1. it must have exactly two arguments **time** and **parms** as input
    and
-2. its return value (output) must be a matrix with at least 3 columns
-with the column names `time`, `y` and `log_y`.
+2. its return value (output) must be a matrix with at least 2 columns
+with the column names `time` and `y`.
 
 The inner part of the function can be adapted as necessary, as long as
 the connection between input and output makes sense from a scientific
@@ -112,14 +112,15 @@ viewpoint.
 grow_logistic_yshift <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    as.matrix(data.frame(time = time, y = y, log_y = log(y)))
+    as.matrix(data.frame(time = time, y = y))
   })
 }
 ```
 
-The, at a first look circumstantial `as.matrix(data.frame(()))`
-construction is a simple way to create the required output format.
-Then it is of course a good idea to test the function beforehand,
+The, at a first look, circumstantial `as.matrix(data.frame(()))`
+construction is just a simple way to create the required output format.
+
+Then it is of course wise to test the function beforehand,
 for example:
 
 ```{r, fig.width=5, fig.height=4}
@@ -167,7 +168,7 @@ a little bit more complex because:
    as *parameters* in a statistical sense. This distinction between
    **statistical parameters** (from the viewpoint of model fitting)
    and **ODE model parameters** should not be confused.
-3. the numerical integration is itself is a broad field that needs
+3. the numerical integration itself is a broad field that needs
    experience and care.  A short overview on this topic can be found
    in @Soetaert2010c.
 
@@ -195,7 +196,7 @@ ode_K_linear <- function (time, init, parms, ...) {
   with(as.list(c(parms, init)), {
     dy <- mumax * y * (1 - y/K)
     dK <- dK
-    list(c(dy, dK), log_y = unname(log(y)))
+    list(c(dy, dK))
   })
 }
 
@@ -282,14 +283,14 @@ grow_K_linear <- function(time, parms, ...) {
   init    <- parms[c("y0", "K")]  # initial values
   names(init) <- c("y", "K")      # force names
   out <- odeC(init, time, ode_K_linear, parms)
-  cbind(out, log_y = log(out[, "y"]))
+  out
 }
 
 ## convert this to an object, (maybe needed by future extensions)
 grow_K_linear <- growthmodel(grow_K_linear, pnames = c("y0", "mumax", "K", "dK"))
 
 ## Test the growthmodel
-## Columns with names 'time', 'y' and 'log_y' are mandatory.
+## Columns with names 'time' and 'y' are mandatory.
 head(grow_K_linear(time = x, c(y0 = 1, mumax = 0.1, K = 10, dK = 0.1)))
 
 
