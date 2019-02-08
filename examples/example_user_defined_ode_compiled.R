@@ -28,7 +28,7 @@ parms = c(mumax = 0.1, dK = 0.05)
 ## run the model
 out1 <- odeC(yini, times=0:100, ode_K_linear, parms = parms)
 
-## generate artificial test data with normal distributed noise
+## generate artificial test data with normally distributed noise
 x <- seq(5, 100, 5)
 y <- odeC(yini, x, ode_K_linear, parms)[, "y"] + rnorm(x)
 
@@ -36,7 +36,7 @@ y <- odeC(yini, x, ode_K_linear, parms)[, "y"] + rnorm(x)
 ## create a "growthmodel" with interfaces compatible to package growthrates
 ## see ?growthmodel for details
 ## Note:
-##   It is essential to use consistent names for parameters and initial values!
+##   It is essential to use consistent names for parameters and initial values
 ## =============================================================================
 
 grow_K_linear <- function(time, parms, ...) {

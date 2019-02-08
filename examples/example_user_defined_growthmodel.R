@@ -20,7 +20,7 @@ library("growthrates")
 grow_logistic_yshift <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+    return(as.matrix(data.frame(time=time, y=y)))
   })
 }
 
@@ -42,3 +42,4 @@ fit <- fit_growthmodel(grow_logistic_yshift,
                        time=x, y=y)
 plot(fit)
 summary(fit)
+

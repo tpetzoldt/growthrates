@@ -43,9 +43,9 @@ res <- fit_spline(time, y, spar=.5)
 plot(res, log="y")
 plot(res, ylim=c(0.005, 0.03))
 
-## todo
+## evaluate results
 summary(res)
-residuals(res) #  log-transformed!
+residuals(res) #  log-transformed
 rsquared(res)  #  log-transformed
 deviance(res)  #
 
