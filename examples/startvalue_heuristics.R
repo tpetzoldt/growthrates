@@ -16,7 +16,7 @@ init_logistic <- function(x, y) {
   ## simple heuristics
   m  <- lm(y~x)
   y0 <- unname(min(y))
-  K  <- unname(max(y)))
+  K  <- unname(max(y))
   mumax <- unname(coef(m)[2])
 
   c(y0=y0, mumax=mumax, K=K)

@@ -2,7 +2,7 @@ Encoding: UTF-8
 Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
-Version: 0.7.4
+Version: 0.8.1
 Date: 2019-02-08
 LazyData: yes
 Author: Thomas Petzoldt

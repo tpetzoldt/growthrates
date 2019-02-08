@@ -20,7 +20,7 @@ ode_K_linear <- function (time, init, parms, ...) {
   with(as.list(c(parms, init)), {
     dy <- mumax * y * (1 - y/K)
     dK <- dK
-    list(c(dy, dK), log_y=unname(log(y)))
+    list(c(dy, dK))
   })
 }
 

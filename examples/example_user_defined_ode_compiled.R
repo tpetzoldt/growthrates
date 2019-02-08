@@ -10,6 +10,7 @@
 ## Please cite our work when using this package.
 ## =============================================================================
 
+### this example is currently broken due to changes in package cOde !!!
 
 library("growthrates")
 library("cOde")
