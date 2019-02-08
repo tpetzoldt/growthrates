@@ -60,7 +60,7 @@ Install with package devtools:
 ```R
 install.packages("devtools")
 library(devtools)
-install_github("tpetzoldt/growthrates/pkg")
+install_github("tpetzoldt/growthrates")
 ```
 
 Introduction to the main functions
