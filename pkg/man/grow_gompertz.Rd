@@ -47,3 +47,4 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
   \code{\link{ode_twostep}}
 }
+\concept{growth models}

@@ -30,15 +30,13 @@ concentration of inactive resp. active cells).}
 For \code{ode_twostep}: matrix containing the simulation outputs.
 The return value of has also class \code{deSolve}.
 
-For \code{grow_twostep}: vector of dependent variable (\code{y}) and
-  its log-transformed values (\code{log_y}):
+For \code{grow_twostep}: vector of dependent variable (\code{y}):
 
 \itemize{
 \item \code{time} time of the simulation
 \item \code{yi} concentration of inactive cells
 \item \code{ya} concentration of active cells
 \item \code{y} total cell concentration
-\item \code{log_y} natural log of total cell concentration
 }
 }
 \description{
@@ -92,3 +90,4 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}}
 }
+\concept{growth models}

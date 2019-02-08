@@ -13,8 +13,7 @@
 #'   \item \code{K} carrying capacity (max. total concentration of cells)
 #' }
 #'
-#' @return vector of dependent variable (\code{y}) and its log-transformed
-#'   values (\code{log_y}).
+#' @return vector of dependent variable (\code{y}).
 #'
 #' @examples
 #'
@@ -30,7 +29,7 @@
 grow_logistic <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time))
-    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+    return(as.matrix(data.frame(time=time, y=y)))
   })
 }
 ## attach names of parameters as attributes

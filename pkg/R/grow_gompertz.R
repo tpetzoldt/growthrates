@@ -36,7 +36,7 @@
 grow_gompertz <- function(time, parms) {
   with(as.list(parms), {
     y <- K * exp(log(y0 / K) * exp(-mumax * time))
-    return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
+    return(as.matrix(data.frame(time = time, y = y)))
   })
 }
 ## attach names of parameters as attributes

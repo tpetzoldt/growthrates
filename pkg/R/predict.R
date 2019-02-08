@@ -101,8 +101,7 @@ setMethod("predict", "smooth.spline_fit",
               xy <- stats::predict(object@fit$fit, x = newdata$time, ...) # calls predict.smooth.spline
               xy <- data.frame(
                 time = xy$x,
-                y = exp(xy$y),
-                log_y = xy$y
+                y = exp(xy$y)
               )
             } else { # exponential
               xy <- object@FUN(newdata$time, coef(object))[,1:2]
@@ -134,8 +133,7 @@ setMethod("predict", "easylinear_fit",
             }
             data.frame(
               time = x,
-              y    = y,
-              log_y= log(y)
+              y    = y
             )
           }
 )
@@ -160,7 +158,7 @@ setMethod("predict", "nonlinear_fit",
 
             ## todo: check type of return parameters for consistency with
             ##       other functions, especially "residuals"
-            ## now it returns a table with time, y, log_y
+            ## now it returns a table with time, y
             y
           }
 )

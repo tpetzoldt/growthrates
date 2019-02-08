@@ -10,7 +10,7 @@ growthmodel(x, pnames = NULL)
 }
 \arguments{
 \item{x}{a function with arguments \code{times} and \code{parms}, and
-returning a matrix with three columns \code{time}, \code{y} and \code{log_y}.}
+returning a matrix with two columns \code{time} and \code{y}.}
 
 \item{pnames}{character vector with the names of the model parameters.}
 }
@@ -26,7 +26,7 @@ Package \pkg{growthrates} has a plug-in architecture allowing
 \preformatted{
   identifier <- function(time, parms) {
     ... content of function here ...
-    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+    return(as.matrix(data.frame(time=time, y=y)))
   }
 }
 
@@ -40,7 +40,7 @@ where \code{time} is a numeric vector and \code{parms} a named, non-nested
 test <- function(time, parms) {
   with(as.list(parms), {
     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-    return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+    return(as.matrix(data.frame(time=time, y=y)))
  })
 }
 
@@ -55,3 +55,4 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{ode_genlogistic}}, \code{\link{ode_twostep}}
 }
+\concept{growth models}

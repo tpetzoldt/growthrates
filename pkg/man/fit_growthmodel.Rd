@@ -78,3 +78,4 @@ Other fitting functions: \code{\link{all_easylinear}},
   \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_spline}}
 }
+\concept{fitting functions}

@@ -21,12 +21,12 @@ void ini_twostep(void (* odeparms)(int *, double *))
 /* derivatives */
 void d_twostep(int *neq, double *t, double *y, double *ydot, double *yout, int*ip)
 {
-    if (ip[0] < 2) error("nout should be >= 2");
+    if (ip[0] < 1) error("nout should be >= 1");
     ydot[0] = -kw * y[0];
     ydot[1] = kw * y[0] + mumax * (1.0 - (y[0] + y[1])/K) * y[1];
 
     yout[0] = y[0] + y[1];
-    yout[1] = log(y[0] + y[1]);
+    //yout[1] = log(y[0] + y[1]);
 }
 
- 
+

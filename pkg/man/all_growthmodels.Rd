@@ -15,8 +15,8 @@ all_growthmodels(...)
 
 \method{all_growthmodels}{function}(FUN, p, data, grouping = NULL,
   time = "time", y = "value", lower = -Inf, upper = Inf,
-  which = names(p), method = "Marq", transform = c("none", "log"), ...,
-  ncores = detectCores(logical = FALSE))
+  which = names(p), method = "Marq", transform = c("none", "log"),
+  ..., ncores = detectCores(logical = FALSE))
 }
 \arguments{
 \item{\dots}{generic parameters, including parameters passed to the optimizer.}
@@ -120,3 +120,4 @@ Other fitting functions: \code{\link{all_easylinear}},
   \code{\link{all_splines}}, \code{\link{fit_easylinear}},
   \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
 }
+\concept{fitting functions}

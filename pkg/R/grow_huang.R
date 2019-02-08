@@ -27,8 +27,7 @@
 #'
 #' }
 #'
-#' @return vector of dependent variable (\code{y}) and its log-transformed
-#'   values (\code{log_y}).
+#' @return vector of dependent variable (\code{y}).
 #'
 #'
 #' @references
@@ -66,7 +65,7 @@ grow_huang <- function(time, parms) {
     B <- time + 1/alpha * log((1+exp(-alpha * (time - lambda)))/(1 + exp(alpha * lambda)))
     #log_y <- y0 + K - log(exp(y0) + (exp(K) - exp(y0)) * exp(-mumax * B))
     log_y <- log(y0) + log(K) - log(y0 + (K - y0) * exp(-mumax * B))
-    return(as.matrix(data.frame(time = time, y = exp(log_y), log_y = log_y)))
+    return(as.matrix(data.frame(time = time, y = exp(log_y))))
   })
 }
 ## attach names of parameters as attributes

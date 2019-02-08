@@ -16,8 +16,8 @@
 
 \S4method{lines}{nonlinear_fit}(x, ...)
 
-\S4method{plot}{easylinear_fit,missing}(x, y, log = "", which = c("fit",
-  "diagnostics"), ...)
+\S4method{plot}{easylinear_fit,missing}(x, y, log = "",
+  which = c("fit", "diagnostics"), ...)
 
 \S4method{plot}{smooth.spline_fit,missing}(x, y, ...)
 

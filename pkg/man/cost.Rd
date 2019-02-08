@@ -4,7 +4,7 @@
 \alias{cost}
 \title{Cost Function for Nonlinear Fits}
 \usage{
-cost(p, obs, FUN, fixed.p = NULL, ...)
+cost(p, obs, FUN, fixed.p = NULL, transform, ...)
 }
 \arguments{
 \item{p}{vector of fitted parameters of the growth model.}
@@ -24,7 +24,7 @@ Defines a cost function from the residual sum of squares between model
 and observational data.
 }
 \details{
-Function 'cost' is implemented along the lines of the 
+Function 'cost' is implemented along the lines of the
 following template, see package FME for details:
 \preformatted{
 cost <- function(p, obs, FUN, fixed.p = NULL, ...) {

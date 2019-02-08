@@ -10,7 +10,7 @@
 #' \preformatted{
 #'   identifier <- function(time, parms) {
 #'     ... content of function here ...
-#'     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+#'     return(as.matrix(data.frame(time=time, y=y)))
 #'   }
 #' }
 #'
@@ -20,7 +20,7 @@
 #'     attribute.
 #'
 #' @param x a function with arguments \code{times} and \code{parms}, and
-#'   returning a matrix with three columns \code{time}, \code{y} and \code{log_y}.
+#'   returning a matrix with two columns \code{time} and \code{y}.
 #' @param pnames character vector with the names of the model parameters.
 #'
 #' @examples
@@ -28,7 +28,7 @@
 #' test <- function(time, parms) {
 #'   with(as.list(parms), {
 #'     y <- (K * y0) / (y0 + (K - y0) * exp(-mumax * time)) + y_shift
-#'     return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+#'     return(as.matrix(data.frame(time=time, y=y)))
 #'  })
 #' }
 #'

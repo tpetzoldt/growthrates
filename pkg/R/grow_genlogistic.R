@@ -24,13 +24,11 @@
 #' For \code{ode_genlogistic}: matrix containing the simulation outputs.
 #' The return value of has also class \code{deSolve}.
 #'
-#' For \code{grow_genlogistic}: vector of dependent variable (\code{y}) and
-#'   its log-transformed values (\code{log_y}).
+#' For \code{grow_genlogistic}: vector of dependent variable (\code{y}).
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
 #' \item \code{y} abundance of organisms
-#' \item \code{log_y} natural log of abundance
 #' }
 #'
 #' @details The generalized logistic according to Tsoularis (2001) is a flexible
@@ -78,7 +76,7 @@ ode_genlogistic <- function (time, y, parms, ...) {
   ## the differential equations
   with(as.list(c(parms)), {
     dy <-  mumax * y^alpha * (1-(y/K)^beta)^gamma
-    list(dy, log_y = log(unname(y)))
+    list(dy)
   })
 }
 
@@ -105,7 +103,8 @@ grow_genlogistic <- function(time, parms, ...) {
   out <- ode(y0, time, func = "d_genlogistic", parms = parms,
              dllname = "growthrates",
              initfunc = "ini_genlogistic", nout = 0, ...)
-  cbind(out, log_y = log(out[,"y"]))
+  #cbind(out, log_y = log(out[,"y"]))
+  out
 }
 ## attach names of parameters as attributes
 attr(grow_genlogistic, "fname") <- c("grow_genlogistic")

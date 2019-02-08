@@ -21,8 +21,7 @@
 #'
 #' }
 #'
-#' @return vector of dependent variable (\code{y}) and its log-transformed
-#'   values (\code{log_y}).
+#' @return vector of dependent variable (\code{y}).
 #'
 #' @references
 #'
@@ -51,7 +50,7 @@ grow_richards <- function(time, parms) {
   with(as.list(parms), {
     y <- K*(1-exp(-beta * mumax * time)*(1-(y0/K)^-beta))^(-1/beta)
 
-    return(as.matrix(data.frame(time = time, y = y, log_y = log(y))))
+    return(as.matrix(data.frame(time = time, y = y)))
   })
 }
 ## attach names of parameters as attributes

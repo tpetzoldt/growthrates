@@ -24,7 +24,8 @@ multisplit(data, grouping, drop = TRUE, sep = ":", ...)
 \S4method{multisplit}{data.frame,list}(data, grouping, drop = TRUE,
   sep = ":", ...)
 
-\S4method{multisplit}{ANY,ANY}(data, grouping, drop = TRUE, sep = ":", ...)
+\S4method{multisplit}{ANY,ANY}(data, grouping, drop = TRUE, sep = ":",
+  ...)
 }
 \arguments{
 \item{data}{data frame, matrix or vector containing several subsets of data}

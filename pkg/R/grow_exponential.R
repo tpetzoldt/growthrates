@@ -12,8 +12,7 @@
 #'   \item \code{mumax} maximum growth rate (1/time).
 #' }
 #'
-#' @return vector of dependent variable (\code{y}) and its log-transformed
-#'   values (\code{log_y}).
+#' @return vector of dependent variable (\code{y}).
 #'
 #' @examples
 #'
@@ -36,7 +35,7 @@ grow_exponential <- function(time, parms) {
     mumax <- parms["mumax"]
   }
   y  <- y0 * exp(mumax * time)
-  return(as.matrix(data.frame(time=time, y=y, log_y=log(y))))
+  return(as.matrix(data.frame(time=time, y=y)))
 }
 ## attach names of parameters as attributes
 attr(grow_exponential, "fname") <- c("grow_exponential")

@@ -17,7 +17,7 @@
 #'
 #' @details
 #'
-#' Function 'cost' is implemented along the lines of the 
+#' Function 'cost' is implemented along the lines of the
 #' following template, see package FME for details:
 #' \preformatted{
 #' cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
@@ -26,8 +26,11 @@
 #' }
 #' }
 
-cost <- function(p, obs, FUN, fixed.p = NULL, ...) {
+cost <- function(p, obs, FUN, fixed.p = NULL, transform, ...) {
   out <- FUN(obs$time, c(p, fixed.p))
+
+  if (transform == "log") out <- cbind(out, log_y=log(out[,"y"]))
+
   ## check NA and NaN, out has the columns: time, y, y_log
   if (any(is.infinite(out[,2]), is.nan(out[,2]), is.na(out[,2]))) {
     warning("Invalid return values of FUN.\n",

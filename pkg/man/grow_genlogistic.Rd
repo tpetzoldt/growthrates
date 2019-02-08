@@ -28,13 +28,11 @@ grow_genlogistic(time, parms, ...)
 For \code{ode_genlogistic}: matrix containing the simulation outputs.
 The return value of has also class \code{deSolve}.
 
-For \code{grow_genlogistic}: vector of dependent variable (\code{y}) and
-  its log-transformed values (\code{log_y}).
+For \code{grow_genlogistic}: vector of dependent variable (\code{y}).
 
 \itemize{
 \item \code{time} time of the simulation
 \item \code{y} abundance of organisms
-\item \code{log_y} natural log of abundance
 }
 }
 \description{
@@ -91,3 +89,4 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{growthmodel}}, \code{\link{ode_twostep}}
 }
+\concept{growth models}

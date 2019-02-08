@@ -32,15 +32,13 @@
 #' For \code{ode_twostep}: matrix containing the simulation outputs.
 #' The return value of has also class \code{deSolve}.
 #'
-#' For \code{grow_twostep}: vector of dependent variable (\code{y}) and
-#'   its log-transformed values (\code{log_y}):
+#' For \code{grow_twostep}: vector of dependent variable (\code{y}):
 #'
 #' \itemize{
 #' \item \code{time} time of the simulation
 #' \item \code{yi} concentration of inactive cells
 #' \item \code{ya} concentration of active cells
 #' \item \code{y} total cell concentration
-#' \item \code{log_y} natural log of total cell concentration
 #' }
 #'
 #' @details Function \code{ode_twostep} is the system of differential equations,
@@ -76,7 +74,7 @@ ode_twostep <- function (time, y, parms, ...) {
   with(as.list(c(parms, y)), {
     dyi <- -kw * yi
     dya <-  kw * yi + mumax * (1 - (yi + ya)/K) * ya
-    list(c(dyi, dya), y = unname(yi + ya), log_y = log(unname(yi + ya)))
+    list(c(dyi, dya), y = unname(yi + ya))
   })
 }
 
@@ -104,7 +102,7 @@ grow_twostep <- function(time, parms, ...) {
   #cat(parms, "\n")
   out <- ode(y0, time, func = "d_twostep", parms = parms,
              dllname = "growthrates",
-             initfunc = "ini_twostep", nout = 2, outnames=c("y", "log_y"), ...)
+             initfunc = "ini_twostep", nout = 1, outnames=c("y"), ...)
 
 }
 ## attach names of parameters as attributes

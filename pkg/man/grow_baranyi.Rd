@@ -20,8 +20,7 @@ grow_baranyi(time, parms)
 }}
 }
 \value{
-vector of dependent variable (\code{y}) and its log-transformed
-  values (\code{log_y}).
+vector of dependent variable (\code{y}).
 }
 \description{
 The growth model of Baranyi and Roberts (1995) written as analytical solution
@@ -56,3 +55,4 @@ Other growth models: \code{\link{grow_exponential}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
   \code{\link{ode_twostep}}
 }
+\concept{growth models}

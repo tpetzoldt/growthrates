@@ -117,7 +117,7 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
   ## todo: redefine functions to allow unconstrained log-transformed parameters
   fit <- modFit(f = cost, p = parms, FUN = FUN, obs = obs,
                 lower = lower, upper = upper,
-                method = method, fixed.p = fixed.p, control = control, ...)
+                method = method, fixed.p = fixed.p, control = control, transform = transform, ...)
 
   parms <- coef(fit)
   out.fit <- FUN(obs$time, c(parms, fixed.p))

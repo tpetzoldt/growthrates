@@ -16,8 +16,7 @@ grow_exponential(time, parms)
 }}
 }
 \value{
-vector of dependent variable (\code{y}) and its log-transformed
-  values (\code{log_y}).
+vector of dependent variable (\code{y}).
 }
 \description{
 Unlimited exponential growth model.
@@ -40,3 +39,4 @@ Other growth models: \code{\link{grow_baranyi}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
   \code{\link{ode_twostep}}
 }
+\concept{growth models}
