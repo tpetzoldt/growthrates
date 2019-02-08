@@ -27,7 +27,7 @@ Bibliographies may need to set the LANG environment variable
 LANG=en_US.UTF-8
 -->
 
-**Please note:** This document reflects work in progress and will be updated from time to time. The most recent copy can be downloaded from https://github.com/tpetzoldt/growthrates/blob/master/doc/Introduction.pdf
+**Please note:** This document reflects work in progress and will be updated from time to time. The most recent copy can be downloaded from https://tpetzoldt.github.io/growthrates/doc/Introduction.html
 
 Introduction
 ============
@@ -460,4 +460,10 @@ was written using **knitr** [@knitr2014] and **rmarkdown**
 
 References
 ==========
+
+<div id="refs"></div>
+
+----
+
+**Copyright and original author:** [tpetzoldt](https://github.com/tpetzoldt), `r Sys.Date()`
 
