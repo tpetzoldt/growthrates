@@ -47,6 +47,7 @@ Collate:
     'grow_exponential.R'
     'grow_genlogistic.R'
     'grow_gompertz.R'
+    'grow_gompertz2.R'
     'grow_huang.R'
     'grow_logistic.R'
     'grow_richards.R'

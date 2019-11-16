@@ -28,6 +28,13 @@ Gompertz growth model written as analytical solution of the differential
 The equation used here is:
 \deqn{y = K * exp(log(y0 / K) * exp(-mumax * time))}
 }
+\note{
+The naming of parameter "mumax" was done in analogy to the other growth
+  models, but it turned out that it was not consistent with the maximum
+  growth rate of the population. This can be considered as bug. The function
+  will be removed or replaced in future versions of the package. Please use
+  \code{grow_gompertz2} instead.
+}
 \examples{
 
 time <- seq(0, 30, length=200)
@@ -42,7 +49,8 @@ Tsoularis, A. (2001) Analysis of Logistic Growth Models.
 }
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},
-  \code{\link{grow_exponential}}, \code{\link{grow_huang}},
+  \code{\link{grow_exponential}},
+  \code{\link{grow_gompertz2}}, \code{\link{grow_huang}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
   \code{\link{ode_twostep}}

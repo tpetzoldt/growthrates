@@ -80,12 +80,14 @@ J. heor. Biol. 192, 403--408.
 \seealso{
 Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_exponential}},
+  \code{\link{grow_gompertz2}},
   \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}}
 
 Other growth models: \code{\link{grow_baranyi}},
   \code{\link{grow_exponential}},
+  \code{\link{grow_gompertz2}},
   \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
   \code{\link{grow_logistic}}, \code{\link{grow_richards}},
   \code{\link{growthmodel}}, \code{\link{ode_genlogistic}}
