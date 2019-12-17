@@ -3,9 +3,11 @@ Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
 Version: 0.8.1
-Date: 2019-02-08
+Date: 2019-12-17
 LazyData: yes
-Author: Thomas Petzoldt
+Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
+                     email = "thomas.petzoldt@tu-dresden.de",
+                     comment = c(ORCID = "0000-0002-4951-6468")))
 Maintainer: Thomas Petzoldt <thomas.petzoldt@tu-dresden.de>
 Description: A collection of methods to determine growth rates from
     experimental data, in particular from batch experiments and
