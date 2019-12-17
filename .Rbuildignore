@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^work
-
+LICENSE
+^local
+todo.txt
 
