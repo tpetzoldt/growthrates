@@ -13,9 +13,10 @@ batch experiments and microwell plate reader trials.
 News
 ----
 
-* Simplified handling of log-transformed parametric models (v. 0.8.1).
-* Release of version 0.7.1 to [**CRAN**](https://cran.r-project.org/package=growthrates).
-* Several small changes and improvements.
+* Release of version 0.8.2 to [**CRAN**](https://cran.r-project.org/package=growthrates)
+* Corrected parametrization of Gompertz models
+* Simplified handling of log-transformed parametric models (v. 0.8.1)
+* Several small changes and improvements
 * Added predict-methods
 * Presentation at the [useR!2017 conference in Brussels](https://channel9.msdn.com/Events/Speakers/thomas-petzoldt) 
 
