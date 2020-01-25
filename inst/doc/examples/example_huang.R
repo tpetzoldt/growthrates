@@ -43,7 +43,7 @@ plot(fit)
 L <- all_growthmodels(value ~ grow_huang(time, parms) | strain + conc + replicate,
                       data = bactgrowth,
                       p = p, lower = lower, upper = upper,
-                      log = "y")
+                      transform = "log")
 
 par(mfrow = c(4,3))
 plot(L, log = "y")
@@ -65,7 +65,7 @@ L2 <- all_growthmodels(value ~ grow_huang(time, parms) | strain + conc + replica
                       data = bactgrowth,
                       p = p, lower = lower, upper = upper,
                       which = c("y0", "mumax", "K", "lambda"),
-                      method = "Marq", log = "y")
+                      method = "Marq", transform = "log")
 
 par(mfrow = c(4,3))
 plot(L2)

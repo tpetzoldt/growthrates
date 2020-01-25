@@ -47,7 +47,7 @@ system.time(
   L <- all_growthmodels(grow_baranyi, p=p, data=bactgrowth,
                         grouping = c("strain", "conc", "replicate"),
                         lower = lower, upper=upper,
-                        log="y")
+                        transform = "log")
 )
 
 ## same with formula interface
@@ -55,7 +55,7 @@ system.time(
   L <- all_growthmodels(value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                         data = bactgrowth,
                         p=p, lower = lower, upper=upper,
-                        log = "y"
+                        transform = "log"
                         )
 )
 
