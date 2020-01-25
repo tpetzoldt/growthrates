@@ -398,7 +398,7 @@ many_baranyi1 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
                    p = p, lower = lower, upper = upper,
-                   log = "y", ncores = 2)
+                   transform = "log", ncores = 2)
 ```
 
 whereas in a second trial, `h0` is fixed to a common value to avoid
@@ -415,7 +415,7 @@ many_baranyi2 <- all_growthmodels(
                    value ~ grow_baranyi(time, parms) | strain + conc + replicate,
                    data = bactgrowth,
                    p = pp, lower = lower, upper = upper,
-                   which = c("y0", "mumax", "K"), log = "y", ncores = 2)
+                   which = c("y0", "mumax", "K"), transform = "log", ncores = 2)
 ```
 
 The result of the second fit is shown in the following figure. It may

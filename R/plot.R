@@ -79,7 +79,7 @@ setMethod("plot", c("nonlinear_fit", "missing"),
 
             switch(which,
                    fit = {
-                     obs <- obs(x)
+                     obs <- obs(x)[c("time", "y")]
                      plot(obs, log=log, ...)
                      times <- seq(min(obs$time), max(obs$time), length.out=200)
                      sim <- x@FUN(times, coef(x))
