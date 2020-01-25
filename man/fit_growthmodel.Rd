@@ -4,9 +4,19 @@
 \alias{fit_growthmodel}
 \title{Fit Nonlinear Parametric Growth Model}
 \usage{
-fit_growthmodel(FUN, p, time, y, lower = -Inf, upper = Inf,
-  which = names(p), method = "Marq", transform = c("none", "log"),
-  control = NULL, ...)
+fit_growthmodel(
+  FUN,
+  p,
+  time,
+  y,
+  lower = -Inf,
+  upper = Inf,
+  which = names(p),
+  method = "Marq",
+  transform = c("none", "log"),
+  control = NULL,
+  ...
+)
 }
 \arguments{
 \item{FUN}{function of growth model to be fitted.}
@@ -73,9 +83,11 @@ plot(fit1, log="y")
 \seealso{
 \code{\link{modFit}} about constrained fitting of models to data
 
-Other fitting functions: \code{\link{all_easylinear}},
-  \code{\link{all_growthmodels}},
-  \code{\link{all_splines}}, \code{\link{fit_easylinear}},
-  \code{\link{fit_spline}}
+Other fitting functions: 
+\code{\link{all_easylinear}()},
+\code{\link{all_growthmodels}()},
+\code{\link{all_splines}()},
+\code{\link{fit_easylinear}()},
+\code{\link{fit_spline}()}
 }
 \concept{fitting functions}

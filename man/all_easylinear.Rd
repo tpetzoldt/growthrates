@@ -8,11 +8,17 @@
 \usage{
 all_easylinear(...)
 
-\method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95,
-  subset = NULL, ...)
+\method{all_easylinear}{formula}(formula, data, h = 5, quota = 0.95, subset = NULL, ...)
 
-\method{all_easylinear}{data.frame}(data, grouping, time = "time",
-  y = "value", h = 5, quota = 0.95, ...)
+\method{all_easylinear}{data.frame}(
+  data,
+  grouping,
+  time = "time",
+  y = "value",
+  h = 5,
+  quota = 0.95,
+  ...
+)
 }
 \arguments{
 \item{\dots}{generic parameters, reserved for future extensions.}
@@ -65,8 +71,11 @@ Hall, BG., Acar, H, Nandipati, A and Barlow, M (2014) Growth Rates Made Easy.
 Mol. Biol. Evol. 31: 232-38, \doi{10.1093/molbev/mst187}
 }
 \seealso{
-Other fitting functions: \code{\link{all_growthmodels}},
-  \code{\link{all_splines}}, \code{\link{fit_easylinear}},
-  \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
+Other fitting functions: 
+\code{\link{all_growthmodels}()},
+\code{\link{all_splines}()},
+\code{\link{fit_easylinear}()},
+\code{\link{fit_growthmodel}()},
+\code{\link{fit_spline}()}
 }
 \concept{fitting functions}

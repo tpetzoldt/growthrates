@@ -102,6 +102,9 @@ all_growthmodels.formula <- function(formula, data,
 
   ## FUN is now part of the formula, y ~ f(x, parms) | groups
 
+  ## force data frame if user enters a tibble
+  if (inherits(data, "tbl_df")) data <- as.data.frame(data)
+
   if (length(grep("^.*[(].*[)]", as.character(formula)[[3]]))) {   # RHS
     if (!is.null(FUN))
       warning("Nonlinear model in formula overrules value of argument FUN")
@@ -146,6 +149,9 @@ all_growthmodels.function <-
                              ncores = detectCores(logical = FALSE)) {
 
   ## check arguments -----------------------------------------------------------
+
+  ## force data frame if user enters a tibble
+  if (inherits(data, "tbl_df")) data <- as.data.frame(data)
 
   if (!is.data.frame(data)) stop("data must be a data frame")
   if (!is.character(grouping) & !inherits(grouping, "formula"))

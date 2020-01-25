@@ -33,11 +33,15 @@ plot(time, y, type="l")
 
 }
 \seealso{
-Other growth models: \code{\link{grow_baranyi}},
-  \code{\link{grow_gompertz2}},
-  \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
-  \code{\link{grow_logistic}}, \code{\link{grow_richards}},
-  \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
-  \code{\link{ode_twostep}}
+Other growth models: 
+\code{\link{grow_baranyi}()},
+\code{\link{grow_gompertz2}()},
+\code{\link{grow_gompertz}()},
+\code{\link{grow_huang}()},
+\code{\link{grow_logistic}()},
+\code{\link{grow_richards}()},
+\code{\link{growthmodel}},
+\code{\link{ode_genlogistic}()},
+\code{\link{ode_twostep}()}
 }
 \concept{growth models}

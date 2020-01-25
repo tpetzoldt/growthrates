@@ -74,6 +74,9 @@ all_splines <- function(...) UseMethod("all_splines")
 #'
 all_splines.formula <- function(formula, data=NULL, optgrid = 50, subset=NULL,  ...) {
 
+  ## force data frame if user enters a tibble
+  if (inherits(data, "tbl_df")) data <- as.data.frame(data)
+
   dataset_name <- deparse(substitute(data))  # name of the dataset in the call
   X <- get_all_vars(formula, data)
   attr(X, "dataset_name") <- dataset_name
@@ -87,6 +90,9 @@ all_splines.formula <- function(formula, data=NULL, optgrid = 50, subset=NULL,  
 #'
 all_splines.data.frame <-
   function(data, grouping=NULL, time = "time", y = "value",  optgrid = 50, ...) {
+
+    ## force data frame if user enters a tibble
+    if (inherits(data, "tbl_df")) data <- as.data.frame(data)
 
     ## remember name of data set
     if (is.null(attr(data, "dataset_name"))) {   # inherited from former method ?

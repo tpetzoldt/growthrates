@@ -79,9 +79,11 @@ Journal of Statistical Software, 33(7), 1-21,
 \doi{10.18637/jss.v033.i07}
 }
 \seealso{
-Other fitting functions: \code{\link{all_easylinear}},
-  \code{\link{all_growthmodels}},
-  \code{\link{all_splines}}, \code{\link{fit_easylinear}},
-  \code{\link{fit_growthmodel}}
+Other fitting functions: 
+\code{\link{all_easylinear}()},
+\code{\link{all_growthmodels}()},
+\code{\link{all_splines}()},
+\code{\link{fit_easylinear}()},
+\code{\link{fit_growthmodel}()}
 }
 \concept{fitting functions}

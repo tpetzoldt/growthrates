@@ -8,11 +8,16 @@
 \usage{
 all_splines(...)
 
-\method{all_splines}{formula}(formula, data = NULL, optgrid = 50,
-  subset = NULL, ...)
+\method{all_splines}{formula}(formula, data = NULL, optgrid = 50, subset = NULL, ...)
 
-\method{all_splines}{data.frame}(data, grouping = NULL, time = "time",
-  y = "value", optgrid = 50, ...)
+\method{all_splines}{data.frame}(
+  data,
+  grouping = NULL,
+  time = "time",
+  y = "value",
+  optgrid = 50,
+  ...
+)
 }
 \arguments{
 \item{\dots}{generic parameters, including parameters passed to \code{\link{smooth.spline}}, see details.}
@@ -88,9 +93,11 @@ Journal of Statistical Software, 33(7), 1-21,
 \doi{10.18637/jss.v033.i07}
 }
 \seealso{
-Other fitting functions: \code{\link{all_easylinear}},
-  \code{\link{all_growthmodels}},
-  \code{\link{fit_easylinear}},
-  \code{\link{fit_growthmodel}}, \code{\link{fit_spline}}
+Other fitting functions: 
+\code{\link{all_easylinear}()},
+\code{\link{all_growthmodels}()},
+\code{\link{fit_easylinear}()},
+\code{\link{fit_growthmodel}()},
+\code{\link{fit_spline}()}
 }
 \concept{fitting functions}

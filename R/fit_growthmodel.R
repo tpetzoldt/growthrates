@@ -84,7 +84,8 @@ fit_growthmodel <- function(FUN, p, time, y, lower = -Inf, upper = Inf,
 
   ## create data frame with names matching between model and data
   if (transform == "log") {
-    obs <- data.frame(time = time, y=y, log_y = log(y))
+    #obs <- data.frame(time = time, y=y, log_y = log(y)) ## wrong!
+    obs <- data.frame(time = time, log_y = log(y))
   } else {
     obs <- data.frame(time = time, y = y)
   }

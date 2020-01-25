@@ -79,7 +79,16 @@ setMethod("plot", c("nonlinear_fit", "missing"),
 
             switch(which,
                    fit = {
-                     obs <- obs(x)[c("time", "y")]
+                     # obs <- obs(x)[c("time", "y")]
+
+
+                     obs <- obs(x)
+                     ## retransform log transformed fits
+                     ## alternative would require separate slot with orig data
+                     ## both, y and log_y, in obs would influence FME modCost
+                     if ("log_y" %in% names(obs)) {
+                       obs <- data.frame(time=obs[,1], y=exp(obs[,2]))
+                     }
                      plot(obs, log=log, ...)
                      times <- seq(min(obs$time), max(obs$time), length.out=200)
                      sim <- x@FUN(times, coef(x))

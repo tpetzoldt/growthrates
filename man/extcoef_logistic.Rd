@@ -127,7 +127,7 @@ K  <-    p["K"]
 turnpoint <- p["turnpoint"]
 sat1 <-  p["sat1"]  # 2nd derivative
 sat2 <-  p["sat2"]  # intercept between steepest increase and K
-sat3 <-  p["sat3"]  # a given quantile of K, default 95\\\%
+sat3 <-  p["sat3"]  # a given quantile of K, default 95\\%
 
 ## show saturation values in growth curve and 1st and 2nd derivatives ------
 opar <- par(no.readonly=TRUE)

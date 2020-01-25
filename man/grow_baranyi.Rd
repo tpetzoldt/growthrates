@@ -49,11 +49,15 @@ Baranyi, J. and Roberts, T.A. (1995). Mathematics of predictive microbiology.
 International Journal of Food Microbiology, 26, 199-218.
 }
 \seealso{
-Other growth models: \code{\link{grow_exponential}},
-  \code{\link{grow_gompertz2}},
-  \code{\link{grow_gompertz}}, \code{\link{grow_huang}},
-  \code{\link{grow_logistic}}, \code{\link{grow_richards}},
-  \code{\link{growthmodel}}, \code{\link{ode_genlogistic}},
-  \code{\link{ode_twostep}}
+Other growth models: 
+\code{\link{grow_exponential}()},
+\code{\link{grow_gompertz2}()},
+\code{\link{grow_gompertz}()},
+\code{\link{grow_huang}()},
+\code{\link{grow_logistic}()},
+\code{\link{grow_richards}()},
+\code{\link{growthmodel}},
+\code{\link{ode_genlogistic}()},
+\code{\link{ode_twostep}()}
 }
 \concept{growth models}

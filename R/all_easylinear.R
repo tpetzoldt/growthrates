@@ -50,6 +50,10 @@ all_easylinear <- function(...) UseMethod("all_easylinear")
 #'
 all_easylinear.formula <- function(formula, data,  h = 5, quota = 0.95,
                                    subset = NULL, ...) {
+
+  ## force data frame if user enters a tibble
+  if (inherits(data, "tbl_df")) data <- as.data.frame(data)
+
   X <- get_all_vars(formula, data)
   if (!is.null(subset)) X <- X[subset, ]
   all_easylinear.data.frame(data = X, grouping = formula, h = h, quota = quota)
@@ -61,6 +65,10 @@ all_easylinear.formula <- function(formula, data,  h = 5, quota = 0.95,
 #'
 all_easylinear.data.frame <-
   function(data, grouping, time = "time", y = "value",  h = 5, quota = 0.95, ...) {
+
+    ## force data frame if user enters a tibble
+    if (inherits(data, "tbl_df")) data <- as.data.frame(data)
+
     splitted.data <- multisplit(data, grouping)
 
     ## todo: consider to attach parsed formula as attr to splitted.data
