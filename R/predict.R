@@ -69,9 +69,6 @@
 #'
 #' plot(fit2, xlim=c(0, 50))
 #' lines(pr[, c("time", "y")], lty="dashed", col="red")
-
-
-#' @rdname predict
 #' @exportMethod predict
 #'
 setMethod("predict", "growthrates_fit",
