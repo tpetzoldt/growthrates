@@ -3,7 +3,7 @@ Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
 Version: 0.8.2
-Date: 2020-01-25
+Date: 2020-11-02
 LazyData: yes
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
@@ -23,11 +23,12 @@ Imports:
     parallel,
     utils,
     FME
+Suggests:
+    knitr,
+    rmarkdown
 License: GPL (>= 2)
 URL: https://github.com/tpetzoldt/growthrates
 VignetteBuilder: knitr
-Suggests:
-    knitr
 RoxygenNote: 7.1.1
 Collate: 
     'aaa_growthmodel-class.R'
