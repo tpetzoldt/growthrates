@@ -18,7 +18,7 @@ News
 * Simplified handling of log-transformed parametric models (v. 0.8.1)
 * Several small changes and improvements
 * Added predict-methods
-* Presentation at the [useR!2017 conference in Brussels](https://channel9.msdn.com/Events/Speakers/thomas-petzoldt) 
+* Presentation at the useR!2017 conference in Brussels
 
 Overview
 --------
