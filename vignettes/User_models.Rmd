@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: growthrates.bib
 vignette: >
-  %\VignetteIndexEntry{Estimation of Growth Rates, Part 2: User-defined Growth Models}
+  %\VignetteIndexEntry{Estimation of Growth Rates with Package `growthrates`, Part 2: User-defined Growth Models}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
@@ -237,7 +237,7 @@ A numerical simulation of ODE models can sometimes be slow, so we may
 be tempted to speed it up. This is indeed possible with *compiled
 code*, i.e. the model is written in another programming language
 (Fortran or C) that are faster compared to R. Several methods exist
-how this can be done, see for example @Soetaert2010c or @Kneis2016. In
+how this can be done, see for example @Soetaert2010c or @Kneis2016 and @Kneis2017. In
 the following, we use a method that allows *inline code*, i.e.  direkt
 integration of C code in the R script using package **cOde**
 [@Kaschek2016].

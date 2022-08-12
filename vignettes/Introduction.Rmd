@@ -1,12 +1,12 @@
 ---
-title: "Estimation of Growth Rates with Package `growthrates`"
+title: "Estimation of Growth Rates with Package `growthrates`, Part 1: Introduction"
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette
 bibliography: growthrates.bib
 vignette: >
-  %\VignetteIndexEntry{Estimation of Growth Rates, Part 1: Introduction}
+  %\VignetteIndexEntry{Estimation of Growth Rates with Package `growthrates`, Part 1: Introduction}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
