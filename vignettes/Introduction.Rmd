@@ -3,7 +3,9 @@ title: "Estimation of Growth Rates with Package `growthrates`, Part 1: Introduct
 author: "Thomas Petzoldt"
 date: "`r Sys.Date()`"
 output: 
-  rmarkdown::html_vignette
+  rmarkdown::html_vignette:
+    toc: yes
+    number_sections: yes  
 bibliography: growthrates.bib
 vignette: >
   %\VignetteIndexEntry{Estimation of Growth Rates with Package `growthrates`, Part 1: Introduction}
@@ -13,7 +15,9 @@ vignette: >
 
 ```{r opts, echo = FALSE, message = FALSE}
 library("knitr")
-#knitr::opts_chunk$set(eval = FALSE)
+library("lattice")
+library("ggplot2")
+library("dplyr")
 ```
 
 <!--
@@ -28,7 +32,7 @@ Bibliographies may need to set the LANG environment variable
 LANG=en_US.UTF-8
 -->
 
-**Please note:** This document reflects work in progress and will be updated from time to time. The most recent copy can be downloaded from https://tpetzoldt.github.io/growthrates/doc/Introduction.html
+**Please note:** This document reflects work in progress and will be updated from time to time. The most recent copy can be found at https://tpetzoldt.github.io/growthrates/doc/Introduction.html
 
 Introduction
 ============
@@ -78,6 +82,20 @@ functions for extracting results (e.g. `coef`, `summary`, `deviance`,
 style, so that the functions above determine automatically which
 method is used for a given class of objects.
 
+Installation
+============
+
+
+The stable version of the package can be installed as usual from within **R** 
+or **RStudio** like any other package, or with:
+
+```R
+install.packages("growthrates")
+```
+
+The development version and full source code are available from https://github.com/tpetzoldt/growthrates . 
+
+
 Data set
 ========
 
@@ -114,14 +132,32 @@ look at the first few lines with `head`:
 head(bactgrowth)
 ```
 
-or we can plot raw data:
+or we can plot raw data with **ggplot**:
 
-```{r, fig.width=10, fig.height=14}
+```{r, fig.width=9, fig.height=4}
+library(ggplot2)
+library(dplyr)
+bactgrowth %>% 
+  mutate(replicate=factor(replicate)) %>%
+  ggplot(aes(time, value)) + 
+  geom_point(aes(color=replicate)) + 
+  facet_grid(strain ~ conc)
+```
+
+Or the same with the **lattice** package:
+
+```{r eval=FALSE}
 library(lattice)
 data(bactgrowth)
-xyplot(value ~ time|strain+as.factor(conc), data = bactgrowth,
+xyplot(value ~ time|strain + as.factor(conc), data = bactgrowth,
        groups = replicate, pch = 16, cex = 0.5)
 ```
+
+While the `lattice` figure is not shown here, it has some nice advantages. 
+The call is even more compact and the applied formula syntax
+`dependend_variable ~ explanation_variable | grouping_variable`
+can also be used in a similar manner by the growth curve fitting
+functions starting with `all_*` to avoid loops or external grouping.
 
 Estimation of growth rates
 ==========================
@@ -132,9 +168,7 @@ with  an overview over the  ``single subset''-methods and show then examples for
 fitting growth models to the full data set. More examples can be found on the
 help pages of the package.
 
-Fitting models to single data sets
-----------------------------------
-
+** Single data sets **
 
 Single data sets can be analysed with functions `fit_easylinear`,
 `fit_growthmodels` or `fit_splines`. As a prerequisite, single data
@@ -144,7 +178,7 @@ the following example, the full data table is first split into a list
 of experiments according to a vector of criteria and then the first
 experiment is extracted:
 
-### Easy Linear Method
+## Easy Linear Method
 
 ```{r}
 splitted.data <- multisplit(bactgrowth, c("strain", "conc", "replicate"))
@@ -190,8 +224,8 @@ lines(fitx, pch = "+", col = "blue")
 ```
 
 
-Parametric nonlinear growth models
-----------------------------------
+## Parametric nonlinear growth models
+
 
 A **parametric growth model** consists of a mathematical formula that describes
 the growth of a population (e.g. `grow_logistic`) and its parameters
@@ -237,7 +271,7 @@ lines(fit2, col = "red")
 ```
 
 
-### Differential equation models
+#### Differential equation models
 
 In the two-step model abode, growth is described as a two-step process
 of adaption of inactive cells $y_i$ and logistic growth of active
@@ -262,7 +296,7 @@ of course also possible to define user-specified models in R code. Details
 can be found in *Part 2* of the package documentation.
 
 
-### Selective parameter fitting
+#### Selective parameter fitting
 
 Despite the fact that the above model is solved as a differential
 equation, the relatively high number of parameters may need special
@@ -289,8 +323,8 @@ parameters, i.e. for both the fitted and the fixed ones, while `upper` and
 `lower` bounds for the fixed parameters can be omitted.
 
 
-Nonparametric smoothing splines
--------------------------------
+## Nonparametric smoothing splines
+
 
 Smoothing splines are a quick method to estimate maximum growth. The method is
 called *nonparametric*, because the growth rate is directly estimated from the
@@ -313,10 +347,9 @@ coef(res)
 ```
 
 
-Fiting multiple data sets
-=========================
+# Fit multiple data sets without loops
 
-Fiting multiple data sets at once is possible with functions
+Fitting multiple data sets at once is possible with functions
 `all_easyliner`, `all_growthmodels` and `all_splines`. Usage is
 similar for all methods, and the parameters are analogous to the
 single-fit methods. Both, the easy growth rates and the smooting
@@ -335,8 +368,8 @@ Nonlinear optimization is done with parallelized code, so multi-core
 computers can speed up computation.
 
 
-Fitting smoothing splines to multiple data
-------------------------------------------
+## Fit smoothing splines to multiple data
+
 
 It can be a good idea, to start with a nonparametric approach like the
 smoothing spline method to get a first impression and, potentially, to
@@ -353,7 +386,7 @@ over time are true replicates from independent experimental units,
 instead of pseudo-replicates with potential autocorrelation.
 
 
-```{r fig.width=14, fig.height=20}
+```{r fig.width=10, fig.height=20}
 many_spline_fits <- all_splines(value ~ time | strain + conc + replicate,
                                 data = bactgrowth, spar = 0.5)
 
@@ -364,8 +397,7 @@ plot(many_spline_fits)
 
 
 
-Fitting parametric models to multiple data
-------------------------------------------
+## Fit parametric models to multiple data
 
 Package **growthrates** allows to fit parametric models to a series of
 grouped data. The formula interface of function `all_growthmodels`
@@ -425,28 +457,57 @@ parameters, e.g. @Huang2011, again at the cost that the effect of
 antibiotics is distributed over several correlated parameters instead
 of an effect of the maximum growth rate.
 
-```{r fig.width=14, fig.height=20}
+```{r fig.width=10, fig.height=20}
 par(mfrow = c(12, 6))
 par(mar = c(2.5, 4, 2, 1))
 plot(many_baranyi2)
 ```
 
-Finally
-=======
+## Dose Respone Curves
+
 
 Dependency of growth rate on antibiotic concentration for the three
-strains with the spline fit and the Baranyi model:
+strains with the spline fit and the Baranyi model. Here we first extract a
+table of results from the fitted objects:
 
 ```{r, fig.width=7, fig.height=3}
 many_spline_res   <- results(many_spline_fits)
 many_baranyi2_res <- results(many_baranyi2)
+```
+
+The resulting data frames follow a "tidy structure" ensuring compatibility with 
+**ggplot2**.
+
+### Nonparameric Spline Fits
+
+```{r, fig.width=7, fig.height=3}
+many_spline_res %>%
+  ggplot(aes(log(conc + 1), mumax)) + 
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~ strain)
+```
+
+### Parametric Baranyi Model
+
+```{r, fig.width=7, fig.height=3}
+many_baranyi2_res %>%
+  ggplot(aes(log(conc + 1), mumax)) + 
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~ strain)
+```
+
+As an alternative, visualization is also possible with R's "base graphics" functions or with **lattice** graphics:
+
+```{r, eval=FALSE}
 xyplot(mumax ~ log(conc+1)|strain, data = many_spline_res, layout = c(3, 1))
 xyplot(mumax ~ log(conc+1)|strain, data = many_baranyi2_res, layout = c(3, 1))
 ```
 
 Describing the observed dependency can again be approached with
 nonparametric methods or parametric functional response curves, which
-may be done by using a specialized package for dose-response curves,
+may be done using a specialized package for dose-response curves,
 for example package **drc** [@Ritz2005].
 
 
