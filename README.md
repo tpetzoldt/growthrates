@@ -13,8 +13,9 @@ batch experiments and microwell plate reader trials.
 News
 ----
 
-* Release of version 0.8.1 to [**CRAN**](https://cran.r-project.org/package=growthrates)
-* Corrected parametrization of Gompertz models
+* Release of version 0.8.4 to [**CRAN**](https://cran.r-project.org/package=growthrates)
+* improved robustness and error checking of the "easylinear"" method 
+* Corrected parametrization of Gompertz models (0.8.2)
 * Simplified handling of log-transformed parametric models (v. 0.8.1)
 * Several small changes and improvements
 * Added predict-methods
@@ -67,13 +68,11 @@ install_github("tpetzoldt/growthrates")
 Introduction to the main functions
 ----------------------------------
 
-* pdf: https://tpetzoldt.github.io/growthrates/doc/Introduction.pdf
 * html: https://tpetzoldt.github.io/growthrates/doc/Introduction.html
 
 Writing user defined functions
 ------------------------------
 
-* pdf: https://tpetzoldt.github.io/growthrates/doc/User_models.pdf
 * html: https://tpetzoldt.github.io/growthrates/doc/User_models.html
 
 
