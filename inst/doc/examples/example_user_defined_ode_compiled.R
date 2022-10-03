@@ -10,8 +10,6 @@
 ## Please cite our work when using this package.
 ## =============================================================================
 
-### this example is currently broken due to changes in package cOde !!!
-
 library("growthrates")
 library("cOde")
 
@@ -69,6 +67,7 @@ dyn.unload(dll)
 unlink(dll)
 unlink(paste(ode_K_linear, ".c", sep=""))
 unlink(paste(ode_K_linear, ".o", sep=""))
+
 
 
 
