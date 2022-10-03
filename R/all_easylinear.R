@@ -79,11 +79,23 @@ all_easylinear.data.frame <-
       grouping <- p$groups
     }
 
-    ## supress warnings, esp. in case of "perfect fit"
+    ## suppress warnings, esp. in case of "perfect fit"
+    #fits <- lapply(splitted.data,
+    #               function(tmp)
+    #                 suppressWarnings(fit_easylinear(
+    #                   tmp[,time], tmp[,y], h = h, quota = quota
+    #                 )))
+
+    ## suppress only "perfect fit" warning
     fits <- lapply(splitted.data,
-                   function(tmp)
-                     suppressWarnings(fit_easylinear(
-                       tmp[,time], tmp[,y], h = h, quota = quota
-                     )))
+                   function(tmp) {
+                     withCallingHandlers({
+                       fit_easylinear(tmp[,time], tmp[,y], h = h, quota = quota)
+                     }, warning = function(w) {
+                       if (startsWith(conditionMessage(w),
+                         "essentially perfect fit")) invokeRestart("muffleWarning")
+                     })
+                   })
+
     new("multiple_easylinear_fits", fits = fits, grouping = grouping)
   }

@@ -232,7 +232,7 @@ setMethod("results", "multiple_fits",
             keys <- as.data.frame(keys, stringsAsFactors = FALSE)
 
             ## try to convert keys to numeric or factor
-            keys <- as.data.frame(lapply(keys, type.convert))
+            keys <- as.data.frame(lapply(keys, type.convert, as.is = TRUE))
 
             ret <- cbind(keys, ret)
             names(ret)[1:length(grouping)] <- c(grouping)
@@ -252,7 +252,7 @@ setMethod("results", "multiple_easylinear_fits",
             keys <- as.data.frame(keys, stringsAsFactors = FALSE)
 
             ## try to convert keys to numeric or factor
-            keys <- as.data.frame(lapply(keys, type.convert))
+            keys <- as.data.frame(lapply(keys, type.convert, as.is = TRUE))
 
             ret <- cbind(keys, ret)
             names(ret) <- c(object@grouping, "y0", "y0_lm", "mumax","lag", "r2")

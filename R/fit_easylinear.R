@@ -64,6 +64,7 @@ fit_easylinear <- function(time, y, h = 5, quota = 0.95) {
 
   if (any(duplicated(time))) stop("time variable must not contain duplicated values")
   if (any(y <= 0))           stop("dependent variable y must be positive")
+  if ((h < 2) | (h > length(time)-1))  stop("h must be > 1 and < N")
 
   obs <- data.frame(time, y)
   obs$ylog <- log(obs$y)

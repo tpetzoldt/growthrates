@@ -140,9 +140,9 @@ setMethod("plot", c("easylinear_fit", "missing"),
 
                      plot(obs[,"y"] ~ obs[,"time"], xlab="time", ylab="y",
                           log=log, ...)
-                     points(obs[x@ndx,"y"] ~ obs[x@ndx,"time"], pch=16, col="red")
 
                      if(!is.null(x@fit)) {
+                        points(obs[x@ndx,"y"] ~ obs[x@ndx,"time"], pch=16, col="red")
 
                        ## lag phase
                        lag <- coef(x)["lag"]
