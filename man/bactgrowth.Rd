@@ -4,14 +4,16 @@
 \name{bactgrowth}
 \alias{bactgrowth}
 \title{Plate Reader Data of Bacterial Growth}
-\format{Data frame with the following columns:
+\format{
+Data frame with the following columns:
 \describe{
   \item{strain}{identifier of the bacterial strain, D=donor, R=recipient, T=transconjugant.}
   \item{replicate}{replicate of the trial.}
   \item{conc}{concentration of the antibiotics (Tetracycline).}
   \item{time}{time in hours.}
   \item{value}{bacteria concentration measured as optical density.}
-}}
+}
+}
 \source{
 Claudia Seiler, TU Dresden, Institute of Hydrobiology.
 }

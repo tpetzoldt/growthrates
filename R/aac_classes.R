@@ -64,7 +64,7 @@ setClass("nonlinear_fit",
 #'
 setClass("easylinear_fit",
          representation(
-           fit = "lm",
+           fit = "lm_or_NULL",
            par = "numeric",
            ndx = "numeric"
          ),

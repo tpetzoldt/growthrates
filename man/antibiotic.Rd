@@ -4,14 +4,16 @@
 \name{antibiotic}
 \alias{antibiotic}
 \title{Plate Reader Data of Bacterial Growth}
-\format{Data frame with the following columns:
+\format{
+Data frame with the following columns:
 \describe{
   \item{time}{time in hours.}
   \item{variable}{sample code.}
   \item{value}{bacteria concentration measured as optical density.}
   \item{conc}{concentration of the antibiotics (Tetracycline).}
   \item{repl}{Replicate.}
-}}
+}
+}
 \source{
 Claudia Seiler, TU Dresden, Institute of Hydrobiology.
 }

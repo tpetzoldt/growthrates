@@ -25,3 +25,12 @@ setOldClass("growthmodel") # S3 class
 #'
 setClassUnion("function_growthmodel", c("growthmodel", "function"))
 
+#' Union Class of Linear Model or NULL
+#'
+#' Class to handle no-growth cases
+#'
+#' @name lm_or_NULL-class
+#' @exportClass lm_or_NULL
+#'
+setClassUnion("lm_or_NULL", c("lm", "NULL"))
+

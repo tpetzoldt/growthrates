@@ -13,3 +13,4 @@ pkg/vignettes/*.html
 pkg/vignettes/*.pdf
 .Rproj.user
 /local
+/_local
