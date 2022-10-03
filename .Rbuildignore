@@ -3,5 +3,6 @@
 ^work
 LICENSE
 ^local
+^_local
 todo.txt
 
