@@ -99,11 +99,11 @@ fit_easylinear <- function(time, y, h = 5, quota = 0.95) {
     ## set crude defaults, check this
     y0_data  <- y[1]
     y0_lm    <- mean(y) # check this
-    mumax    <- 0
-    lag      <- 0
-    tp  <- 1:length(y)
-    m   <- NULL
-    p   <- c(a=0, b=0, se=0, r2=0, cv=0, n=0)
+    mumax    <- NA
+    lag      <- NA
+    tp       <- 1:length(y)
+    m        <- NULL
+    p        <- c(a=y0_lm, b=NA, se=NA, r2=NA, cv=NA, n=NA)
   }
 
   obj <- new("easylinear_fit",

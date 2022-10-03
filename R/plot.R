@@ -142,15 +142,20 @@ setMethod("plot", c("easylinear_fit", "missing"),
                           log=log, ...)
                      points(obs[x@ndx,"y"] ~ obs[x@ndx,"time"], pch=16, col="red")
 
-                     ## lag phase
-                     lag <- coef(x)["lag"]
+                     if(!is.null(x@fit)) {
 
-                     time <- seq(min(obs[,"time"] + lag), max(obs[,"time"]), length=200)
-                     coef_ <- coef(x)
-                     lines(time, x@FUN(time, c(y0=unname(coef_["y0_lm"]), mumax=unname(coef_["mumax"])))[,"y"], ...)
+                       ## lag phase
+                       lag <- coef(x)["lag"]
 
-                     ## todo: use estimated or averaged y0_data instead of y[1]
-                     lines(c(min(obs[1, "time"]), lag), rep(obs[1, "y"], 2), lty="dotted")
+                       time <- seq(min(obs[,"time"] + lag), max(obs[,"time"]), length=200)
+                       coef_ <- coef(x)
+                       lines(time, x@FUN(time,
+                                         c(y0 = unname(coef_["y0_lm"]),
+                                           mumax = unname(coef_["mumax"])))[,"y"], ...)
+
+                       ## todo: use estimated or averaged y0_data instead of y[1]
+                       lines(c(min(obs[1, "time"]), lag), rep(obs[1, "y"], 2), lty="dotted")
+                     }
                    },
                    diagnostics = {
                      opar <- par(no.readonly = TRUE)
