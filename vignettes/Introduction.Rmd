@@ -350,7 +350,7 @@ coef(res)
 # Fit multiple data sets without loops
 
 Fitting multiple data sets at once is possible with functions
-`all_easyliner`, `all_growthmodels` and `all_splines`. Usage is
+`all_easylinear`, `all_growthmodels` and `all_splines`. Usage is
 similar for all methods, and the parameters are analogous to the
 single-fit methods. Both, the easy growth rates and the smooting
 splines method are quite robust. In contrast to this, parametric fits
