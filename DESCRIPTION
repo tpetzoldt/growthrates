@@ -3,7 +3,7 @@ Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
 Version: 0.8.5
-Date: 2022-10-04
+Date: 2025-06-14
 LazyData: yes
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
