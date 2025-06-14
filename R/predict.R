@@ -11,7 +11,7 @@
 #' @param newdata an optional data frame with column 'time' for new time steps with
 #'   which to predict.
 #' @param type type of predict. Can be \code{'exponential'} or \code{'spline'} for \code{fit_spline},
-#'   resp. code{'exponential'} or \code{'no_lag'} for \code{fit_easylinear}.
+#'   resp. \code{'exponential'} or \code{'no_lag'} for \code{fit_easylinear}.
 #' @param \dots additional arguments affecting the predictions produced.
 #'
 #' @rdname predict

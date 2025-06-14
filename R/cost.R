@@ -9,7 +9,7 @@
 #' @param fixed.p vector of fixed  parameters of the growth model.
 #' @param \dots additional parameters passed to the optimizer.
 #'
-#' @return an object of class \code{modCost}, see \code{\link{modCost}} in
+#' @return an object of class \code{modCost}, see \code{\link[FME]{modCost}} in
 #'   package \pkg{FME}
 #'
 #' @export cost

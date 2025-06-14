@@ -31,7 +31,7 @@ Suggests:
 License: GPL (>= 2)
 URL: https://github.com/tpetzoldt/growthrates
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Collate: 
     'aaa_growthmodel-class.R'
     'aab_growthmodel-constructor.R'

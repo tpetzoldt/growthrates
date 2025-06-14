@@ -27,7 +27,7 @@
 which to predict.}
 
 \item{type}{type of predict. Can be \code{'exponential'} or \code{'spline'} for \code{fit_spline},
-resp. code{'exponential'} or \code{'no_lag'} for \code{fit_easylinear}.}
+resp. \code{'exponential'} or \code{'no_lag'} for \code{fit_easylinear}.}
 }
 \description{
 Class-specific methods of package \pkg{growthrates} to make predictions.

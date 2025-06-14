@@ -81,8 +81,8 @@ J. heor. Biol. 192, 403--408.
 Other growth models: 
 \code{\link{grow_baranyi}()},
 \code{\link{grow_exponential}()},
-\code{\link{grow_gompertz2}()},
 \code{\link{grow_gompertz}()},
+\code{\link{grow_gompertz2}()},
 \code{\link{grow_huang}()},
 \code{\link{grow_logistic}()},
 \code{\link{grow_richards}()},
@@ -92,8 +92,8 @@ Other growth models:
 Other growth models: 
 \code{\link{grow_baranyi}()},
 \code{\link{grow_exponential}()},
-\code{\link{grow_gompertz2}()},
 \code{\link{grow_gompertz}()},
+\code{\link{grow_gompertz2}()},
 \code{\link{grow_huang}()},
 \code{\link{grow_logistic}()},
 \code{\link{grow_richards}()},

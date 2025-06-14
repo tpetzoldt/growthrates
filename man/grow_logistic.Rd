@@ -37,8 +37,8 @@ plot(time, y, type="l")
 Other growth models: 
 \code{\link{grow_baranyi}()},
 \code{\link{grow_exponential}()},
-\code{\link{grow_gompertz2}()},
 \code{\link{grow_gompertz}()},
+\code{\link{grow_gompertz2}()},
 \code{\link{grow_huang}()},
 \code{\link{grow_richards}()},
 \code{\link{growthmodel}},

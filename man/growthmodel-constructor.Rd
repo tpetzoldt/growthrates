@@ -52,8 +52,8 @@ mygrowthmodel <- growthmodel(test, c("y0", "mumax", "K", "y_shift"))
 Other growth models: 
 \code{\link{grow_baranyi}()},
 \code{\link{grow_exponential}()},
-\code{\link{grow_gompertz2}()},
 \code{\link{grow_gompertz}()},
+\code{\link{grow_gompertz2}()},
 \code{\link{grow_huang}()},
 \code{\link{grow_logistic}()},
 \code{\link{grow_richards}()},

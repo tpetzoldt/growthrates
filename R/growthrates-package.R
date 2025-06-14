@@ -22,7 +22,6 @@
 #'
 #' @name growthrates-package
 #' @aliases growthrates growthrates-package
-#' @docType package
 #' @author Thomas Petzoldt
 #'
 #' @seealso \code{\link{fit_easylinear}}, \code{\link{fit_spline}}, \code{\link{fit_growthmodel}},
@@ -85,4 +84,6 @@
 #' @importFrom utils type.convert
 #' @import parallel
 ## @importFrom parallel makeCluster stopCluster parLapply
-NULL
+#' @export
+"_PACKAGE"
+

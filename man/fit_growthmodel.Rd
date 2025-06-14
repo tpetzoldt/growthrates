@@ -33,7 +33,7 @@ fit_growthmodel(
 
 \item{which}{vector of parameter names that are to be fitted.}
 
-\item{method}{character vector specifying the optimization algorithm (see \code{\link{modFit}}).}
+\item{method}{character vector specifying the optimization algorithm (see \code{\link[FME]{modFit}}).}
 
 \item{transform}{fit model to non-transformed or log-transformed data.}
 
@@ -48,7 +48,7 @@ object  with parameters of the fit.
 Determine maximum growth rates by fitting nonlinear models.
 }
 \details{
-This function calls \code{modFit} from package \pkg{FME}.
+This function calls \code{\link[FME]{modFit}} from package \pkg{FME}.
 Syntax of control parameters and available options may differ, depending
 on the optimizer used, except \code{control=list(trace=...)} that switches
   tracing on and off for all methods and is either \code{TRUE}, or \code{FALSE},
@@ -81,7 +81,7 @@ plot(fit1, log="y")
 
 }
 \seealso{
-\code{\link{modFit}} about constrained fitting of models to data
+\code{\link[FME]{modFit}} about constrained fitting of models to data
 
 Other fitting functions: 
 \code{\link{all_easylinear}()},

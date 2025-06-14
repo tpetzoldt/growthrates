@@ -10,21 +10,21 @@
 #' @param lower lower bound of the parameter vector (optional).
 #' @param upper upper bound of the parameter vector (optional).
 #' @param which vector of parameter names that are to be fitted.
-#' @param method character vector specifying the optimization algorithm (see \code{\link{modFit}}).
+#' @param method character vector specifying the optimization algorithm (see \code{\link[FME]{modFit}}).
 #' @param transform fit model to non-transformed or log-transformed data.
 #' @param control A list of control parameters for the optimizers. See Details.
 #' @param \dots additional parameters passed to the optimizer.
 #'
 #' @return object  with parameters of the fit.
 #'
-#' @details This function calls \code{modFit} from package \pkg{FME}.
+#' @details This function calls \code{\link[FME]{modFit}} from package \pkg{FME}.
 #' Syntax of control parameters and available options may differ, depending
 #' on the optimizer used, except \code{control=list(trace=...)} that switches
 #'   tracing on and off for all methods and is either \code{TRUE}, or \code{FALSE},
 #'   or an integer value like 0, 1, 2, 3, depending on the optimizer.
 #'
 #' @family fitting functions
-#' @seealso \code{\link{modFit}} about constrained fitting of models to data
+#' @seealso \code{\link[FME]{modFit}} about constrained fitting of models to data
 #'
 #' @examples
 #'

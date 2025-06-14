@@ -16,7 +16,7 @@ cost(p, obs, FUN, fixed.p = NULL, transform, ...)
 \item{\dots}{additional parameters passed to the optimizer.}
 }
 \value{
-an object of class \code{modCost}, see \code{\link{modCost}} in
+an object of class \code{modCost}, see \code{\link[FME]{modCost}} in
   package \pkg{FME}
 }
 \description{
