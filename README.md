@@ -3,26 +3,14 @@
 
 # R package growthrates
 
-### Estimate Growth Rates from Experimental Data
+## Estimate Growth Rates from Experimental Data
 
 The population growth rate is the main indicator of population
 fitness.  This **R** package provides a collection of methods to
 determine growth rates from experimental data, in particular from
 batch experiments and microwell plate reader trials.
 
-News
-----
-
-* Release of version 0.8.4 to [**CRAN**](https://cran.r-project.org/package=growthrates)
-* improved robustness and error checking of the "easylinear"" method 
-* Corrected parametrization of Gompertz models (0.8.2)
-* Simplified handling of log-transformed parametric models (v. 0.8.1)
-* Several small changes and improvements
-* Added predict-methods
-* Presentation at the useR!2017 conference in Brussels
-
-Overview
---------
+## Overview
 
 The package contains basically three methods:
 
@@ -42,18 +30,24 @@ estimates and for plotting. The package supports growth models given
 as numerically solved differential equations. Multi-core computation
 is used to speed up fitting of parametric models.
 
-Download and Installation of the release version (recommended)
---------------------------------------------------------------
+## Documentation
+
+* [Introduction to the main functions](https://tpetzoldt.github.io/growthrates/articles/Introduction.html)
+
+* [Writing user defined functions](https://tpetzoldt.github.io/growthrates/doc/User_models.html)
 
 
-Install package from within **R** or **RStudio** like any other package, 
-or with:
+## Download and Installation
+
+### Release version (recommended)
+
+The package is available on [CRAN](https://cran.r-project.org/package=growthrates). 
+Install it from within **R** or **RStudio** as usual or with:
 
 
 ```R
 install.packages("growthrates")
 ```
-
 
 ### Development version
 
@@ -65,20 +59,11 @@ library(devtools)
 install_github("tpetzoldt/growthrates")
 ```
 
-Introduction to the main functions
-----------------------------------
-
-* html: https://tpetzoldt.github.io/growthrates/doc/Introduction.html
-
-Writing user defined functions
-------------------------------
-
-* html: https://tpetzoldt.github.io/growthrates/doc/User_models.html
 
 
 
-References
-----------
+## References
+
 
 Hall, B. G., H. Acar, A. Nandipati, and M. Barlow. 2014. Growth Rates Made
 Easy. Mol. Biol. Evol. 31: 232-38. https://dx.doi.org/10.1093/molbev/mst187
@@ -102,7 +87,6 @@ Setzer. 2010. Solving Differential Equations in R: Package
 deSolve. Journal of Statistical Software 33 (9):
 1-25. https://dx.doi.org/10.18637/jss.v033.i09
 
-Original author
----------------
+## Author
 
 [tpetzoldt](https://github.com/tpetzoldt)
