@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Introduction: Introduction.html
   User_models: User_models.html
-last_built: 2025-08-28T16:06Z
+last_built: 2025-08-28T17:42Z
 urls:
   reference: http://tpetzoldt.github.io/growthrates/reference
   article: http://tpetzoldt.github.io/growthrates/articles
