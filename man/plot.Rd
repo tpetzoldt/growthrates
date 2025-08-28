@@ -89,7 +89,7 @@ par(mfrow=c(2,2))
 plot(all.fits[1:4])
 
 ## plot only the 'R' strain
-par(mfrow=c(4, 6))
+# par(mfrow=c(4, 6))
 plot(all.fits[grep("R:", names(all.fits))])
 
 }

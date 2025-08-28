@@ -18,7 +18,7 @@
 #'
 #' plot(L[["R:0:2"]])
 #'
-#' par(mfrow=c(2, 2))
+#' # par(mfrow=c(2, 2))
 #' plot(L[1:4])
 #'
 #' @rdname extract

@@ -50,7 +50,7 @@ L <- all_splines(value ~ time | strain + conc + replicate,
 names(L)
 
 ## plot only the 'R' strain
-par(mfrow=c(4, 6))
+# par(mfrow=c(4, 6))
 plot(L[grep("R:", names(L))])
 
 

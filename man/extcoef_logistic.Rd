@@ -77,7 +77,7 @@ all <- all_growthmodels(value ~ time | conc,
                          p = parms, ncores = 2)
 
 
-par(mfrow=c(3,4))
+# par(mfrow=c(3,4))
 plot(all)
 results(all, extended=TRUE)
 ## we see that the the last 3 series (10...12) do not go into saturation
