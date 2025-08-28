@@ -34,7 +34,7 @@ is used to speed up fitting of parametric models.
 
 * [Introduction to the main functions](https://tpetzoldt.github.io/growthrates/articles/Introduction.html)
 
-* [Writing user defined functions](https://tpetzoldt.github.io/growthrates/doc/User_models.html)
+* [Writing user defined functions](https://tpetzoldt.github.io/growthrates/articles/User_models.html)
 
 
 ## Download and Installation
