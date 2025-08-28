@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">growthrates</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,24 +56,10 @@
 <div class="section level1">
 <div class="page-header"><h1 id="r-package-growthrates">R package growthrates<a class="anchor" aria-label="anchor" href="#r-package-growthrates"></a>
 </h1></div>
-<div class="section level3">
-<h3 id="estimate-growth-rates-from-experimental-data">Estimate Growth Rates from Experimental Data<a class="anchor" aria-label="anchor" href="#estimate-growth-rates-from-experimental-data"></a>
-</h3>
-<p>The population growth rate is the main indicator of population fitness. This <strong>R</strong> package provides a collection of methods to determine growth rates from experimental data, in particular from batch experiments and microwell plate reader trials.</p>
-</div>
 <div class="section level2">
-<h2 id="news">News<a class="anchor" aria-label="anchor" href="#news"></a>
+<h2 id="estimate-growth-rates-from-experimental-data">Estimate Growth Rates from Experimental Data<a class="anchor" aria-label="anchor" href="#estimate-growth-rates-from-experimental-data"></a>
 </h2>
-<ul>
-<li>Release of version 0.8.4 to <a href="https://cran.r-project.org/package=growthrates" class="external-link"><strong>CRAN</strong></a>
-</li>
-<li>improved robustness and error checking of the “easylinear”” method</li>
-<li>Corrected parametrization of Gompertz models (0.8.2)</li>
-<li>Simplified handling of log-transformed parametric models (v. 0.8.1)</li>
-<li>Several small changes and improvements</li>
-<li>Added predict-methods</li>
-<li>Presentation at the useR!2017 conference in Brussels</li>
-</ul>
+<p>The population growth rate is the main indicator of population fitness. This <strong>R</strong> package provides a collection of methods to determine growth rates from experimental data, in particular from batch experiments and microwell plate reader trials.</p>
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -87,11 +73,23 @@
 <p>The package can fit data sets of single experiments or complete series containing multiple data sets. Included are functions for extracting estimates and for plotting. The package supports growth models given as numerically solved differential equations. Multi-core computation is used to speed up fitting of parametric models.</p>
 </div>
 <div class="section level2">
-<h2 id="download-and-installation-of-the-release-version-recommended">Download and Installation of the release version (recommended)<a class="anchor" aria-label="anchor" href="#download-and-installation-of-the-release-version-recommended"></a>
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>Install package from within <strong>R</strong> or <strong>RStudio</strong> like any other package, or with:</p>
+<ul>
+<li><p><a href="https://tpetzoldt.github.io/growthrates/articles/Introduction.html" class="external-link">Introduction to the main functions</a></p></li>
+<li><p><a href="https://tpetzoldt.github.io/growthrates/doc/User_models.html" class="external-link">Writing user defined functions</a></p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="download-and-installation">Download and Installation<a class="anchor" aria-label="anchor" href="#download-and-installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="release-version-recommended">Release version (recommended)<a class="anchor" aria-label="anchor" href="#release-version-recommended"></a>
+</h3>
+<p>The package is available on <a href="https://cran.r-project.org/package=growthrates" class="external-link">CRAN</a>. Install it from within <strong>R</strong> or <strong>RStudio</strong> as usual or with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"growthrates"</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
@@ -103,22 +101,6 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="introduction-to-the-main-functions">Introduction to the main functions<a class="anchor" aria-label="anchor" href="#introduction-to-the-main-functions"></a>
-</h2>
-<ul>
-<li>html: <a href="https://tpetzoldt.github.io/growthrates/doc/Introduction.html" class="external-link uri">https://tpetzoldt.github.io/growthrates/doc/Introduction.html</a>
-</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="writing-user-defined-functions">Writing user defined functions<a class="anchor" aria-label="anchor" href="#writing-user-defined-functions"></a>
-</h2>
-<ul>
-<li>html: <a href="https://tpetzoldt.github.io/growthrates/doc/User_models.html" class="external-link uri">https://tpetzoldt.github.io/growthrates/doc/User_models.html</a>
-</li>
-</ul>
-</div>
-<div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Hall, B. G., H. Acar, A. Nandipati, and M. Barlow. 2014. Growth Rates Made Easy. Mol. Biol. Evol. 31: 232-38. <a href="https://dx.doi.org/10.1093/molbev/mst187" class="external-link uri">https://dx.doi.org/10.1093/molbev/mst187</a></p>
@@ -128,7 +110,7 @@
 <p>Soetaert, Karline, Thomas Petzoldt, and R. Woodrow Setzer. 2010. Solving Differential Equations in R: Package deSolve. Journal of Statistical Software 33 (9): 1-25. <a href="https://dx.doi.org/10.18637/jss.v033.i09" class="external-link uri">https://dx.doi.org/10.18637/jss.v033.i09</a></p>
 </div>
 <div class="section level2">
-<h2 id="original-author">Original author<a class="anchor" aria-label="anchor" href="#original-author"></a>
+<h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a>
 </h2>
 <p><a href="https://github.com/tpetzoldt" class="external-link">tpetzoldt</a></p>
 </div>
