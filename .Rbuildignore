@@ -6,3 +6,7 @@ LICENSE
 ^_local
 todo.txt
 
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
