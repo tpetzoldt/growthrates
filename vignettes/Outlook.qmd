@@ -1,26 +1,25 @@
 ---
-title: "Pipelines, Scope, and Outlook on FME"
+title: "Pipelines, Scope, and Outlook on Multivariate Models"
 author: "Thomas Petzoldt"
 format:
   html:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Pipelines, Scope, and Outlook on FME}
+  %\VignetteIndexEntry{Pipelines, Scope, and Outlook on Multivariate Models}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
 ## Overview
 
-The **`growthrates`** package is designed to estimate growth rates (especially $\mu_{\max}$) and curve parameters from a single response time series—either via smoothing splines (`fit_splines()`, `all_splines()`), linear fits to the exponential phase (`fit_easylinear()`, `all_easylinear()`), or parametric and ODE-based growth models (`fit_growthmodels()`, `all_growthmodels()`).
+The **`growthrates`** package is designed to estimate growth rates (especially $\mu_{\max}$) and curve parameters from a single response time series, either via smoothing splines (`fit_splines()`, `all_splines()`), linear fits to the exponential phase (`fit_easylinear()`, `all_easylinear()`), or parametric and ODE-based growth models (`fit_growthmodels()`, `all_growthmodels()`).
 
-This short vignette illustrates:
+This vignette illustrates:
 
 1. how batch analyses can be expressed with modern R pipelines instead of `all_*` functions (while keeping `all_*` intact for convenience and backward compatibility),
 2. why `growthrates` intentionally restricts fitting to a single response variable, and
 3. how to transition to multivariate dynamic systems using **`deSolve`** and **`FME`**.
 
----
 
 ## Batch Analysis with Pipelines Instead of `all_*`
 
@@ -85,7 +84,6 @@ head(coefs_dplyr)
 
 Using a pipeline is especially helpful when blank corrections, outlier filtering, or `tryCatch()` guards for noisy individual wells need to be integrated directly into the workflow.
 
----
 
 ## Why `growthrates` Focuses on a Single Response Variable
 
@@ -97,7 +95,6 @@ Supporting multivariate responses directly within `growthrates` would substantia
 * **weighting and error structure** (appropriate weights across variables depend on measurement noise, replication, and biological priorities rather than a universal default), and
 * **more complex return objects, plotting, and batch methods** for a package aimed at lightweight, reproducible growth rate estimation.
 
----
 
 ## Outlook: Multivariate ODE Fits with `deSolve` and `FME`
 
@@ -175,7 +172,6 @@ ggplot() +
   theme_bw()
 ```
 
----
 
 ## Summary
 
