@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Thomas Petzoldt">
+
+<title>Pipelines, Scope, and Outlook on Multivariate Models</title>
+<style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+width: 0.8em;
+margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+</style>
+</head>
+
+<body>
+
+
+<header id="title-block-header">
+<h1 class="title">Pipelines, Scope, and Outlook on Multivariate Models</h1>
+<p class="author">Thomas Petzoldt</p>
+
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview">Overview</a></li>
+  <li><a href="#batch-analysis-with-pipelines-instead-of-all_" id="toc-batch-analysis-with-pipelines-instead-of-all_">Batch Analysis with Pipelines Instead of <code>all_*</code></a>
+  <ul>
+  <li><a href="#comparing-all_easylinear-and-a-base-r-pipeline" id="toc-comparing-all_easylinear-and-a-base-r-pipeline">Comparing <code>all_easylinear()</code> and a Base-R Pipeline</a></li>
+  <li><a href="#comparing-all_easylinear-in-a-dplyr-pipeline" id="toc-comparing-all_easylinear-in-a-dplyr-pipeline">Comparing <code>all_easylinear()</code> in a dplyr pipeline</a></li>
+  </ul></li>
+  <li><a href="#why-growthrates-focuses-on-a-single-response-variable" id="toc-why-growthrates-focuses-on-a-single-response-variable">Why <code>growthrates</code> Focuses on a Single Response Variable</a></li>
+  <li><a href="#outlook-multivariate-ode-fits-with-desolve-and-fme" id="toc-outlook-multivariate-ode-fits-with-desolve-and-fme">Outlook: Multivariate ODE Fits with <code>deSolve</code> and <code>FME</code></a>
+  <ul>
+  <li><a href="#core-workflow" id="toc-core-workflow">Core Workflow</a></li>
+  <li><a href="#visualizing-the-coupled-monod-fit" id="toc-visualizing-the-coupled-monod-fit">Visualizing the Coupled Monod Fit</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary">Summary</a></li>
+  </ul>
+</nav>
+<h2 id="overview">Overview</h2>
+<p>The <strong><code>growthrates</code></strong> package is designed to estimate growth rates (especially <span class="math inline"><em>μ</em><sub>max</sub></span>) and curve parameters from a single response time series, either via smoothing splines (<code>fit_splines()</code>, <code>all_splines()</code>), linear fits to the exponential phase (<code>fit_easylinear()</code>, <code>all_easylinear()</code>), or parametric and ODE-based growth models (<code>fit_growthmodels()</code>, <code>all_growthmodels()</code>).</p>
+<p>This vignette illustrates:</p>
+<ol type="1">
+<li>how batch analyses can be expressed with modern R pipelines instead of <code>all_*</code> functions (while keeping <code>all_*</code> intact for convenience and backward compatibility),</li>
+<li>why <code>growthrates</code> intentionally restricts fitting to a single response variable, and</li>
+<li>how to transition to multivariate dynamic systems using <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong>.</li>
+</ol>
+<h2 id="batch-analysis-with-pipelines-instead-of-all_">Batch Analysis with Pipelines Instead of <code>all_*</code></h2>
+<p>The <code>all_*</code> functions provide a compact formula interface for fitting multiple groups at once. In many workflows, however, it is more flexible to handle data preprocessing, error handling, and postprocessing explicitly inside a pipeline—using either base R (<code>|&gt;</code> with <code>split()</code> and <code>lapply()</code>) or <code>dplyr</code> / <code>purrr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(growthrates)</span></code></pre></div>
+</div>
+<h3 id="comparing-all_easylinear-and-a-base-r-pipeline">Comparing <code>all_easylinear()</code> and a Base-R Pipeline</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Classic batch call across all groups in bactgrowth</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fits_all <span class="ot">&lt;-</span> <span class="fu">all_easylinear</span>(value <span class="sc">~</span> time <span class="sc">|</span> strain <span class="sc">+</span> conc <span class="sc">+</span> replicate,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> bactgrowth, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">quota =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein
+Warning in summary.lm(m): im Wesentlichen ein perfekter Fit: summary kann
+unzuverlässig sein</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent base-R pipeline without extra package dependencies</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fits_pipe <span class="ot">&lt;-</span> bactgrowth <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">split</span>(<span class="sc">~</span> strain <span class="sc">+</span> conc <span class="sc">+</span> replicate) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="cf">function</span>(df) {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fit_easylinear</span>(df<span class="sc">$</span>time, df<span class="sc">$</span>value, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">quota =</span> <span class="fl">0.95</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine estimated coefficients into a data frame</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>coefs_pipe <span class="ot">&lt;-</span> <span class="fu">do.call</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  rbind,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(<span class="fu">names</span>(fits_pipe), <span class="cf">function</span>(nm) {</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(<span class="at">group =</span> nm, <span class="fu">as.data.frame</span>(<span class="fu">as.list</span>(<span class="fu">coef</span>(fits_pipe[[nm]]))))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coefs_pipe)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     group    y0       y0_lm      mumax       lag
+1    D.0.1 0.018 0.012348195 0.20489854 1.8392607
+2    R.0.1 0.011 0.008831178 0.25630432 0.8568207
+3    T.0.1 0.009 0.007109072 0.26515879 0.8894780
+4 D.0.24.1 0.023 0.017262020 0.15798894 1.8164912
+5 R.0.24.1 0.017 0.014271037 0.05226301 3.3480901
+6 T.0.24.1 0.016 0.012426043 0.19736804 1.2808264</code></pre>
+</div>
+</div>
+<h3 id="comparing-all_easylinear-in-a-dplyr-pipeline">Comparing <code>all_easylinear()</code> in a dplyr pipeline</h3>
+<p>When working with <code>dplyr</code>, you can group by the experimental factors and fit <code>fit_easylinear()</code> per group before unpacking the estimated coefficients into columns. Using <code>suppressWarnings()</code> keeps the rendered output free of <code>summary.lm()</code> warnings for near-perfect linear fits, while keeping <code>growthrates</code> itself free of <code>dplyr</code> as a hard dependency.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>coefs_dplyr <span class="ot">&lt;-</span> bactgrowth <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">list</span>(<span class="fu">suppressWarnings</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">fit_easylinear</span>(time, value, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">quota =</span> <span class="fl">0.95</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(strain, conc, replicate)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">coefs =</span> <span class="fu">lapply</span>(fit, coef)) <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>fit) <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(coefs)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coefs_dplyr)</span></code></pre></div>
+</div>
+<p>Using a pipeline is especially helpful when blank corrections, outlier filtering, or <code>tryCatch()</code> guards for noisy individual wells need to be integrated directly into the workflow.</p>
+<h2 id="why-growthrates-focuses-on-a-single-response-variable">Why <code>growthrates</code> Focuses on a Single Response Variable</h2>
+<p>Both <code>fit_growthmodel()</code> / <code>all_growthmodel()</code> and the non-parametric methods in <code>growthrates</code> operate on <strong>one dependent response variable</strong>. Even when a user-defined ODE model simulates multiple internal state variables (such as biomass <code>y</code> and substrate <code>s</code>), the objective function evaluates residuals against that single observed variable.</p>
+<p>Supporting multivariate responses directly within <code>growthrates</code> would substantially increase API and complexity for the user, mainly due to:</p>
+<ul>
+<li><strong>different units and scales</strong> (e.g., <span class="math inline">OD<sub>600</sub></span> values between <code>0.01</code> and <code>1.5</code> vs. substrate concentrations in <code>mmol/L</code> or fluorescence intensities),</li>
+<li><strong>weighting and error structure</strong> (appropriate weights across variables depend on measurement noise, replication, and biological priorities rather than a universal default), and</li>
+<li><strong>more complex return objects, plotting, and batch methods</strong> for a package aimed at lightweight, reproducible growth rate estimation.</li>
+</ul>
+<h2 id="outlook-multivariate-ode-fits-with-desolve-and-fme">Outlook: Multivariate ODE Fits with <code>deSolve</code> and <code>FME</code></h2>
+<p>When multiple state variables are measured simultaneously, such as biomass alongside substrate depletion or product formation, and jointly help identify parameters like half-saturation constants (<span class="math inline"><em>K</em><sub><em>s</em></sub></span>) or yield coefficients, switching directly to <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong> (<code>modCost()</code> and <code>modFit()</code>) is the natural next step.</p>
+<h3 id="core-workflow">Core Workflow</h3>
+<ol type="1">
+<li>Define the coupled ODE system as a standard derivative function for <code>deSolve::ode()</code>.</li>
+<li>Use <code>FME::modCost()</code> to combine residuals across multiple observed variables with explicit scaling and weighting.</li>
+<li>Optimize parameters with <code>FME::modFit()</code>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FME)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coupled Monod model with biomass (y) and substrate (s)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>monod_ode <span class="ot">&lt;-</span> <span class="cf">function</span>(time, state, parms) {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> mumax <span class="sc">*</span> s <span class="sc">/</span> (Ks <span class="sc">+</span> s)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> mu <span class="sc">*</span> y</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ds <span class="ot">&lt;-</span> <span class="sc">-</span>dy <span class="sc">/</span> yield</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dy, ds))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Example objective function for two observed variables (columns: time, y, s)</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>obj_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(p, obs_df, y0) {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> y0, <span class="at">times =</span> obs_df<span class="sc">$</span>time, <span class="at">func =</span> monod_ode, <span class="at">parms =</span> p)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modCost</span>(<span class="at">model =</span> out, <span class="at">obs =</span> obs_df, <span class="at">x =</span> <span class="st">&quot;time&quot;</span>, <span class="at">weight =</span> <span class="st">&quot;std&quot;</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Example observed dataset with two measured state variables</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>obs_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>),</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">y    =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.13</span>, <span class="fl">0.26</span>, <span class="fl">0.59</span>, <span class="fl">0.81</span>, <span class="fl">0.94</span>, <span class="fl">1.01</span>),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">s    =</span> <span class="fu">c</span>(<span class="fl">10.0</span>, <span class="fl">9.15</span>, <span class="fl">7.72</span>, <span class="fl">4.45</span>, <span class="fl">1.85</span>, <span class="fl">0.48</span>, <span class="fl">0.06</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>p_start <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">mumax =</span> <span class="fl">0.6</span>, <span class="at">Ks =</span> <span class="fl">1.0</span>,  <span class="at">yield =</span> <span class="fl">0.1</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_lower <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">mumax =</span> <span class="dv">0</span>,   <span class="at">Ks =</span> <span class="fl">1e-6</span>, <span class="at">yield =</span> <span class="fl">1e-6</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>p_upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">mumax =</span> <span class="dv">10</span>,  <span class="at">Ks =</span> <span class="dv">100</span>,  <span class="at">yield =</span> <span class="dv">5</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>fit_mv <span class="ot">&lt;-</span> <span class="fu">modFit</span>(<span class="at">f =</span> obj_fun, <span class="at">p =</span> p_start, <span class="at">lower =</span> p_lower, <span class="at">upper =</span> p_upper,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">obs_df =</span> obs_df, <span class="at">y0 =</span> <span class="fu">c</span>(<span class="at">y =</span> <span class="fl">0.05</span>, <span class="at">s =</span> <span class="dv">10</span>))</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_mv)</span></code></pre></div>
+</div>
+<h3 id="visualizing-the-coupled-monod-fit">Visualizing the Coupled Monod Fit</h3>
+<p>Once the multivariate fit is obtained with <code>FME::modFit()</code>, you can define the initial state vector <code>y0</code> explicitly, simulate the fitted trajectory on a finer time grid with <code>deSolve::ode()</code>, and plot both observed points and model curves side by side with <code>ggplot2</code> (using facets so biomass <code>y</code> and substrate <code>s</code> keep their own scales).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>y0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">y =</span> <span class="fl">0.05</span>, <span class="at">s =</span> <span class="dv">10</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>time_fine <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(obs_df<span class="sc">$</span>time), <span class="fu">max</span>(obs_df<span class="sc">$</span>time), <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>sim_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ode</span>(<span class="at">y =</span> y0, <span class="at">times =</span> time_fine, <span class="at">func =</span> monod_ode, <span class="at">parms =</span> <span class="fu">coef</span>(fit_mv))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>obs_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(obs_df, <span class="at">cols =</span> <span class="fu">c</span>(y, s),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>sim_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(sim_df, <span class="at">cols =</span> <span class="fu">c</span>(y, s),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> sim_long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value), <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> obs_long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+</div>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong><code>growthrates</code></strong> provides a lightweight, script-friendly workflow for estimating growth rates and curve parameters from a <strong>single</strong> response variable.</li>
+<li><strong><code>deSolve</code> + <code>FME</code></strong> support mechanistic dynamic modeling with <strong>multiple</strong> observed state variables, explicit residual weighting, and parameter identifiability analysis.</li>
+</ul>
+<p>Depending on the experimental setup, other packages can be useful when a workflow calls for direct import of plate-reader data, dose-response analysis, or an interactive Shiny interface.</p>
+
+
+
+
+
+</body></html>
