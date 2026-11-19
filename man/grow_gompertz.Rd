@@ -48,15 +48,15 @@ Tsoularis, A. (2001) Analysis of Logistic Growth Models.
   Res. Lett. Inf. Math. Sci, (2001) 2, 23-46.
 }
 \seealso{
-Other growth models: 
-\code{\link{grow_baranyi}()},
-\code{\link{grow_exponential}()},
-\code{\link{grow_gompertz2}()},
-\code{\link{grow_huang}()},
-\code{\link{grow_logistic}()},
-\code{\link{grow_richards}()},
-\code{\link{growthmodel}},
-\code{\link{ode_genlogistic}()},
-\code{\link{ode_twostep}()}
+Other growth models:
+\code{\link[=grow_baranyi]{grow_baranyi()}},
+\code{\link[=grow_exponential]{grow_exponential()}},
+\code{\link[=grow_gompertz2]{grow_gompertz2()}},
+\code{\link[=grow_huang]{grow_huang()}},
+\code{\link[=grow_logistic]{grow_logistic()}},
+\code{\link[=grow_richards]{grow_richards()}},
+\code{\link[=growthmodel]{growthmodel()}},
+\code{\link[=ode_genlogistic]{ode_genlogistic()}},
+\code{\link[=ode_twostep]{ode_twostep()}}
 }
 \concept{growth models}

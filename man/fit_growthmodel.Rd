@@ -83,11 +83,11 @@ plot(fit1, log="y")
 \seealso{
 \code{\link[FME]{modFit}} about constrained fitting of models to data
 
-Other fitting functions: 
-\code{\link{all_easylinear}()},
-\code{\link{all_growthmodels}()},
-\code{\link{all_splines}()},
-\code{\link{fit_easylinear}()},
-\code{\link{fit_spline}()}
+Other fitting functions:
+\code{\link[=all_easylinear]{all_easylinear()}},
+\code{\link[=all_growthmodels]{all_growthmodels()}},
+\code{\link[=all_splines]{all_splines()}},
+\code{\link[=fit_easylinear]{fit_easylinear()}},
+\code{\link[=fit_spline]{fit_spline()}}
 }
 \concept{fitting functions}

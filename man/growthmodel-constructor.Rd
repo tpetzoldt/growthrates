@@ -49,15 +49,15 @@ mygrowthmodel <- growthmodel(test, c("y0", "mumax", "K", "y_shift"))
 
 }
 \seealso{
-Other growth models: 
-\code{\link{grow_baranyi}()},
-\code{\link{grow_exponential}()},
-\code{\link{grow_gompertz}()},
-\code{\link{grow_gompertz2}()},
-\code{\link{grow_huang}()},
-\code{\link{grow_logistic}()},
-\code{\link{grow_richards}()},
-\code{\link{ode_genlogistic}()},
-\code{\link{ode_twostep}()}
+Other growth models:
+\code{\link[=grow_baranyi]{grow_baranyi()}},
+\code{\link[=grow_exponential]{grow_exponential()}},
+\code{\link[=grow_gompertz]{grow_gompertz()}},
+\code{\link[=grow_gompertz2]{grow_gompertz2()}},
+\code{\link[=grow_huang]{grow_huang()}},
+\code{\link[=grow_logistic]{grow_logistic()}},
+\code{\link[=grow_richards]{grow_richards()}},
+\code{\link[=ode_genlogistic]{ode_genlogistic()}},
+\code{\link[=ode_twostep]{ode_twostep()}}
 }
 \concept{growth models}

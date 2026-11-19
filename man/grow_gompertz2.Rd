@@ -55,15 +55,15 @@ Zwietering, M. H., Jongenburger, I., Rombouts, F. M., and Van't Riet, K.
   Appl. Environ. Microbiol., 56(6), 1875-1881.
 }
 \seealso{
-Other growth models: 
-\code{\link{grow_baranyi}()},
-\code{\link{grow_exponential}()},
-\code{\link{grow_gompertz}()},
-\code{\link{grow_huang}()},
-\code{\link{grow_logistic}()},
-\code{\link{grow_richards}()},
-\code{\link{growthmodel}},
-\code{\link{ode_genlogistic}()},
-\code{\link{ode_twostep}()}
+Other growth models:
+\code{\link[=grow_baranyi]{grow_baranyi()}},
+\code{\link[=grow_exponential]{grow_exponential()}},
+\code{\link[=grow_gompertz]{grow_gompertz()}},
+\code{\link[=grow_huang]{grow_huang()}},
+\code{\link[=grow_logistic]{grow_logistic()}},
+\code{\link[=grow_richards]{grow_richards()}},
+\code{\link[=growthmodel]{growthmodel()}},
+\code{\link[=ode_genlogistic]{ode_genlogistic()}},
+\code{\link[=ode_twostep]{ode_twostep()}}
 }
 \concept{growth models}

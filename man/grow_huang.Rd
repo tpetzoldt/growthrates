@@ -64,15 +64,15 @@ Program (IPMP). Residue Chemistry and Predictive Microbiology Research
 Unit. USDA Agricultural Research Service.
 }
 \seealso{
-Other growth models: 
-\code{\link{grow_baranyi}()},
-\code{\link{grow_exponential}()},
-\code{\link{grow_gompertz}()},
-\code{\link{grow_gompertz2}()},
-\code{\link{grow_logistic}()},
-\code{\link{grow_richards}()},
-\code{\link{growthmodel}},
-\code{\link{ode_genlogistic}()},
-\code{\link{ode_twostep}()}
+Other growth models:
+\code{\link[=grow_baranyi]{grow_baranyi()}},
+\code{\link[=grow_exponential]{grow_exponential()}},
+\code{\link[=grow_gompertz]{grow_gompertz()}},
+\code{\link[=grow_gompertz2]{grow_gompertz2()}},
+\code{\link[=grow_logistic]{grow_logistic()}},
+\code{\link[=grow_richards]{grow_richards()}},
+\code{\link[=growthmodel]{growthmodel()}},
+\code{\link[=ode_genlogistic]{ode_genlogistic()}},
+\code{\link[=ode_twostep]{ode_twostep()}}
 }
 \concept{growth models}

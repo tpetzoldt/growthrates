@@ -2,8 +2,8 @@ Encoding: UTF-8
 Package: growthrates
 Type: Package
 Title: Estimate Growth Rates from Experimental Data
-Version: 0.8.6
-Date: 2025-08-28
+Version: 0.8.7
+Date: 2026-11-19
 LazyData: yes
 Authors@R: c(person("Thomas","Petzoldt", role = c("aut", "cre"),
                      email = "thomas.petzoldt@tu-dresden.de",
@@ -25,13 +25,13 @@ Imports:
     FME
 Suggests:
     knitr,
+	quarto,
     rmarkdown,
     dplyr,
     ggplot2
 License: GPL (>= 2)
 URL: https://github.com/tpetzoldt/growthrates, http://tpetzoldt.github.io/growthrates/
-VignetteBuilder: knitr
-RoxygenNote: 7.3.2
+VignetteBuilder: knitr, quarto
 Collate: 
     'aaa_growthmodel-class.R'
     'aab_growthmodel-constructor.R'
@@ -67,3 +67,4 @@ Collate:
     'plot.R'
     'predict.R'
     'utilities.R'
+Config/roxygen2/version: 8.1.1
