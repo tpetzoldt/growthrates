@@ -1,9 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>http://tpetzoldt.github.io/growthrates/404.html</loc></url>
 <url><loc>http://tpetzoldt.github.io/growthrates/LICENSE-text.html</loc></url>
-<url><loc>http://tpetzoldt.github.io/growthrates/articles/Introduction.html</loc></url>
-<url><loc>http://tpetzoldt.github.io/growthrates/articles/Outlook.html</loc></url>
-<url><loc>http://tpetzoldt.github.io/growthrates/articles/User_models.html</loc></url>
+<url><loc>http://tpetzoldt.github.io/growthrates/articles/1-introduction.html</loc></url>
+<url><loc>http://tpetzoldt.github.io/growthrates/articles/2-user_models.html</loc></url>
+<url><loc>http://tpetzoldt.github.io/growthrates/articles/3-pipes_outlook.html</loc></url>
 <url><loc>http://tpetzoldt.github.io/growthrates/articles/index.html</loc></url>
 <url><loc>http://tpetzoldt.github.io/growthrates/authors.html</loc></url>
 <url><loc>http://tpetzoldt.github.io/growthrates/index.html</loc></url>
