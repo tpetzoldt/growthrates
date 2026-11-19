@@ -134,16 +134,16 @@ obj_fun <- function(p, obs_df, y0) {
 # Example observed dataset with two measured state variables
 obs_df <- data.frame(
   time = c(0, 2, 4, 6, 8, 10, 12),
-  y    = c(0.05, 0.11, 0.24, 0.48, 0.76, 0.92, 0.98),
-  s    = c(10.0, 9.88, 9.62, 9.14, 8.58, 8.26, 8.14)
+  y    = c(0.05, 0.13, 0.26, 0.59, 0.81, 0.94, 1.01),
+  s    = c(10.0, 9.15, 7.72, 4.45, 1.85, 0.48, 0.06)
 )
 
-p_start <- c(mumax = 2,  Ks = 1.0, yield = 0.5)
-p_lower <- c(mumax = 0,  Ks = 1e-6, yield = 1e-6)
-p_upper <- c(mumax = 10, Ks = 100,  yield = 10)
-
+p_start <- c(mumax = 0.6, Ks = 1.0,  yield = 0.1)
+p_lower <- c(mumax = 0,   Ks = 1e-6, yield = 1e-6)
+p_upper <- c(mumax = 10,  Ks = 100,  yield = 5)
 fit_mv <- modFit(f = obj_fun, p = p_start, lower = p_lower, upper = p_upper,
                   obs_df = obs_df, y0 = c(y = 0.05, s = 10))
+summary(fit_mv)
 ```
 
 ### Visualizing the Coupled Monod Fit
