@@ -1,4 +1,4 @@
-# R package growthrates ![growthrates logo](reference/figures/growthrates_logo.png)
+# R package growthrates
 
 ## Estimate Growth Rates from Experimental Data
 

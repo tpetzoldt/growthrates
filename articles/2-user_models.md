@@ -379,4 +379,4 @@ Hall/CRC.
 ------------------------------------------------------------------------
 
 **Copyright and original author:**
-[tpetzoldt](https://github.com/tpetzoldt), 2026-11-19
+[tpetzoldt](https://github.com/tpetzoldt), 2026-11-20
