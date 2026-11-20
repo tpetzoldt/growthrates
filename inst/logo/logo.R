@@ -100,7 +100,7 @@ s <- sticker(
   h_size = 1.5
 )
 
-svglite::svglite("man/figures/growthrates_logo.svg", width = 1.73, height = 2.0)
+svglite::svglite("man/figures/logo.svg", width = 1.73, height = 2.0)
 print(s)
 dev.off()
 

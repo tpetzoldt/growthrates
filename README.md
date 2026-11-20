@@ -1,7 +1,7 @@
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/growthrates)](https://cran.r-project.org/package=growthrates)
 [![Downloads](https://cranlogs.r-pkg.org/badges/growthrates)](https://cran.r-project.org/package=growthrates)
 
-# R package growthrates <img src="man/figures/growthrates_logo.png" align="right" alt="growthrates logo" />
+# R package growthrates <img src="man/figures/logo.png" align="right" alt="growthrates logo" />
 
 ## Estimate Growth Rates from Experimental Data
 

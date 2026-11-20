@@ -15,3 +15,7 @@ pkg/vignettes/*.pdf
 /local
 /_local
 docs
+
+^.*[.]dll
+^.*[.]o
+^.*[.]so
