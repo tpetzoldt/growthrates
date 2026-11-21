@@ -304,7 +304,7 @@ unlink(paste(ode_K_linear, ".o", sep = ""))
 Many thanks to Claudia Seiler for the data set, to David Kneis for
 fruitful discussions, to Daniel Kaschek for his **cOde** package, and to the R
 Core Team [@RCore2015] for developing and maintaining **R**. This documentation
-was written using **Quarto**.
+was written using **Quarto** [@quarto].
 
 # References
 

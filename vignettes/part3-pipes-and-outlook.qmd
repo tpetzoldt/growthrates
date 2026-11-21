@@ -15,7 +15,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Overview
+# Overview
 
 The **`growthrates`** package is designed to estimate growth rates (especially $\mu_{\max}$) and curve parameters from a single response time series, either via smoothing splines (`fit_splines()`, `all_splines()`), linear fits to the exponential phase (`fit_easylinear()`, `all_easylinear()`), or parametric and ODE-based growth models (`fit_growthmodels()`, `all_growthmodels()`).
 
@@ -26,7 +26,7 @@ This vignette illustrates:
 3. how to transition to multivariate dynamic systems using **`deSolve`** and **`FME`**.
 
 
-## Batch Analysis with Pipelines Instead of `all_*`
+# Batch Analysis with Pipelines Instead of `all_*`
 
 The `all_*` functions provide a compact formula interface for fitting multiple groups at once. In many workflows, however, it is more flexible to handle data preprocessing, error handling, and postprocessing explicitly inside a pipeline—using either base R (`|>` with `split()` and `lapply()`) or `dplyr` / `purrr`.
 
@@ -36,7 +36,7 @@ The `all_*` functions provide a compact formula interface for fitting multiple g
 library(growthrates)
 ```
 
-### Comparing `all_easylinear()` and a Base-R Pipeline
+## Comparing `all_easylinear()` and a Base-R Pipeline
 
 ```{r}
 #| label: pipeline-vs-all
@@ -62,7 +62,7 @@ coefs_pipe <- do.call(
 
 head(coefs_pipe)
 ```
-### Comparing `all_easylinear()` in a dplyr pipeline
+## Comparing `all_easylinear()` in a dplyr pipeline
 
 When working with `dplyr`, you can group by the experimental factors and fit `fit_easylinear()` per group before unpacking the estimated coefficients into columns.
 
@@ -91,15 +91,16 @@ head(coefs_dplyr)
 
 Using a pipeline is especially helpful when blank corrections, outlier filtering, or `tryCatch()` guards for noisy individual wells need to be integrated directly into the workflow.
 
-### Parallelization with **futurize**
+## Parallelization with `futurize`
 
-A limitation of standard `dplyr` / `purrr` pipelines compared to `all_*` functions (which accept `ncores`) is that they run sequentially by default. With the **`futurize`** package [@Bengtsson2025_futurize]. 
+A limitation of standard `dplyr` / `purrr` pipelines compared to the `all_*` functions of `growthrates` (which accept `ncores`) is that they run sequentially by default. With the **`futurize`** package [@Bengtsson2025_futurize]. 
 You can parallelize map-reduce calls such as `lapply()` or `purrr::map()` by selecting a **`future`** backend [@Bengtsson2021_future] (`plan(multisession)`) and piping the mapping step into `futurize()`.
 
 Note that `futurize` relies on optional backend packages depending on which mapping function you use: **`future.apply`** [@Bengtsson2021_future_apply] would be required to transpile base R's `lapply()`, whereas **`furrr`** [@Vaughan2022_furrr] is required to transpile `purrr::map()`. 
 You can check which namespaces are currently supported in your installation with `futurize::futurize_supported_packages()`.
 
 Because fitting the models themselves do the main work, splitting the grouped data into a list first lets `futurize()` distribute `fit_easylinear()` across worker sessions:
+
 ```{r}
 #| label: split-futurize
 #| eval: false
@@ -107,7 +108,7 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 
-plan(multisession)
+plan(multisession) # enables multicore computations
 
 splits <- bactgrowth |>
   split(~ strain + replicate + conc)
@@ -122,27 +123,27 @@ coefs_futurize <- names(splits) |>
   futurize() |>
   list_rbind()
 
-plan(sequential)
+plan(sequential) # resets to single core computation
 head(coefs_futurize)
 ```
 
+# Outlook: Multivariate ODE Fits
 
-## Why `growthrates` Focuses on a Single Response Variable
+When multiple state variables are measured simultaneously, such as biomass alongside substrate depletion or product formation, joint fitting can help identify parameters like half-saturation constants ($K_s$) or yield coefficients that remain correlated or weakly constrained from growth curves alone. Both `fit_growthmodel()` and `all_growthmodel()`—like the non-parametric methods in `growthrates`—intentionally focus on **one dependent response variable** at a time. Even when a user-defined ODE model tracks multiple internal state variables, such as biomass `y` and substrate `s`, the built-in objective function evaluates residuals against a single observed response.
 
-Both `fit_growthmodel()` / `all_growthmodel()` and the non-parametric methods in `growthrates` operate on **one dependent response variable**. Even when a user-defined ODE model simulates multiple internal state variables (such as biomass `y` and substrate `s`), the objective function evaluates residuals against that single observed variable.
+This single-response design keeps the interface focused and transparent for routine growth-curve analysis, avoiding added complexity around:
 
-Supporting multivariate responses directly within `growthrates` would substantially increase API and complexity for the user, mainly due to:
+- **different units and scales**, e.g., $\text{OD}_{600}$ values between `0.01` and `1.5` vs. substrate concentrations in `mmol/L` or fluorescence intensities,
+- **weighting and error structure**, where appropriate scaling across variables depends on measurement noise, replication, and experimental priorities rather than a universal default, and
+- **more complex return objects, plotting, and batch methods** across grouped datasets.
 
-* **different units and scales** (e.g., $\text{OD}_{600}$ values between `0.01` and `1.5` vs. substrate concentrations in `mmol/L` or fluorescence intensities),
-* **weighting and error structure** (appropriate weights across variables depend on measurement noise, replication, and biological priorities rather than a universal default), and
-* **more complex return objects, plotting, and batch methods** for a package aimed at lightweight, reproducible growth rate estimation.
+Even with a single observed response, multi-state ODE models in `growthrates` remain useful whenever mechanistic coupling shapes the trajectory of the measured variable. When true multi-response fitting across several observed state variables is required, you can pass a custom cost or objective function built on `growthrates` model functions or use dedicated nonlinear/inverse-modeling frameworks such as **`FME`** [@Soetaert2010]. For most batch and plate-reader workflows, however, fitting the primary growth response directly—and using additional measurements as independent checks or covariates—keeps models easier to diagnose and reproduce.
 
+## Multivariate ODE Fits with `deSolve` and `FME`
 
-## Outlook: Multivariate ODE Fits with `deSolve` and `FME`
+In the interest of full flexibility and power, switching directly to **`deSolve`** and **`FME`** [@deSolve_jss; @Soetaert2010] is the natural next step. Together, they let you model coupled dynamics across multiple observed states while retaining full control over numerical solvers, variable scaling, and parameter estimation algorithms.
 
-When multiple state variables are measured simultaneously, such as biomass alongside substrate depletion or product formation, and jointly help identify parameters like half-saturation constants ($K_s$) or yield coefficients, switching directly to **`deSolve`** and **`FME`** (`modCost()` and `modFit()`) is the natural next step.
-
-### Core Workflow
+## Core Workflow
 
 1. Define the coupled ODE system as a standard derivative function for `deSolve::ode()`.
 2. Use `FME::modCost()` to combine residuals across multiple observed variables with explicit scaling and weighting.
@@ -185,7 +186,7 @@ fit_mv <- modFit(f = obj_fun, p = p_start, lower = p_lower, upper = p_upper,
 summary(fit_mv)
 ```
 
-### Visualizing the Coupled Monod Fit
+## Visualizing the Coupled Monod Fit
 
 Once the multivariate fit is obtained with `FME::modFit()`, you can define the initial state vector `y0` explicitly, simulate the fitted trajectory on a finer time grid with `deSolve::ode()`, and plot both observed points and model curves side by side with `ggplot2` (using facets so biomass `y` and substrate `s` keep their own scales).
 
@@ -216,7 +217,7 @@ ggplot() +
 ```
 
 
-## Summary
+# Summary
 
 - **`growthrates`** provides a lightweight, script-friendly workflow for estimating growth rates and curve parameters from a **single** response variable.
 - It includes `all_*` functions for fitting multiple data sets or models within the package, and it can also be integrated into broader data pipelines.
@@ -224,7 +225,12 @@ ggplot() +
 
 Depending on your experimental setup and analytical pipeline, complementary packages can round out the workflow—whether for importing plate-reader data directly, analyzing dose-response relationships, or building an interactive Shiny interface.
 
-## References
+# Acknowledgments
+
+Many thanks to the R Core Team [@RCore2015] for developing and maintaining **R**. 
+This documentation was written using **Quarto** [@quarto].
+
+# References
 
 ::: {#refs}
 :::

@@ -26,10 +26,10 @@ df_curve <- data.frame(
 
 # Data points (simulating noisy observations around the curve)
 set.seed(42)
-t_obs <- seq(0, 12, by = 0.6) + rnorm(16, 0, 0.3)
+t_obs <- seq(1, 11, length.out=18) #+ rnorm(18, 0, 0.3)
 df_points <- data.frame(
   t = t_obs,
-  y = logistic_y(t_obs) + rnorm(16, 0, 0.05)
+  y = logistic_y(t_obs) + rnorm(18, 0, 0.04)
 )
 df_points$y <- pmax(pmin(df_points$y, K_val * 1.05), y0_val * 0.9)
 
@@ -52,25 +52,25 @@ p <- ggplot() +
   geom_point(data = df_points, aes(x = t, y = y), shape = 21,
              color = "#557A1A",
              stroke = 0.4,
-             fill = "#D2DC46", size = 1.5, alpha = 0.95) +
+             fill = "#D2DC46", size = 2.5, alpha = 0.98) +
   geom_line(data = df_curve, aes(x = t, y = y),
-            color = "#00008C", linewidth = 0.8, alpha=0.7) +
+            color = "#00008C", linewidth = 1.2, alpha=0.7) +
   geom_line(data = tangent_df, aes(x = t, y = y),
             color = "#D95F02", linewidth = 0.4, linetype = "dashed") +
 
   # --- Annotations (Single instances only) ---
 
-  geom_segment(aes(x = 0, xend = 5, y = y0_val, yend = y0_val),
-               color = "#777777", linetype = "dotted", linewidth = 0.5) +
+#  geom_segment(aes(x = 0, xend = 5, y = y0_val, yend = y0_val),
+#               color = "#777777", linetype = "dotted", linewidth = 0.5) +
 
-  geom_segment(aes(x = 5, xend = 12, y = K_val, yend = K_val),
-               color = "#777777", linetype = "dotted", linewidth = 0.5) +
+#  geom_segment(aes(x = 5, xend = 12, y = K_val, yend = K_val),
+#               color = "#777777", linetype = "dotted", linewidth = 0.5) +
 
 
   # Smaller mm sizes for svglite / hexSticker
   annotate("text", x = 0.7, y = 0.3, label = expression(y[0]), color = "#00008C", size = 4.0) +
   annotate("text", x = 11.4, y = 0.8, label = expression(K),    color = "#00008C", size = 4.0) +
-  annotate("text", x = 7.5, y = 0.48, label = expression(mu[max]), color = "#D95F02", size = 5.0) +
+  annotate("text", x = 8, y = 0.48, label = expression(mu[max]), color = "#D95F02", size = 6.0) +
 
   scale_x_continuous(expand = c(0, 0), limits = c(0, 12)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 1.1)) +
@@ -95,16 +95,8 @@ s <- sticker(
   s_y = 0.8,
   s_width = 1.2,
   s_height = 0.75,
-  h_fill = "#D0D3D4",
+  h_fill = "#E0E3E4",
   h_color = "#00008C",
-  h_size = 1.5
+  h_size = 1.5,
+  filename = "man/figures/logo.svg"
 )
-
-svglite::svglite("man/figures/logo.svg", width = 1.73, height = 2.0)
-print(s)
-dev.off()
-
-# ## Using the magick package (ImageMagick in R)
-# img <- magick::image_read_svg("man/figures/growthrates_logo.svg")
-# img <- magick::image_scale(img, "1200x") # or "1200x" for usethis::use_logo()
-# magick::image_write(img, "man/figures/growthrates_logo.png", format = "png")

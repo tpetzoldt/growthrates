@@ -517,7 +517,7 @@ for example package **drc** [@Ritz2005].
 
 Many thanks to Claudia Seiler for the data set, and to the R Core Team
 [@RCore2015] for developing and maintaining **R**. 
-This documentation was written with **Quarto**.
+This documentation was written using **Quarto** [@quarto].
 
 # References
 
