@@ -105,11 +105,11 @@ filtering, or [`tryCatch()`](https://rdrr.io/r/base/conditions.html)
 guards for noisy individual wells need to be integrated directly into
 the workflow.
 
-### 2.3 Parallelization with **futurize**
+### 2.3 Parallelization with `futurize`
 
-A limitation of standard `dplyr` / `purrr` pipelines compared to `all_*`
-functions (which accept `ncores`) is that they run sequentially by
-default. With the **`futurize`** package ([Bengtsson
+A limitation of standard `dplyr` / `purrr` pipelines compared to the
+`all_*` functions of `growthrates` (which accept `ncores`) is that they
+run sequentially by default. With the **`futurize`** package ([Bengtsson
 2025](#ref-Bengtsson2025_futurize)). You can parallelize map-reduce
 calls such as [`lapply()`](https://rdrr.io/r/base/lapply.html) or
 [`purrr::map()`](https://purrr.tidyverse.org/reference/map.html) by
@@ -139,7 +139,7 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 
-plan(multisession)
+plan(multisession) # enables multicore computations
 
 splits <- bactgrowth |>
   split(~ strain + replicate + conc)
@@ -154,43 +154,58 @@ coefs_futurize <- names(splits) |>
   futurize() |>
   list_rbind()
 
-plan(sequential)
+plan(sequential) # resets to single core computation
 head(coefs_futurize)
 ```
 
-## 3 Why `growthrates` Focuses on a Single Response Variable
-
-Both
-[`fit_growthmodel()`](http://tpetzoldt.github.io/growthrates/reference/fit_growthmodel.md)
-/ `all_growthmodel()` and the non-parametric methods in `growthrates`
-operate on **one dependent response variable**. Even when a user-defined
-ODE model simulates multiple internal state variables (such as biomass
-`y` and substrate `s`), the objective function evaluates residuals
-against that single observed variable.
-
-Supporting multivariate responses directly within `growthrates` would
-substantially increase API and complexity for the user, mainly due to:
-
-- **different units and scales** (e.g., $`\text{OD}_{600}`$ values
-  between `0.01` and `1.5` vs. substrate concentrations in `mmol/L` or
-  fluorescence intensities),
-- **weighting and error structure** (appropriate weights across
-  variables depend on measurement noise, replication, and biological
-  priorities rather than a universal default), and
-- **more complex return objects, plotting, and batch methods** for a
-  package aimed at lightweight, reproducible growth rate estimation.
-
-## 4 Outlook: Multivariate ODE Fits with `deSolve` and `FME`
+## 3 Outlook: Multivariate ODE Fits
 
 When multiple state variables are measured simultaneously, such as
-biomass alongside substrate depletion or product formation, and jointly
-help identify parameters like half-saturation constants ($`K_s`$) or
-yield coefficients, switching directly to **`deSolve`** and **`FME`**
-([`modCost()`](https://rdrr.io/pkg/FME/man/modCost.html) and
-[`modFit()`](https://rdrr.io/pkg/FME/man/modFit.html)) is the natural
-next step.
+biomass alongside substrate depletion or product formation, joint
+fitting can help identify parameters like half-saturation constants
+($`K_s`$) or yield coefficients that remain correlated or weakly
+constrained from growth curves alone. Both
+[`fit_growthmodel()`](http://tpetzoldt.github.io/growthrates/reference/fit_growthmodel.md)
+and `all_growthmodel()`—like the non-parametric methods in
+`growthrates`—intentionally focus on **one dependent response variable**
+at a time. Even when a user-defined ODE model tracks multiple internal
+state variables, such as biomass `y` and substrate `s`, the built-in
+objective function evaluates residuals against a single observed
+response.
 
-### 4.1 Core Workflow
+This single-response design keeps the interface focused and transparent
+for routine growth-curve analysis, avoiding added complexity around:
+
+- **different units and scales**, e.g., $`\text{OD}_{600}`$ values
+  between `0.01` and `1.5` vs. substrate concentrations in `mmol/L` or
+  fluorescence intensities,
+- **weighting and error structure**, where appropriate scaling across
+  variables depends on measurement noise, replication, and experimental
+  priorities rather than a universal default, and
+- **more complex return objects, plotting, and batch methods** across
+  grouped datasets.
+
+Even with a single observed response, multi-state ODE models in
+`growthrates` remain useful whenever mechanistic coupling shapes the
+trajectory of the measured variable. When true multi-response fitting
+across several observed state variables is required, you can pass a
+custom cost or objective function built on `growthrates` model functions
+or use dedicated nonlinear/inverse-modeling frameworks such as **`FME`**
+([Soetaert and Petzoldt 2010](#ref-Soetaert2010)). For most batch and
+plate-reader workflows, however, fitting the primary growth response
+directly—and using additional measurements as independent checks or
+covariates—keeps models easier to diagnose and reproduce.
+
+### 3.1 Multivariate ODE Fits with `deSolve` and `FME`
+
+In the interest of full flexibility and power, switching directly to
+**`deSolve`** and **`FME`** ([Soetaert et al. 2010](#ref-deSolve_jss);
+[Soetaert and Petzoldt 2010](#ref-Soetaert2010)) is the natural next
+step. Together, they let you model coupled dynamics across multiple
+observed states while retaining full control over numerical solvers,
+variable scaling, and parameter estimation algorithms.
+
+### 3.2 Core Workflow
 
 1.  Define the coupled ODE system as a standard derivative function for
     [`deSolve::ode()`](https://rdrr.io/pkg/deSolve/man/ode.html).
@@ -260,7 +275,7 @@ summary(fit_mv)
     Ks    0.9996 1.0000 0.7320
     yield 0.7324 0.7320 1.0000
 
-### 4.2 Visualizing the Coupled Monod Fit
+### 3.3 Visualizing the Coupled Monod Fit
 
 Once the multivariate fit is obtained with
 [`FME::modFit()`](https://rdrr.io/pkg/FME/man/modFit.html), you can
@@ -296,7 +311,7 @@ ggplot() +
 
 ![](part3-pipes-and-outlook_files/figure-html/monod-ggplot-1.png)
 
-## 5 Summary
+## 4 Summary
 
 - **`growthrates`** provides a lightweight, script-friendly workflow for
   estimating growth rates and curve parameters from a **single**
@@ -316,7 +331,17 @@ complementary packages can round out the workflow—whether for importing
 plate-reader data directly, analyzing dose-response relationships, or
 building an interactive Shiny interface.
 
+## 5 Acknowledgments
+
+Many thanks to the R Core Team ([R Core Team 2015](#ref-RCore2015)) for
+developing and maintaining **R**. This documentation was written using
+**Quarto** ([Allaire and Dervieux 2025](#ref-quarto)).
+
 ## 6 References
+
+Allaire, JJ, and Christophe Dervieux. 2025. *Quarto: R Interface to
+’Quarto’ Markdown Publishing System*.
+<https://doi.org/10.32614/CRAN.package.quarto>.
 
 Bengtsson, Henrik. 2021a. “A Unifying Framework for Parallel and
 Distributed Processing in r Using Futures.” *The R Journal* 13 (2):
@@ -328,6 +353,10 @@ Parallel Using Futures*.
 
 Bengtsson, Henrik. 2025. *Futurize: Parallelize Common Functions via One
 Magic Function*. <https://CRAN.R-project.org/package=futurize>.
+
+R Core Team. 2015. *R: A Language and Environment for Statistical
+Computing*. R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
 
 Soetaert, Karline, and Thomas Petzoldt. 2010. “Inverse Modelling,
 Sensitivity and Monte Carlo Analysis in Using Package .” *Journal of

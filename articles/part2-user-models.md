@@ -342,9 +342,14 @@ unlink(paste(ode_K_linear, ".o", sep = ""))
 Many thanks to Claudia Seiler for the data set, to David Kneis for
 fruitful discussions, to Daniel Kaschek for his **cOde** package, and to
 the R Core Team ([R Core Team 2015](#ref-RCore2015)) for developing and
-maintaining **R**. This documentation was written using **Quarto**.
+maintaining **R**. This documentation was written using **Quarto**
+([Allaire and Dervieux 2025](#ref-quarto)).
 
 ## 7 References
+
+Allaire, JJ, and Christophe Dervieux. 2025. *Quarto: R Interface to
+’Quarto’ Markdown Publishing System*.
+<https://doi.org/10.32614/CRAN.package.quarto>.
 
 Kaschek, Daniel. 2016. *code: Automated C Code Generation for Use with
 the deSolve and bvpSolve Packages*.

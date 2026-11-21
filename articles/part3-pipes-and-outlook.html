@@ -68,7 +68,7 @@
 
 
 
-    <section class="level2" data-number="1"><h2 data-number="1" id="overview">
+    <section class="section level2" data-number="1"><h2 data-number="1" id="overview">
 <span class="header-section-number">1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p>The <strong><code>growthrates</code></strong> package is designed to estimate growth rates (especially <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>μ</mi><mi mathvariant="normal">max</mi></msub><annotation encoding="application/x-tex">\mu_{\max}</annotation></semantics></math>) and curve parameters from a single response time series, either via smoothing splines (<code>fit_splines()</code>, <code><a href="../reference/all_splines.html">all_splines()</a></code>), linear fits to the exponential phase (<code><a href="../reference/fit_easylinear.html">fit_easylinear()</a></code>, <code><a href="../reference/all_easylinear.html">all_easylinear()</a></code>), or parametric and ODE-based growth models (<code>fit_growthmodels()</code>, <code><a href="../reference/all_growthmodels.html">all_growthmodels()</a></code>).</p>
@@ -77,7 +77,7 @@
 <li>how batch analyses can be expressed with modern R pipelines instead of <code>all_*</code> functions (while keeping <code>all_*</code> intact for convenience and backward compatibility),</li>
 <li>why <code>growthrates</code> intentionally restricts fitting to a single response variable, and</li>
 <li>how to transition to multivariate dynamic systems using <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong>.</li>
-</ol></section><section class="level2" data-number="2"><h2 data-number="2" id="batch-analysis-with-pipelines-instead-of-all_">
+</ol></section><section class="section level2" data-number="2"><h2 data-number="2" id="batch-analysis-with-pipelines-instead-of-all_">
 <span class="header-section-number">2</span> Batch Analysis with Pipelines Instead of <code>all_*</code>
 <a class="anchor" aria-label="anchor" href="#batch-analysis-with-pipelines-instead-of-all_"></a>
 </h2>
@@ -86,7 +86,7 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tpetzoldt/growthrates" class="external-link">growthrates</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<section class="level3" data-number="2.1"><h3 data-number="2.1" id="comparing-all_easylinear-and-a-base-r-pipeline">
+<section class="level2" data-number="2.1"><h3 data-number="2.1" id="comparing-all_easylinear-and-a-base-r-pipeline">
 <span class="header-section-number">2.1</span> Comparing <code>all_easylinear()</code> and a Base-R Pipeline<a class="anchor" aria-label="anchor" href="#comparing-all_easylinear-and-a-base-r-pipeline"></a>
 </h3>
 <div class="cell">
@@ -122,7 +122,7 @@
 6 T.2.0 0.013 0.011889052 0.2191126 0.4076961</code></pre>
 </div>
 </div>
-</section><section class="level3" data-number="2.2"><h3 data-number="2.2" id="comparing-all_easylinear-in-a-dplyr-pipeline">
+</section><section class="level2" data-number="2.2"><h3 data-number="2.2" id="comparing-all_easylinear-in-a-dplyr-pipeline">
 <span class="header-section-number">2.2</span> Comparing <code>all_easylinear()</code> in a dplyr pipeline<a class="anchor" aria-label="anchor" href="#comparing-all_easylinear-in-a-dplyr-pipeline"></a>
 </h3>
 <p>When working with <code>dplyr</code>, you can group by the experimental factors and fit <code><a href="../reference/fit_easylinear.html">fit_easylinear()</a></code> per group before unpacking the estimated coefficients into columns.</p>
@@ -148,11 +148,11 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coefs_dplyr</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>Using a pipeline is especially helpful when blank corrections, outlier filtering, or <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> guards for noisy individual wells need to be integrated directly into the workflow.</p>
-</section><section class="level3" data-number="2.3"><h3 data-number="2.3" id="parallelization-with-futurize">
-<span class="header-section-number">2.3</span> Parallelization with <strong>futurize</strong>
+</section><section class="level2" data-number="2.3"><h3 data-number="2.3" id="parallelization-with-futurize">
+<span class="header-section-number">2.3</span> Parallelization with <code>futurize</code>
 <a class="anchor" aria-label="anchor" href="#parallelization-with-futurize"></a>
 </h3>
-<p>A limitation of standard <code>dplyr</code> / <code>purrr</code> pipelines compared to <code>all_*</code> functions (which accept <code>ncores</code>) is that they run sequentially by default. With the <strong><code>futurize</code></strong> package <span class="citation" data-cites="Bengtsson2025_futurize">(<a href="#ref-Bengtsson2025_futurize" role="doc-biblioref">Bengtsson 2025</a>)</span>. You can parallelize map-reduce calls such as <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> by selecting a <strong><code>future</code></strong> backend <span class="citation" data-cites="Bengtsson2021_future">(<a href="#ref-Bengtsson2021_future" role="doc-biblioref">Bengtsson 2021a</a>)</span> (<code>plan(multisession)</code>) and piping the mapping step into <code>futurize()</code>.</p>
+<p>A limitation of standard <code>dplyr</code> / <code>purrr</code> pipelines compared to the <code>all_*</code> functions of <code>growthrates</code> (which accept <code>ncores</code>) is that they run sequentially by default. With the <strong><code>futurize</code></strong> package <span class="citation" data-cites="Bengtsson2025_futurize">(<a href="#ref-Bengtsson2025_futurize" role="doc-biblioref">Bengtsson 2025</a>)</span>. You can parallelize map-reduce calls such as <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> by selecting a <strong><code>future</code></strong> backend <span class="citation" data-cites="Bengtsson2021_future">(<a href="#ref-Bengtsson2021_future" role="doc-biblioref">Bengtsson 2021a</a>)</span> (<code>plan(multisession)</code>) and piping the mapping step into <code>futurize()</code>.</p>
 <p>Note that <code>futurize</code> relies on optional backend packages depending on which mapping function you use: <strong><code>future.apply</code></strong> <span class="citation" data-cites="Bengtsson2021_future_apply">(<a href="#ref-Bengtsson2021_future_apply" role="doc-biblioref">Bengtsson 2021b</a>)</span> would be required to transpile base R’s <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>, whereas <strong><code>furrr</code></strong> <span class="citation" data-cites="Vaughan2022_furrr">(<a href="#ref-Vaughan2022_furrr" role="doc-biblioref">Vaughan and Dancho 2022</a>)</span> is required to transpile <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>. You can check which namespaces are currently supported in your installation with <code><a href="https://futurize.futureverse.org/reference/futurize_supported_packages.html" class="external-link">futurize::futurize_supported_packages()</a></code>.</p>
 <p>Because fitting the models themselves do the main work, splitting the grouped data into a list first lets <code>futurize()</code> distribute <code><a href="../reference/fit_easylinear.html">fit_easylinear()</a></code> across worker sessions:</p>
 <div class="cell">
@@ -161,7 +161,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">plan</span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
+<span><span class="fu">plan</span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span> <span class="co"># enables multicore computations</span></span>
 <span></span>
 <span><span class="va">splits</span> <span class="op">&lt;-</span> <span class="va">bactgrowth</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="op">~</span> <span class="va">strain</span> <span class="op">+</span> <span class="va">replicate</span> <span class="op">+</span> <span class="va">conc</span><span class="op">)</span></span>
@@ -176,28 +176,30 @@
 <span>  <span class="fu">futurize</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">plan</span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
+<span><span class="fu">plan</span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span> <span class="co"># resets to single core computation</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coefs_futurize</span><span class="op">)</span></span></code></pre></div>
 </div>
-</section></section><section class="level2" data-number="3"><h2 data-number="3" id="why-growthrates-focuses-on-a-single-response-variable">
-<span class="header-section-number">3</span> Why <code>growthrates</code> Focuses on a Single Response Variable<a class="anchor" aria-label="anchor" href="#why-growthrates-focuses-on-a-single-response-variable"></a>
+</section></section><section class="section level2" data-number="3"><h2 data-number="3" id="outlook-multivariate-ode-fits">
+<span class="header-section-number">3</span> Outlook: Multivariate ODE Fits<a class="anchor" aria-label="anchor" href="#outlook-multivariate-ode-fits"></a>
 </h2>
-<p>Both <code><a href="../reference/fit_growthmodel.html">fit_growthmodel()</a></code> / <code>all_growthmodel()</code> and the non-parametric methods in <code>growthrates</code> operate on <strong>one dependent response variable</strong>. Even when a user-defined ODE model simulates multiple internal state variables (such as biomass <code>y</code> and substrate <code>s</code>), the objective function evaluates residuals against that single observed variable.</p>
-<p>Supporting multivariate responses directly within <code>growthrates</code> would substantially increase API and complexity for the user, mainly due to:</p>
+<p>When multiple state variables are measured simultaneously, such as biomass alongside substrate depletion or product formation, joint fitting can help identify parameters like half-saturation constants (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>K</mi><mi>s</mi></msub><annotation encoding="application/x-tex">K_s</annotation></semantics></math>) or yield coefficients that remain correlated or weakly constrained from growth curves alone. Both <code><a href="../reference/fit_growthmodel.html">fit_growthmodel()</a></code> and <code>all_growthmodel()</code>—like the non-parametric methods in <code>growthrates</code>—intentionally focus on <strong>one dependent response variable</strong> at a time. Even when a user-defined ODE model tracks multiple internal state variables, such as biomass <code>y</code> and substrate <code>s</code>, the built-in objective function evaluates residuals against a single observed response.</p>
+<p>This single-response design keeps the interface focused and transparent for routine growth-curve analysis, avoiding added complexity around:</p>
 <ul>
 <li>
-<strong>different units and scales</strong> (e.g., <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mtext mathvariant="normal">OD</mtext><mn>600</mn></msub><annotation encoding="application/x-tex">\text{OD}_{600}</annotation></semantics></math> values between <code>0.01</code> and <code>1.5</code> vs. substrate concentrations in <code>mmol/L</code> or fluorescence intensities),</li>
+<strong>different units and scales</strong>, e.g., <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mtext mathvariant="normal">OD</mtext><mn>600</mn></msub><annotation encoding="application/x-tex">\text{OD}_{600}</annotation></semantics></math> values between <code>0.01</code> and <code>1.5</code> vs. substrate concentrations in <code>mmol/L</code> or fluorescence intensities,</li>
 <li>
-<strong>weighting and error structure</strong> (appropriate weights across variables depend on measurement noise, replication, and biological priorities rather than a universal default), and</li>
+<strong>weighting and error structure</strong>, where appropriate scaling across variables depends on measurement noise, replication, and experimental priorities rather than a universal default, and</li>
 <li>
-<strong>more complex return objects, plotting, and batch methods</strong> for a package aimed at lightweight, reproducible growth rate estimation.</li>
-</ul></section><section class="level2" data-number="4"><h2 data-number="4" id="outlook-multivariate-ode-fits-with-desolve-and-fme">
-<span class="header-section-number">4</span> Outlook: Multivariate ODE Fits with <code>deSolve</code> and <code>FME</code>
-<a class="anchor" aria-label="anchor" href="#outlook-multivariate-ode-fits-with-desolve-and-fme"></a>
-</h2>
-<p>When multiple state variables are measured simultaneously, such as biomass alongside substrate depletion or product formation, and jointly help identify parameters like half-saturation constants (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>K</mi><mi>s</mi></msub><annotation encoding="application/x-tex">K_s</annotation></semantics></math>) or yield coefficients, switching directly to <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong> (<code><a href="https://rdrr.io/pkg/FME/man/modCost.html" class="external-link">modCost()</a></code> and <code><a href="https://rdrr.io/pkg/FME/man/modFit.html" class="external-link">modFit()</a></code>) is the natural next step.</p>
-<section class="level3" data-number="4.1"><h3 data-number="4.1" id="core-workflow">
-<span class="header-section-number">4.1</span> Core Workflow<a class="anchor" aria-label="anchor" href="#core-workflow"></a>
+<strong>more complex return objects, plotting, and batch methods</strong> across grouped datasets.</li>
+</ul>
+<p>Even with a single observed response, multi-state ODE models in <code>growthrates</code> remain useful whenever mechanistic coupling shapes the trajectory of the measured variable. When true multi-response fitting across several observed state variables is required, you can pass a custom cost or objective function built on <code>growthrates</code> model functions or use dedicated nonlinear/inverse-modeling frameworks such as <strong><code>FME</code></strong> <span class="citation" data-cites="Soetaert2010">(<a href="#ref-Soetaert2010" role="doc-biblioref">Soetaert and Petzoldt 2010</a>)</span>. For most batch and plate-reader workflows, however, fitting the primary growth response directly—and using additional measurements as independent checks or covariates—keeps models easier to diagnose and reproduce.</p>
+<section class="level2" data-number="3.1"><h3 data-number="3.1" id="multivariate-ode-fits-with-desolve-and-fme">
+<span class="header-section-number">3.1</span> Multivariate ODE Fits with <code>deSolve</code> and <code>FME</code>
+<a class="anchor" aria-label="anchor" href="#multivariate-ode-fits-with-desolve-and-fme"></a>
+</h3>
+<p>In the interest of full flexibility and power, switching directly to <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong> <span class="citation" data-cites="deSolve_jss Soetaert2010">(<a href="#ref-deSolve_jss" role="doc-biblioref">Soetaert et al. 2010</a>; <a href="#ref-Soetaert2010" role="doc-biblioref">Soetaert and Petzoldt 2010</a>)</span> is the natural next step. Together, they let you model coupled dynamics across multiple observed states while retaining full control over numerical solvers, variable scaling, and parameter estimation algorithms.</p>
+</section><section class="level2" data-number="3.2"><h3 data-number="3.2" id="core-workflow">
+<span class="header-section-number">3.2</span> Core Workflow<a class="anchor" aria-label="anchor" href="#core-workflow"></a>
 </h3>
 <ol type="1">
 <li>Define the coupled ODE system as a standard derivative function for <code><a href="https://rdrr.io/pkg/deSolve/man/ode.html" class="external-link">deSolve::ode()</a></code>.</li>
@@ -263,8 +265,8 @@ Ks    0.9996 1.0000 0.7320
 yield 0.7324 0.7320 1.0000</code></pre>
 </div>
 </div>
-</section><section class="level3" data-number="4.2"><h3 data-number="4.2" id="visualizing-the-coupled-monod-fit">
-<span class="header-section-number">4.2</span> Visualizing the Coupled Monod Fit<a class="anchor" aria-label="anchor" href="#visualizing-the-coupled-monod-fit"></a>
+</section><section class="level2" data-number="3.3"><h3 data-number="3.3" id="visualizing-the-coupled-monod-fit">
+<span class="header-section-number">3.3</span> Visualizing the Coupled Monod Fit<a class="anchor" aria-label="anchor" href="#visualizing-the-coupled-monod-fit"></a>
 </h3>
 <p>Once the multivariate fit is obtained with <code><a href="https://rdrr.io/pkg/FME/man/modFit.html" class="external-link">FME::modFit()</a></code>, you can define the initial state vector <code>y0</code> explicitly, simulate the fitted trajectory on a finer time grid with <code><a href="https://rdrr.io/pkg/deSolve/man/ode.html" class="external-link">deSolve::ode()</a></code>, and plot both observed points and model curves side by side with <code>ggplot2</code> (using facets so biomass <code>y</code> and substrate <code>s</code> keep their own scales).</p>
 <div class="cell" data-layout-align="center">
@@ -296,8 +298,8 @@ yield 0.7324 0.7320 1.0000</code></pre>
 </div>
 </div>
 </div>
-</section></section><section class="level2" data-number="5"><h2 data-number="5" id="summary">
-<span class="header-section-number">5</span> Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</section></section><section class="section level2" data-number="4"><h2 data-number="4" id="summary">
+<span class="header-section-number">4</span> Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <ul>
 <li>
@@ -306,10 +308,17 @@ yield 0.7324 0.7320 1.0000</code></pre>
 <li>Fitting models with <strong>multiple</strong> state variables is possible by combining <strong><code>deSolve</code></strong> and <strong><code>FME</code></strong> <span class="citation" data-cites="deSolve_jss Soetaert2010">(<a href="#ref-deSolve_jss" role="doc-biblioref">Soetaert et al. 2010</a>; <a href="#ref-Soetaert2010" role="doc-biblioref">Soetaert and Petzoldt 2010</a>)</span>. Together, they support mechanistic dynamic modeling with multiple observed state variables, explicit residual weighting, and parameter identifiability analysis.</li>
 </ul>
 <p>Depending on your experimental setup and analytical pipeline, complementary packages can round out the workflow—whether for importing plate-reader data directly, analyzing dose-response relationships, or building an interactive Shiny interface.</p>
-</section><section class="level2" data-number="6"><h2 data-number="6" id="references">
+</section><section class="section level2" data-number="5"><h2 data-number="5" id="acknowledgments">
+<span class="header-section-number">5</span> Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
+<p>Many thanks to the R Core Team <span class="citation" data-cites="RCore2015">(<a href="#ref-RCore2015" role="doc-biblioref">R Core Team 2015</a>)</span> for developing and maintaining <strong>R</strong>. This documentation was written using <strong>Quarto</strong> <span class="citation" data-cites="quarto">(<a href="#ref-quarto" role="doc-biblioref">Allaire and Dervieux 2025</a>)</span>.</p>
+</section><section class="section level2" data-number="6"><h2 data-number="6" id="references">
 <span class="header-section-number">6</span> References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-quarto" class="csl-entry" role="listitem">
+Allaire, JJ, and Christophe Dervieux. 2025. <em>Quarto: R Interface to ’Quarto’ Markdown Publishing System</em>. <a href="https://doi.org/10.32614/CRAN.package.quarto" class="external-link">https://doi.org/10.32614/CRAN.package.quarto</a>.
+</div>
 <div id="ref-Bengtsson2021_future" class="csl-entry" role="listitem">
 Bengtsson, Henrik. 2021a. <span>“A Unifying Framework for Parallel and Distributed Processing in r Using Futures.”</span> <em>The R Journal</em> 13 (2): 208–27. <a href="https://doi.org/10.32614/RJ-2021-048" class="external-link">https://doi.org/10.32614/RJ-2021-048</a>.
 </div>
@@ -318,6 +327,9 @@ Bengtsson, Henrik. 2021b. <em>Future.apply: Apply Function to Elements in Parall
 </div>
 <div id="ref-Bengtsson2025_futurize" class="csl-entry" role="listitem">
 Bengtsson, Henrik. 2025. <em>Futurize: Parallelize Common Functions via One Magic Function</em>. <a href="https://CRAN.R-project.org/package=futurize" class="external-link">https://CRAN.R-project.org/package=futurize</a>.
+</div>
+<div id="ref-RCore2015" class="csl-entry" role="listitem">
+R Core Team. 2015. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
 </div>
 <div id="ref-Soetaert2010" class="csl-entry" role="listitem">
 Soetaert, Karline, and Thomas Petzoldt. 2010. <span>“Inverse Modelling, Sensitivity and Monte Carlo Analysis in Using Package .”</span> <em>Journal of Statistical Software</em> 33 (3): 1–28. <a href="https://doi.org/10.18637/jss.v033.i03" class="external-link">https://doi.org/10.18637/jss.v033.i03</a>.

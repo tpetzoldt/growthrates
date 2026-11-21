@@ -604,9 +604,14 @@ example package **drc** ([Ritz and Streibig 2005](#ref-Ritz2005)).
 
 Many thanks to Claudia Seiler for the data set, and to the R Core Team
 ([R Core Team 2015](#ref-RCore2015)) for developing and maintaining
-**R**. This documentation was written with **Quarto**.
+**R**. This documentation was written using **Quarto** ([Allaire and
+Dervieux 2025](#ref-quarto)).
 
 ## 8 References
+
+Allaire, JJ, and Christophe Dervieux. 2025. *Quarto: R Interface to
+’Quarto’ Markdown Publishing System*.
+<https://doi.org/10.32614/CRAN.package.quarto>.
 
 Baranyi, Jozsef, and Terry A. Roberts. 1995. “Mathematics of Predictive
 Food Microbiology.” *International Journal of Food Microbiology* 26 (2):
