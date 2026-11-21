@@ -122,7 +122,7 @@ p <- c(coef(fit1), K = max(dat$value))
 fit2 <- fit_growthmodel(grow_logistic, p=p, time=dat$time, y=dat$value, transform="log")
 coef(fit2)
 #>          y0       mumax           K 
-#> 0.008668589 0.293698939 0.081412765 
+#> 0.008668589 0.293698940 0.081412764 
 rsquared(fit2)
 #> [1] 0.9820697
 deviance(fit2)

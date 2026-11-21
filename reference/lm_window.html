@@ -18,9 +18,9 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/1-introduction.html">Estimation of Growth Rates with Package `growthrates`, Part 1: Introduction</a></li>
-    <li><a class="dropdown-item" href="../articles/2-user_models.html">Estimation of Growth Rates with Package `growthrates`, Part 2: User-defined Growth Models</a></li>
-    <li><a class="dropdown-item" href="../articles/3-pipes_outlook.html">Pipelines, Scope, and Outlook on Multivariate Models</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/part1-introduction.html">Estimation of Growth Rates with Package `growthrates`, Part 1: Introduction</a></li>
+    <li><a class="dropdown-item" href="../articles/part2-user-models.html">Estimation of Growth Rates with Package `growthrates`, Part 2: User-defined Growth Models</a></li>
+    <li><a class="dropdown-item" href="../articles/part3-pipes-and-outlook.html">Estimation of Growth Rates with Package `growthrates`, Part 3: Pipelines and Outlook</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -65,7 +65,7 @@
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>with of the window (number of data).</p></dd>
+<dd><p>width of the window (number of data).</p></dd>
 
 
 <dt id="arg-m">m<a class="anchor" aria-label="anchor" href="#arg-m"></a></dt>
@@ -81,6 +81,12 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The functions are used by a heuristic linear approach, similar to the
 “growth rates made easy”-method of Hall et al. (2013).</p>
+<p>Internal warnings of <code>summary(m)</code> about essentially perfect
+  fits are suppressed.</p>
+<p>Temporarily switches message language to English during
+  <code>summary(m)</code> so that warnings from essentially perfect fits can be
+  reliably identified and muffled without suppressing other warnings,
+  restoring the previous language setting afterward.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

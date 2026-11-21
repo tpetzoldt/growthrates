@@ -43,7 +43,7 @@ L <- all_splines(value ~ time | strain + conc +replicate, data=bactgrowth)
 
 coef(L[[1]])
 #>          y0       mumax 
-#> 0.008092226 0.298829615 
+#> 0.008092251 0.298829003 
 
 plot(L[["R:0:2"]])
 

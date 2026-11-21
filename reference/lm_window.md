@@ -26,7 +26,7 @@ lm_parms(m)
 
 - h:
 
-  with of the window (number of data).
+  width of the window (number of data).
 
 - m:
 
@@ -41,6 +41,14 @@ linear model object (`lm_window` resp. vector with parameters of the fit
 
 The functions are used by a heuristic linear approach, similar to the
 “growth rates made easy”-method of Hall et al. (2013).
+
+Internal warnings of `summary(m)` about essentially perfect fits are
+suppressed.
+
+Temporarily switches message language to English during `summary(m)` so
+that warnings from essentially perfect fits can be reliably identified
+and muffled without suppressing other warnings, restoring the previous
+language setting afterward.
 
 ## References
 
