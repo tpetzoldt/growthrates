@@ -16,7 +16,7 @@ lm_parms(m)
 
 \item{i0}{index of first value used for a window.}
 
-\item{h}{with of the window (number of data).}
+\item{h}{width of the window (number of data).}
 
 \item{m}{linear model (\code{lm}) object}
 }
@@ -30,6 +30,14 @@ Helper functions for handling linear fits.
 \details{
 The functions are used by a heuristic linear approach, similar to the
 ``growth rates made easy''-method of Hall et al. (2013).
+
+Internal warnings of \code{summary(m)} about essentially perfect
+  fits are suppressed.
+
+Temporarily switches message language to English during
+  \code{summary(m)} so that warnings from essentially perfect fits can be
+  reliably identified and muffled without suppressing other warnings,
+  restoring the previous language setting afterward.
 }
 \references{
 Hall, B. G., H. Acar and M. Barlow 2013. Growth Rates Made Easy.

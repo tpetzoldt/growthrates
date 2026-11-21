@@ -1,12 +1,17 @@
 ---
-title: "Pipelines, Scope, and Outlook on Multivariate Models"
+title: "Estimation of Growth Rates with Package `growthrates`, Part 3: Pipelines and Outlook"
 author: "Thomas Petzoldt"
 format:
   html:
-    toc: true
+    toc: false
+    number-sections: true
+    embed-resources: true
+    html-math-method: mathjax
+    page-layout: full
+bibliography: growthrates.bib
 vignette: >
-  %\VignetteIndexEntry{Pipelines, Scope, and Outlook on Multivariate Models}
-  %\VignetteEngine{quarto::html}
+  %\VignetteIndexEntry{`growthrates` Part 3: Pipelines and Outlook}
+  %\VignetteEngine{quarto::format}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -36,23 +41,22 @@ library(growthrates)
 ```{r}
 #| label: pipeline-vs-all
 # Classic batch call across all groups in bactgrowth
-fits_all <- all_easylinear(value ~ time | strain + conc + replicate,
+fits_all <- all_easylinear(value ~ time | strain + replicate + conc,
                            data = bactgrowth, h = 6, quota = 0.95)
 
 # Equivalent base-R pipeline without extra package dependencies
 fits_pipe <- bactgrowth |>
-  split(~ strain + conc + replicate) |>
+  split(~ strain + replicate + conc) |>
   lapply(function(df) {
-    suppressWarnings(
-      fit_easylinear(df$time, df$value, h = 6, quota = 0.95)
-    )
+    fit_easylinear(df$time, df$value, h = 6, quota = 0.95)
   })
 
-# Combine estimated coefficients into a data frame
+# Combine estimated coefficients into a data frame (matching futurize's key handling)
 coefs_pipe <- do.call(
   rbind,
   lapply(names(fits_pipe), function(nm) {
-    cbind(group = nm, as.data.frame(as.list(coef(fits_pipe[[nm]]))))
+    cf <- coef(fits_pipe[[nm]])
+    data.frame(group = nm, as.list(cf), check.names = FALSE)
   })
 )
 
@@ -60,22 +64,25 @@ head(coefs_pipe)
 ```
 ### Comparing `all_easylinear()` in a dplyr pipeline
 
-When working with `dplyr`, you can group by the experimental factors and fit `fit_easylinear()` per group before unpacking the estimated coefficients into columns. Using `suppressWarnings()` keeps the rendered output free of `summary.lm()` warnings for near-perfect linear fits, while keeping `growthrates` itself free of `dplyr` as a hard dependency.
+When working with `dplyr`, you can group by the experimental factors and fit `fit_easylinear()` per group before unpacking the estimated coefficients into columns.
 
 ```{r}
 #| label: dplyr-pipeline
 #| eval: false
 library(dplyr)
 library(tidyr)
+library(purrr)
+
+plan(multisession)
 
 coefs_dplyr <- bactgrowth |>
   summarise(
-    fit = list(suppressWarnings(
+    fit = list(
       fit_easylinear(time, value, h = 6, quota = 0.95)
-    )),
-    .by = c(strain, conc, replicate)
+    ),
+    .by = c(strain, replicate, conc)
   ) |>
-  mutate(coefs = lapply(fit, coef)) |>
+  mutate(coefs = map(fit, coef)) |>
   select(-fit) |>
   unnest_wider(coefs)
 
@@ -83,6 +90,41 @@ head(coefs_dplyr)
 ```
 
 Using a pipeline is especially helpful when blank corrections, outlier filtering, or `tryCatch()` guards for noisy individual wells need to be integrated directly into the workflow.
+
+### Parallelization with **futurize**
+
+A limitation of standard `dplyr` / `purrr` pipelines compared to `all_*` functions (which accept `ncores`) is that they run sequentially by default. With the **`futurize`** package [@Bengtsson2025_futurize]. 
+You can parallelize map-reduce calls such as `lapply()` or `purrr::map()` by selecting a **`future`** backend [@Bengtsson2021_future] (`plan(multisession)`) and piping the mapping step into `futurize()`.
+
+Note that `futurize` relies on optional backend packages depending on which mapping function you use: **`future.apply`** [@Bengtsson2021_future_apply] would be required to transpile base R's `lapply()`, whereas **`furrr`** [@Vaughan2022_furrr] is required to transpile `purrr::map()`. 
+You can check which namespaces are currently supported in your installation with `futurize::futurize_supported_packages()`.
+
+Because fitting the models themselves do the main work, splitting the grouped data into a list first lets `futurize()` distribute `fit_easylinear()` across worker sessions:
+```{r}
+#| label: split-futurize
+#| eval: false
+library(dplyr)
+library(tidyr)
+library(purrr)
+
+plan(multisession)
+
+splits <- bactgrowth |>
+  split(~ strain + replicate + conc)
+
+coefs_futurize <- names(splits) |>
+  map(\(nm) {
+    df <- splits[[nm]]
+    cf <- coef(fit_easylinear(df$time, df$value, h = 6, quota = 0.95))
+    c(list(group = nm), as.list(cf)) |>
+      as_tibble()
+  }) |>
+  futurize() |>
+  list_rbind()
+
+plan(sequential)
+head(coefs_futurize)
+```
 
 
 ## Why `growthrates` Focuses on a Single Response Variable
@@ -108,7 +150,7 @@ When multiple state variables are measured simultaneously, such as biomass along
 
 ```{r}
 #| label: fme-outlook
-#| eval: false
+#| eval: true
 library(deSolve)
 library(FME)
 
@@ -149,7 +191,8 @@ Once the multivariate fit is obtained with `FME::modFit()`, you can define the i
 
 ```{r}
 #| label: monod-ggplot
-#| eval: false
+#| eval: true
+#| fig-align: center
 library(ggplot2)
 library(tidyr)
 
@@ -175,7 +218,14 @@ ggplot() +
 
 ## Summary
 
-* **`growthrates`** provides a lightweight, script-friendly workflow for estimating growth rates and curve parameters from a **single** response variable.
-* **`deSolve` + `FME`** support mechanistic dynamic modeling with **multiple** observed state variables, explicit residual weighting, and parameter identifiability analysis.
+- **`growthrates`** provides a lightweight, script-friendly workflow for estimating growth rates and curve parameters from a **single** response variable.
+- It includes `all_*` functions for fitting multiple data sets or models within the package, and it can also be integrated into broader data pipelines.
+- Fitting models with **multiple** state variables is possible by combining **`deSolve`** and **`FME`** [@deSolve_jss; @Soetaert2010]. Together, they support mechanistic dynamic modeling with multiple observed state variables, explicit residual weighting, and parameter identifiability analysis.
 
-Depending on the experimental setup, other packages can be useful when a workflow calls for direct import of plate-reader data, dose-response analysis, or an interactive Shiny interface.
+Depending on your experimental setup and analytical pipeline, complementary packages can round out the workflow—whether for importing plate-reader data directly, analyzing dose-response relationships, or building an interactive Shiny interface.
+
+## References
+
+::: {#refs}
+:::
+

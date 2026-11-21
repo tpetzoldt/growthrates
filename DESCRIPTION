@@ -24,14 +24,19 @@ Imports:
     utils,
     FME
 Suggests:
-    knitr,
-	quarto,
+    quarto,
     rmarkdown,
     dplyr,
-    ggplot2
+    ggplot2,
+    tidyr,
+    purrr,
+    furrr,
+    futurize,
+    future,
+    tibble
 License: GPL (>= 2)
 URL: https://github.com/tpetzoldt/growthrates, http://tpetzoldt.github.io/growthrates/
-VignetteBuilder: knitr, quarto
+VignetteBuilder: quarto
 Collate: 
     'aaa_growthmodel-class.R'
     'aab_growthmodel-constructor.R'
